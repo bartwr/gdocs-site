@@ -4,7 +4,7 @@ import { marked } from 'marked';
 export const Doc = (props) => {
 
   // Strip comments from doc
-  const strippedDoc = props.doc.split('---')[2];
+  const strippedDoc = props.doc ? props.doc.split('---')[2] : props.doc;
 
   return (
     <div>

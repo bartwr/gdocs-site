@@ -7,8 +7,10 @@ const readline = require('readline');
 const {google} = require('googleapis');
 const docsMarkdown = require("docs-markdown");
 
+import { getFiles } from './drive.js';
+
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/documents.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/documents.readonly', 'https://www.googleapis.com/auth/drive.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -122,5 +124,8 @@ Meteor.methods({
   },
   'docs.getFormattedDoc': async function(documentId) {
     return await authorizedCall(getFormattedDoc, documentId);
+  },
+  'drive.getFolderFiles': async function(folderId) {
+    return await authorizedCall(getFiles, folderId);
   }
 })

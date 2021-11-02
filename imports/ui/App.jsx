@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Navigation } from './components/Navigation/Navigation.jsx';
 import { Doc } from './components/Doc/Doc.jsx';
 
+// Load global App styles
+import './App.css';
+
 export const App = () => {
   const [title, setTitle] = useState('');
   const [doc, setDoc] = useState('');
@@ -11,11 +14,10 @@ export const App = () => {
     Meteor.call('docs.getTitle', '1J3gT-_NmdR0Jj5tJl79uUYDBC09siruD5idlmlNwz7Q', (err, res) => {
       setTitle(res);
     });
-  });
+  }, []);
 
   useEffect(() => {
     Meteor.call('docs.getFormattedDoc', '1J3gT-_NmdR0Jj5tJl79uUYDBC09siruD5idlmlNwz7Q', (err, docInMarkdown) => {
-      console.log('res', docInMarkdown)
       setDoc(docInMarkdown);
     });
   }, []);
