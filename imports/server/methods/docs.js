@@ -14,12 +14,24 @@ const SCOPES = ['https://www.googleapis.com/auth/documents.readonly', 'https://w
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = base + '/imports/server/methods/token.json';
 
 const authorizedCall = async (funcName, args) => {
   // Authorize a client with credentials, then call the Google Docs API.
-  const credentials = await fs.readFileSync(base + '/imports/server/methods/credentials.json', 'utf8');
-  return await authorize(JSON.parse(credentials), funcName, args);
+  const credentials = {
+    "installed": {
+      "client_id": process.env.CREDENTIALS__CLIENT_ID,
+      "project_id": process.env.CREDENTIALS__PROJECT_ID,
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_secret": process.env.CREDENTIALS__CLIENT_SECRET,
+      "redirect_uris": [
+        "urn:ietf:wg:oauth:2.0:oob",
+        "http://localhost"
+      ]
+    }
+  };
+  return await authorize(credentials, funcName, args);
 }
 
 /**
@@ -35,8 +47,14 @@ async function authorize(credentials, callback, args) {
   );
 
   // Check if we have previously stored a token.
-  const token = await fs.readFileSync(TOKEN_PATH, 'utf-8');
-  oAuth2Client.setCredentials(JSON.parse(token));
+  const token = {
+    "access_token": process.env.TOKEN__ACCESS_TOKEN,
+    "refresh_token": process.env.TOKEN__REFRESH_TOKEN,
+    "scope": process.env.TOKEN__SCOPE,
+    "token_type": "Bearer",
+    "expiry_date": 1635899614813
+  }
+  oAuth2Client.setCredentials(token);
   return await callback(oAuth2Client, args);
 }
 

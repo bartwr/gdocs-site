@@ -1,0 +1,14 @@
+export MAILGUN_USERNAME="postmaster@mg.site.nl"
+export MAILGUN_PASSWORD="passwd"
+export MAILGUN_HOST="smtp.eu.mailgun.org"
+export MAILGUN_PORT="587"
+export MAILGUN_DOMAIN="mg.site.nl"
+export MAILGUN_API_KEY="key-"
+
+export CREDENTIALS__CLIENT_ID=""
+export CREDENTIALS__PROJECT_ID=""
+export CREDENTIALS__CLIENT_SECRET=""
+
+export TOKEN__ACCESS_TOKEN=""
+export TOKEN__REFRESH_TOKEN=""
+export TOKEN__SCOPE=""
