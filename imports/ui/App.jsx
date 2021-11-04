@@ -16,5 +16,10 @@ export const App = (props) => {
         {props.children}
       </div>
     </div>
+    <div className="absolute bottom-0 right-0 pb-1 pr-1">
+      <small><a href="https://github.com/bartwr/gdocs-site" target="_blank" className="text-gray-500" rel="external">
+        open source
+      </a></small>
+    </div>
   </div>
 }
