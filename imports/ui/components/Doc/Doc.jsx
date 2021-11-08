@@ -20,7 +20,7 @@ export const Doc = (props) => {
   }, [props.documentId]);
 
   // Strip comments from doc
-  const strippedDoc = (doc && doc.indexOf('---') > -1) ? doc.split('---')[2] : doc;
+  const strippedDoc = (doc && doc.indexOf('---') > -1) ? doc.split('---')[2] : (doc ? doc : '');
 
   return (
     <div>

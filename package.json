@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "docs-markdown": "^1.2.0",
+    "docs-markdown": "git+https://github.com/bartwr/docs-markdown.git",
     "fibers": "^5.0.0",
     "googleapis": "^89.0.0",
     "marked": "^4.0.0",
