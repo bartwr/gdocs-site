@@ -28,7 +28,7 @@ export const Navigation = () => {
     <div className="Navigation">
       {folderDocs && folderDocs.map(x => {
         if(navItemsToExclude.indexOf(x.name) > -1) return;
-        return <a href="#" key={x.id} onClick={(e) => {
+        return <a href="#" target="_self" key={x.id} onClick={(e) => {
           e.preventDefault();
           FlowRouter.go('/d/' + x.id);
         }} className="
