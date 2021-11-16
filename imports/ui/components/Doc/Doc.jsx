@@ -24,15 +24,9 @@ export const Doc = (props) => {
 
   return (
     <div>
-      <h1 className="
-        text-4xl
-        font-bold
-      ">
-        Nijverhoek kennisbank 
-      </h1>
 
       <h2 className="
-        text-2xl
+        text-4xl
         font-bold
       ">
         {title}
@@ -46,6 +40,24 @@ export const Doc = (props) => {
           📝
         </a>
       </h2>
+
+      <a href="/" className="
+        text-xs
+        font-semibold
+        inline-block
+        py-1
+        px-2
+        uppercase
+        rounded
+        uppercase last:mr-0 mr-1
+        no-underline
+        hover:text-black
+      " style={{
+        color: '#f59e0b',
+        backgroundColor: '#fde68a'
+      }}>
+        Nijverhoek kennisbank
+      </a>
 
       <div dangerouslySetInnerHTML={{
         __html: marked(strippedDoc, {breaks: true})

@@ -36,6 +36,10 @@ Follow these steps to get your token:
 4. Paste the code back into the terminal
 5. See the contents of `lib/tools/createCredentials/token.js` for your token
 
+PS If you want to see the app permissions you have given, see https://myaccount.google.com/permissions?pli=1
+
+PPS If you want to create a new token, first delete token.json, then run step 1 (`node index.js`) again
+
 ## Set ENV variables
 
 The following ENV variables have to be set.
