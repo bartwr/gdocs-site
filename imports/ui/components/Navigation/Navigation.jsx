@@ -5,7 +5,7 @@ import './Navigation.css';
 export const Navigation = () => {
   const navItemsToExclude = [
     'TEMPLATE',
-    'Kennisbank home'
+    'Welkom!'
   ];
   const [folderDocs, setFolderDocs] = useState([]);
 
