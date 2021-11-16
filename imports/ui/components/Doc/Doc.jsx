@@ -7,8 +7,12 @@ export const Doc = (props) => {
 
   useEffect(() => {
     setTitle('...');
-    Meteor.call('docs.getTitle', props.documentId, (err, res) => {
-      setTitle(res);
+    Meteor.call('docs.getTitle', props.documentId, (err, title) => {
+      setTitle(title);
+      Meteor.call('docs.updateDocTitle', {
+        documentId: props.documentId,
+        title: title
+      })
     });
   }, [props.documentId]);
 
@@ -16,6 +20,10 @@ export const Doc = (props) => {
     setDoc('...');
     Meteor.call('docs.getFormattedDoc', props.documentId, (err, docInMarkdown) => {
       setDoc(docInMarkdown);
+      Meteor.call('docs.updateDocContent', {
+        documentId: props.documentId,
+        content: docInMarkdown
+      })
     });
   }, [props.documentId]);
 

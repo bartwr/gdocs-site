@@ -9,6 +9,16 @@ h1, h2, h3, h4, h5, h6 {
   margin: 15px 0;
 }
 
+.text-theme-orange {
+  color: #ea5c33;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.4em; }
+h5 { font-size: 1.2em; }
+
 ul, li {
   list-style: circle;
 }

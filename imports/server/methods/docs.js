@@ -1,3 +1,6 @@
+/**
+ * All methods related to Google Docs
+**/
 import { Meteor } from 'meteor/meteor';
 import Future from 'fibers/future';
 
@@ -8,6 +11,9 @@ const {google} = require('googleapis');
 const docsMarkdown = require("docs-markdown");
 
 import { getFiles } from './drive.js';
+
+// Import models
+import {Docs} from '/imports/models/Docs.js';
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/documents.readonly', 'https://www.googleapis.com/auth/drive.readonly'];
@@ -92,7 +98,7 @@ function getNewToken(oAuth2Client, callback) {
 function formatContent(elements) {
   if(! elements) return;
   elements.map(element => {
-    if(! element.textRun || ! element.textRun.content) return;
+    if(! element.z4Run || ! element.textRun.content) return;
     console.log(element.textRun.content);
   })
 }
@@ -164,5 +170,45 @@ Meteor.methods({
   },
   'drive.getFolderFiles': async function(folderId) {
     return await authorizedCall(getFiles, folderId);
+  }
+})
+
+/**
+ * All methods related to 'Docs' collection in mongodb
+**/
+Meteor.methods({
+  'docs.updateDocTitle': function (data) {
+    const {documentId, title} = data;
+    // Validation
+    if(! documentId) return;
+    if(! title) return;
+    // Authorization
+    // authorizeAdmin();
+    // Database mutation
+    Docs.update({
+      documentId: data.documentId
+    }, {$set: {
+      documentId: data.documentId,
+      title: data.title
+    }}, {
+      upsert: true
+    })
+  },
+  'docs.updateDocContent': function (data) {
+    const {documentId, content} = data;
+    // Validation
+    if(! documentId) return;
+    if(! content) return;
+    // Authorization
+    // authorizeAdmin();
+    // Database mutation
+    Docs.update({
+      documentId: data.documentId
+    }, {$set: {
+      documentId: data.documentId,
+      content: data.content,
+    }}, {
+      upsert: true
+    })
   }
 })
