@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { marked } from 'marked';
 
+const homeUnicodeSymbols = [
+  '🏠',
+  '🏡',
+  '🏞️',
+  '🌉',
+  '🌃',
+  '🏙️',
+  '🌆',
+  '🌌',
+  '🎪',
+  '🏕️'
+]
+
 export const Doc = (props) => {
   const [title, setTitle] = useState('');
   const [doc, setDoc] = useState('');
 
   useEffect(() => {
-    setTitle('...');
+    // Get random 'loading' title
+    const randomLoadingTitle = homeUnicodeSymbols[Math.floor(Math.random()*homeUnicodeSymbols.length)];
+    setTitle(randomLoadingTitle);
     Meteor.call('docs.getTitle', props.documentId, (err, title) => {
       setTitle(title);
       Meteor.call('docs.updateDocTitle', {
