@@ -38,7 +38,7 @@ export const Doc = (props) => {
   useEffect(() => {
     TO_counter = setInterval(x => {
       setCounter(counter+1);
-    }, 5000);
+    }, 60*1000*30);
 
     return () => {
       clearInterval(TO_counter)
