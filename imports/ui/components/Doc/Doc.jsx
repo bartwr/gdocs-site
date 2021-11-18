@@ -75,10 +75,12 @@ export const Doc = (props) => {
         uppercase last:mr-0 mr-1
         no-underline
         hover:text-black
+
+        transition-transform duration-200 transform hover:scale-105
       " style={{
         color: '#f59e0b',
         backgroundColor: '#fde68a'
-      }}>
+      }} title="Terug naar home">
         Nijverhoek kennisbank
       </a>
 

@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import './Navigation.css';
 
 export const Navigation = () => {
+  // Exclude nav items if they contain a forbidden word
   const navItemsToExclude = [
     'TEMPLATE',
-    'Welkom!'
+    'Welkom!',
+    'DRAFT'
   ];
   const [folderDocs, setFolderDocs] = useState([]);
 
@@ -27,7 +29,8 @@ export const Navigation = () => {
   return (
     <div className="Navigation">
       {folderDocs && folderDocs.map(x => {
-        if(navItemsToExclude.indexOf(x.name) > -1) return;
+        const navTitleContainsForbiddenWord = navItemsToExclude.filter(forbiddenWord => x.name.indexOf(forbiddenWord) > -1).length >= 1;
+        if(navTitleContainsForbiddenWord) return;
         return <a href="#" target="_self" key={x.id} onClick={(e) => {
           e.preventDefault();
           FlowRouter.go('/d/' + x.id);
