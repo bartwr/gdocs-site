@@ -1,6 +1,6 @@
 # gdocs-site: INSTALL
 
-= [ [README](./README.md) ] . [ **[INSTALL](./INSTALL.md)** ]  . [ [RUN](./RUN.md) ] =
+= [ [README](./README.md) ] . [ **[INSTALL](./INSTALL.md)** ]  . [ [RUN](./RUN.md) ] . [ [CONTRIBUTE](./CONTRIBUTE.md) ] =
 
 ## 1. Install dependencies
 

@@ -1,6 +1,6 @@
 # gdocs-site: README
 
-= [ **[README](./README.md)** ] . [ [INSTALL](./INSTALL.md) ]  . [ [RUN](./RUN.md) ] =
+= [ **[README](./README.md)** ] . [ [INSTALL](./INSTALL.md) ]  . [ [RUN](./RUN.md) ] . [ [CONTRIBUTE](./CONTRIBUTE.md) ] =
 
 With the code in this repository you can build a website out of Google Docs.
 
