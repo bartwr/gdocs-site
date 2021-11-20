@@ -98,3 +98,34 @@
     #{$attr}: $max-size;
   }
 }
+
+
+// ----- Containers
+
+@mixin container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin container--m {
+  @include container;
+  max-width: $width--m-gutter;
+}
+
+// ----- Gutters
+
+// Use `@include gutter--m--left`
+@mixin gutter--m--left {
+  padding-left: var(--gutter--m);
+}
+
+// Use `@include gutter--m--right`
+@mixin gutter--m--right {
+  padding-right: var(--gutter--m);
+}
+
+// Use `@include gutter--m`
+@mixin gutter--m {
+  @include gutter--m--left;
+  @include gutter--m--right;
+}

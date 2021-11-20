@@ -1,0 +1,152 @@
+// ==========================================================================
+// OBJECTS | Header
+// ==========================================================================
+
+$breakpoint--header: $breakpoint--tablet--m;
+
+.Header {
+  position: relative;
+  height: var(--height--header);
+  background-color: var(--color--bg-primary);
+  z-index: 100;
+}
+
+.Header__inner {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 ($px * 2) ($px * 20) 0 var(--color--box-shadow);
+  @include gutter--m;
+}
+
+.Header__logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: grid--l(1) 0;
+  height: var(--height--header);
+
+  @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
+    width: grid--l(3);
+    overflow: hidden;
+  }
+}
+
+.Header__logo {
+  @media only screen and (min-width: $breakpoint--mobile--m) {
+    .Header__image {
+      transform: scale(1);
+      transition: transform $transition--normal;
+    }
+
+    &:hover,
+    &:focus {
+      .Header__image { transform: scale(1.05); }
+    }
+  }
+}
+
+.Header__image {
+  max-height: calculate-rem(50);
+  height: 100%;
+  width: auto;
+
+  @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
+    width: (556 / 106) * 100%;
+  }
+}
+
+.Header__image-text {
+  @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.Header__nav {
+  @media only screen and (max-width: ($breakpoint--header - $px)) {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--height--header);
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    background-color: var(--color--bg-primary);
+  }
+  
+  @media only screen and (min-width: $breakpoint--header) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: grid--l(30);
+    height: 100vh;
+    padding-top: var(--height--header);
+    background-color: var(--color--bg-primary);
+    z-index: -1;
+  }
+
+  &:before {
+    @media only screen and (max-width: ($breakpoint--header - $px)) {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: grid--l(2);
+      box-shadow: 0 ($px * 2) grid--l(2) 0 var(--color--box-shadow);
+      clip-path: inset(0 grid--l(-2) grid--l(-2) grid--l(-2)); // Remove box-shadow top
+    }
+  }
+}
+
+// ==========================================================================
+// OBJECTS | Header / Toggler
+// ==========================================================================
+
+.Toggler {
+  position: relative;
+  margin-right: grid--l(-1);
+  padding: 0;
+  width: grid--l(4);
+  height: grid--l(4);
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    .Toggler__label { color: var(--color--link); }
+    span:not(.Toggler__label) { background-color: var(--color--link); }
+    span:nth-child(3),
+    span:nth-child(4) { width: grid--l(2); }
+  }
+
+  span:not(.Toggler__label) {
+    display: block;
+    position: absolute;
+    top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: grid(.25);
+    width: grid--l(2);
+    border-radius: calculate-rem(3);
+    background-color: var(--color--text);
+    transition: all var(--transition--normal);
+  }
+
+  span:nth-child(2) { margin-top: calculate-rem(6, true); }
+  span:nth-child(3),
+  span:nth-child(4) { width: grid(2); }
+  span:nth-child(5) { margin-top: calculate-rem(6); }
+}
+
+.Toggler__label {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  font-size: ($px * 12);
+  @include title-base;
+  transition: color var(--transition--normal);
+}

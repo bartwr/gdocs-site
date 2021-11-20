@@ -2,6 +2,15 @@
 // TOOLS | Typography
 // ==========================================================================
 
+// ----- Titles
+
+@mixin title-base {
+  font-family: var(--font--titles);
+  // letter-spacing: var(--letterspacing--titles);
+}
+
+// ----- Texts
+
 @mixin text-base {
   font-family: var(--font--text);
   letter-spacing: var(--letterspacing--text);

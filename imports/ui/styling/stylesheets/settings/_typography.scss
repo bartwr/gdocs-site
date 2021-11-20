@@ -62,6 +62,7 @@ $map--typography-settings: map-collect($map--fonts, $map--weights, $map--styles)
 $map--typography-implementations: (
   'font--text': tp('font--montserrat'),
   'font--titles': tp('font--pluto'),
+  'letterspacing--titles': -.4px,
   'letterspacing--text': -.2px
 );
 

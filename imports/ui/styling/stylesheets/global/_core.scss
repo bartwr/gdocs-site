@@ -25,7 +25,6 @@ body {
 }
 
 html {
-  overflow-y: scroll; // Force vertical scrollbar to avoid jumping if navigating from short to long page and vice versa
   box-sizing: border-box;
 }
 
@@ -35,6 +34,7 @@ body {
   font-size-adjust: auto;
   min-width: $threshold--mobile;
   color: var(--color--text);
+  background-color: var(--color--bg-secondary);
   @include text--m;
 }
 

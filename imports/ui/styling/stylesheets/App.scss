@@ -60,8 +60,9 @@
 @import 'objects/lists';
 @import 'objects/media';
 @import 'objects/footer-sticky';
-
 @import 'objects/helpers';
+
+@import 'objects/header';
 
 // ==========================================================================
 // PAGES
@@ -71,6 +72,8 @@
 // ==========================================================================
 // OVERWRITES
 // ==========================================================================
+
+@import 'overwrites/header';
 
 @import 'overwrites/print-private';
 // @import 'overwrites/print';

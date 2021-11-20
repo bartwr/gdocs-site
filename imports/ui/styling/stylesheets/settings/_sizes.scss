@@ -46,9 +46,22 @@ $map--size-settings: (
   @return get-var($var, $map--size-settings);
 }
 
-$map--size-implementations: (
-  'gutter--m': (sz('grid--l') * 2),
-);
+$map--size-implementations: ();
+
+:root {
+  --gutter--m: calc(#{$px} * 20);
+  --height--header: calc(#{$px} * 88);
+
+  @media only screen and (min-width: $breakpoint--tablet--m) {
+    --gutter--m: calc(#{$px} * 40);
+    --height--header: calc(#{$px} * 160);
+  }
+
+  @media only screen and (min-width: $breakpoint--desktop--m) {
+    --gutter--m: calc(#{$px} * 60);
+  }
+}
+
 
 // ==========================================================================
 // CONFIG

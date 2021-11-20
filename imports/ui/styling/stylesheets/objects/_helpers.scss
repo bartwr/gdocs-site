@@ -19,3 +19,14 @@
 .fit-object {
   @include objectfit-mq;
 }
+
+// ------ Containers
+
+.container { @include container; }
+.container--m { @include container--m; }
+
+// ----- Gutters & Spacings
+
+.gutter--m { @include gutter--m; }
+
+.spacing--wysiwyg { margin-bottom: var(--spacing--wysiwyg); }
