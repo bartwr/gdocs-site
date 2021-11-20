@@ -12,7 +12,7 @@ export const App = (props) => {
         <div className='main__inner container--m gutter--m'>{props.children}</div>
       </main>
 
-      <footer className='footer container--m gutter--m spacing--m text--s text--styled text--center'>
+      <footer className='footer container--m gutter--m spacing--s text--s text--styled text--center'>
         {new Date().getFullYear()} De Nijverhoek&nbsp;&nbsp;|&nbsp;&nbsp; 
         <a href='https://github.com/bartwr/gdocs-site' target='_blank' rel='external'>
           open source

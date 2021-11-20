@@ -29,6 +29,7 @@
 
 .gutter--m { @include gutter--m; }
 
+.spacing--s { @include spacing--s; }
 .spacing--m { @include spacing--m; }
 
 .spacing--wysiwyg { margin-bottom: var(--spacing--wysiwyg); }

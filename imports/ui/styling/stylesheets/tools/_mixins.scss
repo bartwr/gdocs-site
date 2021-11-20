@@ -132,6 +132,22 @@
 
 // ----- Spacings
 
+// Use `@include spacing--s--top`
+@mixin spacing--s--top {
+  padding-top: var(--spacing--s);
+}
+
+// Use `@include spacing--s--bottom`
+@mixin spacing--s--bottom {
+  padding-bottom: var(--spacing--s);
+}
+
+// Use `@include spacing--s`
+@mixin spacing--s {
+  @include spacing--s--top;
+  @include spacing--s--bottom;
+}
+
 // Use `@include spacing--m--top`
 @mixin spacing--m--top {
   padding-top: var(--spacing--m);
