@@ -63,7 +63,7 @@ export const Doc = (props) => {
   const strippedDoc = doc && doc.indexOf('---') > -1 ? doc.split('---')[2] : doc ? doc : ''
 
   return (
-    <section className='text--styled'>
+    <section className='Content text--styled'>
       <h1>
         {title}
         <a

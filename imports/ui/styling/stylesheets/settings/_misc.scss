@@ -19,9 +19,11 @@ $map--transitions: (
 // ----- Border-radius
 
 $border-radius--normal: ($px * 4);
+$border-radius--content: ($px * 8);
 
 $map--border-radius: (
   'border-radius--normal': $border-radius--normal,
+  'border-radius--content': $border-radius--content,
 );
 
 $map--misc-settings: map-collect($map--transitions, $map--border-radius);

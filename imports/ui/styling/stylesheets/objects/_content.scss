@@ -1,0 +1,30 @@
+// ==========================================================================
+// OBJECTS | Content
+// ==========================================================================
+
+.Content {
+  --offset: #{grid--l(3)};
+
+  position: relative;
+  margin: calc(var(--offset) / 2) calc(-1 * var(--gutter--m));
+  padding: var(--spacing--m) var(--spacing--s);
+  background-color: var(--color--bg-primary);
+
+  @media only screen and (min-width: $breakpoint--tablet--m) {
+    margin: calc(var(--offset) / 2) 0;
+    padding: var(--spacing--m);
+    border-radius: var(--border-radius--content);
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(var(--offset) / -2);
+    left: calc(var(--offset) / 2);
+    width: calc(100% - var(--offset));
+    height: calc(100% + var(--offset));
+    background-color: var(--color--white--rgba-50);
+    border-radius: var(--border-radius--content);
+    z-index: -1;
+  }
+}

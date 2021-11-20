@@ -15,6 +15,7 @@
   h1 {
     @include title--xl;
     padding-bottom: grid(2);
+    margin-bottom: grid(3);
     border-bottom: $px solid var(--color--border);
   }
 
