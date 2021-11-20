@@ -15,12 +15,11 @@ export const App = (props) => {
         <div className='main__inner container--m gutter--m'>{props.children}</div>
       </main>
 
-      <footer className='footer'>
-        <small>
-          <a href='https://github.com/bartwr/gdocs-site' target='_blank' className='text-gray-500' rel='external'>
-            open source
-          </a>
-        </small>
+      <footer className='footer container--m gutter--m spacing--m text--s text--styled text--center'>
+        {new Date().getFullYear()} De Nijverhoek&nbsp;&nbsp;|&nbsp;&nbsp; 
+        <a href='https://github.com/bartwr/gdocs-site' target='_blank' rel='external'>
+          open source
+        </a>
       </footer>
 
       <svg xmlns='https://www.w3.org/2000/svg' style={{ display: 'none' }} aria-hidden='true'>

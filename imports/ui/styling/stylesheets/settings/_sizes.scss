@@ -50,10 +50,12 @@ $map--size-implementations: ();
 
 :root {
   --gutter--m: calc(#{$px} * 20);
+  --spacing--m: calc(#{$px} * 20);
   --height--header: calc(#{$px} * 88);
 
   @media only screen and (min-width: $breakpoint--tablet--m) {
     --gutter--m: calc(#{$px} * 40);
+    --spacing--m: calc(#{$px} * 40);
     --height--header: calc(#{$px} * 160);
   }
 

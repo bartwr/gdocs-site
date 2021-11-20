@@ -27,3 +27,9 @@
   font-size: ($px * 16);
   line-height: calculate-relative-lineheight( ($px * 16), ($px * 32) );
 }
+
+@mixin text--s {
+  @include text-base;
+  font-size: ($px * 14);
+  line-height: calculate-relative-lineheight( ($px * 14), ($px * 18) );
+}

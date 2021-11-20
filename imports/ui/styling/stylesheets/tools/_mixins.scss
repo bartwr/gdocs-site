@@ -130,6 +130,24 @@
   @include gutter--m--right;
 }
 
+// ----- Spacings
+
+// Use `@include spacing--m--top`
+@mixin spacing--m--top {
+  padding-top: var(--spacing--m);
+}
+
+// Use `@include spacing--m--bottom`
+@mixin spacing--m--bottom {
+  padding-bottom: var(--spacing--m);
+}
+
+// Use `@include spacing--m`
+@mixin spacing--m {
+  @include spacing--m--top;
+  @include spacing--m--bottom;
+}
+
 // ----- Links
 
 @mixin link--hover-animation-base($color) {
