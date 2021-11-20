@@ -29,33 +29,22 @@ $breakpoint--header: $breakpoint--tablet--l;
   height: var(--height--header);
   @include container;
 
-  @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
-    width: grid--l(3);
-    overflow: hidden;
-  }
-}
 
-.Header__logo {
-  @media only screen and (min-width: $breakpoint--mobile--m) {
-    .Header__image {
-      transform: scale(1);
-      transition: transform $transition--normal;
-    }
-
-    &:hover,
+  &:hover,
     &:focus {
       .Header__image { transform: scale(1.05); }
     }
-  }
 }
 
 .Header__image {
-  max-height: calculate-rem(50);
-  height: 100%;
   width: auto;
+  height: 100%;
+  max-height: grid--l(5);
+  transform: scale(1);
+  transition: transform $transition--normal;
 
-  @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
-    width: (556 / 106) * 100%;
+  @media only screen and (min-width: $breakpoint--header) {
+    max-height: grid--l(8);
   }
 }
 
