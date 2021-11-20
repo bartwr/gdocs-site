@@ -56,6 +56,9 @@ $map--size-implementations: ();
   @media only screen and (min-width: $breakpoint--tablet--m) {
     --gutter--m: calc(#{$px} * 40);
     --spacing--m: calc(#{$px} * 40);
+  }
+
+  @media only screen and (min-width: $breakpoint--tablet--l) {
     --height--header: calc(#{$px} * 160);
   }
 

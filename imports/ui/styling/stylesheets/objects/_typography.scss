@@ -12,7 +12,11 @@
 // ==========================================================================
 
 .text--styled {
-  h1 { }
+  h1 {
+    @include title--xl;
+    padding-bottom: grid(2);
+    border-bottom: $px solid var(--color--border);
+  }
 
   h2 { }
 

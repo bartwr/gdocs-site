@@ -1,98 +1,87 @@
-import React, { useState, useEffect } from 'react';
-import { marked } from 'marked';
+import React, { useState, useEffect } from 'react'
+import { marked } from 'marked'
 
-const homeUnicodeSymbols = [
-  '🏠',
-  '🏡',
-  '🏞️',
-  '🌉',
-  '🌃',
-  '🏙️',
-  '🌆',
-  '🌌',
-  '🎪',
-  '🏕️'
-]
+const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
 export const Doc = (props) => {
   // State variables
-  const [title, setTitle] = useState('');
-  const [doc, setDoc] = useState('');
-  const [counter, setCounter] = useState(0);
+  const [title, setTitle] = useState('')
+  const [doc, setDoc] = useState('')
+  const [counter, setCounter] = useState(0)
   // Other variables
-  let TO_counter;
+  let TO_counter
 
   // Function fetchDoc :: fetched document from Google Docs
   const fetchDoc = () => {
     Meteor.call('docs.getFormattedDoc', props.documentId, (err, docInMarkdown) => {
-      setDoc(docInMarkdown);
+      setDoc(docInMarkdown)
       Meteor.call('docs.updateDocContent', {
         documentId: props.documentId,
         content: docInMarkdown
       })
-    });
+    })
   }
 
   // Every 5 seconds: increment counter
   // This is used for re-fetching the doc every 5 seconds
   useEffect(() => {
-    TO_counter = setInterval(x => {
-      setCounter(counter+1);
-    }, 60*1000*30);
+    TO_counter = setInterval((x) => {
+      setCounter(counter + 1)
+    }, 60 * 1000 * 30)
 
     return () => {
       clearInterval(TO_counter)
     }
-  }, [counter]);
+  }, [counter])
 
   // Fetch document on load and if new documentId is given
   useEffect(() => {
     // Get random 'loading' title
-    const randomLoadingTitle = homeUnicodeSymbols[Math.floor(Math.random()*homeUnicodeSymbols.length)];
-    setTitle(randomLoadingTitle);
+    const randomLoadingTitle = homeUnicodeSymbols[Math.floor(Math.random() * homeUnicodeSymbols.length)]
+    setTitle(randomLoadingTitle)
     Meteor.call('docs.getTitle', props.documentId, (err, title) => {
-      setTitle(title);
+      setTitle(title)
       Meteor.call('docs.updateDocTitle', {
         documentId: props.documentId,
         title: title
       })
-    });
-  }, [props.documentId]);
+    })
+  }, [props.documentId])
 
   // Fetch doc if documentId updates
   useEffect(() => {
-    setDoc('...');
-    fetchDoc();
-  }, [props.documentId]);
+    setDoc('...')
+    fetchDoc()
+  }, [props.documentId])
 
   // Fetch doc every x seconds
   useEffect(() => {
-    fetchDoc();
-  }, [counter]);
+    fetchDoc()
+  }, [counter])
 
   // Strip comments from doc
-  const strippedDoc = (doc && doc.indexOf('---') > -1) ? doc.split('---')[2] : (doc ? doc : '');
+  const strippedDoc = doc && doc.indexOf('---') > -1 ? doc.split('---')[2] : doc ? doc : ''
 
   return (
-    <div>
-
-      <h2 className="
-        text-4xl
-        font-bold
-      ">
+    <section className='text--styled'>
+      <h1>
         {title}
-        <a href={`https://docs.google.com/document/d/${props.documentId}/edit`} target="_blank" rel="external" title="Bewerk in Google Docs" className="
+        <a
+          href={`https://docs.google.com/document/d/${props.documentId}/edit`}
+          target='_blank'
+          rel='external'
+          title='Bewerk in Google Docs'
+          className='
           inline-block px-2 no-underline
           transition-transform
           duration-200
           transform
           hover:scale-110
-        ">
-          📝
-        </a>
-      </h2>
+        '
+        ></a>
+      </h1>
 
-      <a href="/" className="
+      {/* <a href="/" className="
         text-xs
         font-semibold
         inline-block
@@ -110,11 +99,13 @@ export const Doc = (props) => {
         backgroundColor: '#fde68a'
       }} title="Terug naar home">
         Nijverhoek kennisbank
-      </a>
+      </a> */}
 
-      <div dangerouslySetInnerHTML={{
-        __html: marked(strippedDoc, {breaks: true})
-      }} />
-    </div>
-  );
-};
+      <div
+        dangerouslySetInnerHTML={{
+          __html: marked(strippedDoc, { breaks: true })
+        }}
+      />
+    </section>
+  )
+}

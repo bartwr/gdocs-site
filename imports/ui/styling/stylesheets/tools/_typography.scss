@@ -6,7 +6,14 @@
 
 @mixin title-base {
   font-family: var(--font--titles);
-  // letter-spacing: var(--letterspacing--titles);
+}
+
+@mixin title--xl {
+  @include title-base;
+  @include fluid-sizing($threshold--mobile, $threshold--desktop, ($px * 32), ($px * 56));
+  line-height: calculate-relative-lineheight(($px * 56), ($px * 62));
+  letter-spacing: var(--letterspacing--titles);
+  color: var(--color--blue-200);
 }
 
 // ----- Texts
@@ -19,17 +26,17 @@
 @mixin text--l {
   @include text-base;
   font-size: ($px * 18);
-  line-height: calculate-relative-lineheight( ($px * 18), ($px * 24) );
+  line-height: calculate-relative-lineheight(($px * 18), ($px * 24));
 }
 
 @mixin text--m {
   @include text-base;
   font-size: ($px * 16);
-  line-height: calculate-relative-lineheight( ($px * 16), ($px * 32) );
+  line-height: calculate-relative-lineheight(($px * 16), ($px * 32));
 }
 
 @mixin text--s {
   @include text-base;
   font-size: ($px * 14);
-  line-height: calculate-relative-lineheight( ($px * 14), ($px * 18) );
+  line-height: calculate-relative-lineheight(($px * 14), ($px * 18));
 }
