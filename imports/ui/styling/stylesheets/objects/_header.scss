@@ -17,6 +17,7 @@ $breakpoint--header: $breakpoint--tablet--l;
 .Header__inner {
   display: flex;
   align-items: center;
+  height: var(--height--header);
   box-shadow: 0 ($px * 2) ($px * 20) 0 var(--color--box-shadow);
   @include gutter--m;
 }
@@ -25,8 +26,8 @@ $breakpoint--header: $breakpoint--tablet--l;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: grid--l(1) 0;
   height: var(--height--header);
+  @include container;
 
   @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
     width: grid--l(3);
@@ -55,13 +56,6 @@ $breakpoint--header: $breakpoint--tablet--l;
 
   @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
     width: (556 / 106) * 100%;
-  }
-}
-
-.Header__image-text {
-  @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
-    display: none;
-    visibility: hidden;
   }
 }
 

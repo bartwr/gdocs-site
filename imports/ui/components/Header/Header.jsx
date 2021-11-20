@@ -25,7 +25,7 @@ export const Header = () => {
     setNavMode((isNavOpen) => !isNavOpen)
     document.documentElement.classList.toggle('Nav--toggled')
   }
-  
+
   closeNav = () => {
     setNavMode(false)
     document.documentElement.classList.remove('Nav--toggled')
@@ -47,7 +47,9 @@ export const Header = () => {
           <span aria-hidden='true' />
         </button>
 
-        <a className='Header__logo' href='#' />
+        <a className='Header__logo' href='#'>
+          <img className='Header__image' src='/wwwroot/images/logo-nijverhoek.png' width='290' height='80' />
+        </a>
 
         <nav className='Header__nav Nav--header' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
           <ul className='Nav__items'>
