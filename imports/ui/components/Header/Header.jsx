@@ -13,6 +13,8 @@ export const Header = () => {
     })
   }
 
+  const isLinkActive = (id) => window.location.pathname.includes(id)
+
   useEffect(() => {
     Meteor.call('drive.getFolderFiles', '148bWv4FCGEeTBeEgwZCFjT7gn748s3vj', (err, res) => {
       setFolderDocs(sortAlphabetically(res, 'name'))
@@ -59,7 +61,7 @@ export const Header = () => {
                     <a
                       href='#'
                       target='_self'
-                      className='Nav__link'
+                      className={`Nav__link${isLinkActive(x.id) ? ' Nav__link--active' : ''} `}
                       onClick={(e) => {
                         e.preventDefault()
                         closeNav()

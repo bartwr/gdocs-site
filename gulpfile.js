@@ -57,7 +57,7 @@ function stylesheets() {
     .pipe(sass().on('error', sass.logError))
     .pipe(gcmq())
     .pipe(autoprefixer(options.autoprefixer))
-    .pipe(gulp.dest(paths.styles.dest))
+    // .pipe(gulp.dest(paths.styles.dest))
     .pipe(rename(options.rename))
     .pipe(cleanCSS())
     .pipe(gulp.dest(paths.styles.dest))

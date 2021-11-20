@@ -5,7 +5,10 @@
 $breakpoint--header: $breakpoint--tablet--l;
 
 .Header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: var(--height--header);
   background-color: var(--color--bg-primary);
   z-index: 100;
@@ -63,9 +66,9 @@ $breakpoint--header: $breakpoint--tablet--l;
 }
 
 .Header__nav {
+  background-color: var(--color--bg-primary);
+
   @media only screen and (max-width: ($breakpoint--header - $px)) {
-    display: flex;
-    flex-direction: column;
     position: fixed;
     top: var(--height--header);
     left: 0;
@@ -74,7 +77,6 @@ $breakpoint--header: $breakpoint--tablet--l;
     z-index: 10;
     opacity: 0;
     visibility: hidden;
-    background-color: var(--color--bg-primary);
   }
   
   @media only screen and (min-width: $breakpoint--header) {
@@ -84,10 +86,12 @@ $breakpoint--header: $breakpoint--tablet--l;
     width: grid--l(30);
     height: 100vh;
     padding-top: var(--height--header);
-    background-color: var(--color--bg-primary);
+    transform: translateX(-100%);
+    transition: transform var(--transition--normal);
     z-index: -1;
   }
 
+  // Mobile shadow
   &:before {
     @media only screen and (max-width: ($breakpoint--header - $px)) {
       content: '';
@@ -156,6 +160,11 @@ $breakpoint--header: $breakpoint--tablet--l;
 // ==========================================================================
 
 .Nav--header {
+  .Nav__items {
+    height: 100%;
+    overflow-y: auto;
+  }
+
   .Nav__link {
     display: flex;
     align-items: center;
@@ -174,6 +183,11 @@ $breakpoint--header: $breakpoint--tablet--l;
       color: var(--color--link);
       fill: var(--color--link);
     }
+  }
+
+  .Nav__link--active {
+    color: var(--color--primary);
+    fill: var(--color--primary);
   }
 
   .Nav__icon {

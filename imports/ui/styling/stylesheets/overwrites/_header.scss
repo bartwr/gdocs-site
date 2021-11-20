@@ -3,9 +3,6 @@
 // ==========================================================================
 
 .Nav--toggled {
-  @media only screen and (max-width: ($breakpoint--header - $px)) {
-    overflow: hidden;
-
   // Toggler
   .Toggler {
 
@@ -21,13 +18,22 @@
     span:nth-child(4) { transform: rotate(-45deg); }
   }
 
-  // Nav
-  .Header__nav {
-    opacity: 1;
-    height: calc(100% - var(--height--header));
-    visibility: visible;
-    transition: opacity var(--transition--normal);
+  @media only screen and (max-width: ($breakpoint--header - $px)) {
+    overflow: hidden;
+
+    .Header__nav {
+      opacity: 1;
+      height: calc(100% - var(--height--header));
+      visibility: visible;
+      transition: opacity var(--transition--normal);
+    }
   }
 
+  @media only screen and (min-width: $breakpoint--header) {
+    .Header__nav {
+      opacity: 1;
+      transform: translateX(0);
+      transition: transform var(--transition--normal);
+    }
   }
 }

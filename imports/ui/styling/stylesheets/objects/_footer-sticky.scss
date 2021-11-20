@@ -27,3 +27,5 @@
 .header, .footer {
   flex: none; /* 2 */
 }
+
+.main { margin-top: var(--height--header); }
