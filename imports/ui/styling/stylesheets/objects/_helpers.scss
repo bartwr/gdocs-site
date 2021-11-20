@@ -1,0 +1,21 @@
+// ==========================================================================
+// OBJECTS | Helpers
+// ==========================================================================
+
+// ----- Display
+
+.sr-text {
+  @include screen-reader-text;
+}
+
+// ----- Clearfix
+
+.cf {
+  @include clearfix;
+}
+
+// ----- Figures
+
+.fit-object {
+  @include objectfit-mq;
+}

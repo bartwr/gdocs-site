@@ -1,0 +1,15 @@
+// ==========================================================================
+// GLOBAL | Links
+// ==========================================================================
+
+a {
+  text-decoration-skip-ink: auto;
+  transition: color var(--transition--normal), background-color var(--transition--normal), border-color var(--transition--normal);
+
+  &:hover,
+  &:focus { }
+
+  &:focus {
+    outline: none;
+  }
+}

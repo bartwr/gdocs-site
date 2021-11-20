@@ -5,7 +5,9 @@
     "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-    "visualize": "meteor --production --extra-packages bundle-visualizer"
+    "visualize": "meteor --production --extra-packages bundle-visualizer",
+    "css": "gulp",
+    "css-watch": "gulp watch"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
@@ -17,6 +19,14 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-mounter": "^1.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-group-css-media-queries": "^1.2.2",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.0.2"
   },
   "meteor": {
     "mainModule": {

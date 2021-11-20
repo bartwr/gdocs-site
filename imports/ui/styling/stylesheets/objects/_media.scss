@@ -1,0 +1,15 @@
+// ==========================================================================
+// OBJECTS | Figures
+// ==========================================================================
+
+img {
+  &.lazyload,
+  &.lazyloading {
+    opacity: 0;
+  }
+
+  &.lazyloaded {
+    opacity: 1;
+    transition: opacity $transition--normal;
+  }
+}

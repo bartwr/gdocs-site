@@ -1,0 +1,44 @@
+// ==========================================================================
+// SETTINGS | Helpers
+// ==========================================================================
+
+// ----- Declare empty settings map
+
+$map--settings: ();
+
+// ----- Merge multiple maps together
+
+@function map-collect($maps...) {
+  $collection: ();
+
+  @each $map in $maps {
+    $collection: map-merge($collection, $map);
+  }
+  
+  @return $collection;
+}
+
+
+// ---- Generate root variables
+
+// Use: generate-root-vars($map-1, $map-2, $map-3)
+@mixin generate-root-vars($maps...) {
+  @each $map in $maps {
+    @each $key, $color in $map {
+      --#{$key}: #{$color};
+    }
+  }
+}
+
+// ----- Retrieve data from the correct map
+
+// Use: get-var('color--brand', $map--color-settings)
+// Use: get-var('weight--bold', '$map--typography-settings)
+@function get-var($var, $map) {
+  @if(map-has-key($map, $var)) {
+    @return map-get($map, #{$var});
+  } @else {
+    @warn "Invalid variable: `#{$var}`.";
+    @return false;
+  }
+}

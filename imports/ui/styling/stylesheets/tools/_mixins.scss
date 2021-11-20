@@ -1,0 +1,100 @@
+// ==========================================================================
+// TOOLS | Mixins
+// ==========================================================================
+
+// Use: @include clearfix;
+@mixin clearfix {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// -----
+
+@mixin screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+
+  &:focus {
+    clip: auto !important;
+    display: block;
+    width: auto;
+    height: auto;
+    left: 5px;
+    top: 5px;
+    z-index: 100000;
+  }
+}
+
+// -----
+
+// Use: @include objectfit;
+@mixin objectfit {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+// Use: @include no-objectfit;
+@mixin no-objectfit {
+  min-height: 100%;
+  min-width: 100%;
+  max-width: none;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+// Use: @include objectfit-mq;
+@mixin objectfit-mq {
+  position: relative;
+  overflow: hidden;
+  
+  img {
+    object-fit: cover;
+    object-position: 50% 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      min-height: 100%;
+      min-width: 100%;
+      max-width: none;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+    }
+  }
+}
+
+// -----
+
+// Use: @include fluid-sizing( 320px, 1280px, 16px, 32px );
+// Use: @include fluid-sizing( 320px, 1280px, 16px, 32px, 'margin-top' );
+@mixin fluid-sizing( $min-vw, $max-vw, $min-size, $max-size, $attr: 'font-size' ) {
+  #{$attr}: $min-size;
+
+  @media screen and ( min-width: $min-vw ) {
+    #{$attr}: calc( #{ $min-size } + #{ strip-unit( $max-size ) - strip-unit( $min-size ) } * ( ( 100vw - #{ $min-vw } ) / #{ strip-unit( $max-vw - $min-vw ) } ) );
+  }
+
+  @media screen and ( min-width: $max-vw ) {
+    #{$attr}: $max-size;
+  }
+}

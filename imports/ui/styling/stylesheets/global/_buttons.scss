@@ -1,0 +1,25 @@
+// ==========================================================================
+// GLOBAL | Buttons
+// ==========================================================================
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  appearance: none;
+  cursor: pointer;
+  vertical-align: middle;
+  user-select: none;
+  border: 0;
+  text-decoration: none;
+  display: inline-block;
+  transition: color $transition--normal, background-color $transition--normal, border-color $transition--normal;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

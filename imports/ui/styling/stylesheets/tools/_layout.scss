@@ -1,0 +1,283 @@
+// ==========================================================================
+// OBJECTS | Block - Core
+// ========================================================================== 
+// LEGENDA
+// c: content | h: header | f: footer | b: block | v: visual | bg: background
+
+// h with copy align at left side
+@mixin h--left ($title-max-width: $grid, $intro-max-width: $grid, $intro-margin-top: $grid) { 
+  .block__title {
+    margin-bottom: 0;
+    max-width: $title-max-width;
+  }
+
+  .block__intro {
+    max-width: $intro-max-width;
+    margin-top: $intro-margin-top;
+  }
+}
+
+// h with copy align in the middle
+@mixin h--center ($title-max-width: 100%, $intro-max-width: 100%, $intro-margin-top: $grid) { 
+  text-align: center;
+  
+  .block__title {
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $title-max-width;
+  }
+
+  .block__intro {
+    max-width: $intro-max-width;
+    margin-top: $intro-margin-top;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// h with copy in columns
+@mixin h--columns ($min-breakpoint, $max-breakpoint, $vertical-alignment: $grid, $columns: $grid, $title-colspan: $grid, $title-colspan: $grid, $space: $grid,  $intro-colspan: $grid,  $intro-margin-top: $grid) { 
+  @media only screen and (min-width: $min-breakpoint) {
+    display: flex;
+    justify-content: space-between;
+    align-self: $vertical-alignment;
+  }
+
+  .block__title {
+    margin-bottom: 0;
+
+    @media only screen and (min-width: $min-breakpoint) {
+      width: calc(100% / #{$columns} * #{$title-colspan} - #{$space});
+    }
+  }
+
+  .block__intro {
+    @media only screen and (max-width: $max-breakpoint) {
+      margin-top: $intro-margin-top;
+    }
+
+    @media only screen and (min-width: $min-breakpoint) {
+      width: calc(100% / #{$columns} * #{$intro-colspan} - #{$space});
+    }
+  }
+}
+
+// c with columns
+@mixin c--columns ($min-breakpoint-s, $min-breakpoint-m, $list-space: $grid, $vertical-alignment: stretch, $item-space: $grid, $item-gutter: $grid, $columns-tablet: 2, $columns-desktop: 3) { 
+  margin: $list-space ($item-gutter * -1) ($item-space * -1);
+
+  @media only screen and (min-width: $min-breakpoint-s) {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: $vertical-alignment;
+  }
+
+  .item {
+    width: 100%;
+    padding: $item-space $item-gutter;
+
+    @media only screen and (min-width: $min-breakpoint-s) {
+      width: calc(100% / #{$columns-tablet});
+    }
+
+    @media only screen and (min-width: $min-breakpoint-m) {
+      width: calc(100% / #{$columns-desktop});
+    }
+    @content;
+  }
+}
+
+// c with columns | with slider on mobile
+@mixin c--columnslider ($min-breakpoint-s, $min-breakpoint-m, $list-space: $grid, $item-space: $grid, $item-gutter: $grid, $margin: $grid, $vertical-alignment: stretch, $columns-tablet: 2, $item-space: $grid, $columns-desktop: 3) { 
+  margin: $list-space ($item-gutter * -1) ($item-space * -1);
+  padding: 0 ($grid * 3);
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  @media only screen and (min-width: $min-breakpoint-s) {
+    margin: $list-space ($margin * -1) ($item-space * -1);
+    padding: unset;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    justify-content: start;
+    align-self: $vertical-alignment;
+  }
+
+  .item {
+    width: 80%;
+    margin-top: $margin * 2;
+    margin-right: $margin;
+    margin-bottom: $margin * 2;
+    margin-left: $margin;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+
+    @media only screen and (min-width: $min-breakpoint-s) {
+      width: calc(100% / #{$columns-tablet} - #{$item-space});
+    }
+
+    @media only screen and (min-width: $min-breakpoint-m) {
+      width: calc(100% / #{$columns-desktop} - #{$item-space});
+    }
+    @content;
+  }
+}
+
+// c is center aligned
+@mixin c--center {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+}
+
+// f with buttons in one row
+@mixin f--row ($list-space: $grid, $margin: $grid) { 
+  margin: $list-space ($margin * -1);
+  display: flex;
+  flex-wrap: wrap;
+
+  .block__clickable {
+    margin: $margin;
+    @content;
+  }
+}
+
+// b with v + c next to each  other || based on width of v and c
+@mixin b--vc ($min-breakpoint, $max-breakpoint, $direction, $container-width, $visual-width, $content-width, $visual-margin: $grid) { 
+  display: flex;
+  flex-direction: column-reverse;
+
+  @media only screen and (min-width: $min-breakpoint) {
+    flex-direction: $direction;
+    justify-content: space-between;
+  }
+
+  .block__visual {
+    @media only screen and (max-width: $max-breakpoint) {
+      margin-bottom: $visual-margin;
+    }
+
+    @media only screen and (min-width: $min-breakpoint) {
+      width: calc(#{$visual-width} * 100% / #{$container-width});
+    }
+  }
+
+  .block__content {
+    @media only screen and (min-width: $min-breakpoint) {
+      width: calc(#{$content-width} * 100% / #{$container-width});
+    }
+  }
+}
+
+// b with v + c next to each  other || based on columns  
+@mixin b--vccolumns ($min-breakpoint-s, $min-breakpoint-m, $direction, $container-width, $visual-width, $content-width, $visual-margin: $grid) { 
+  display: flex;
+  flex-direction: column-reverse;
+
+  @media only screen and (min-width: $min-breakpoint-s) {
+    flex-direction: $direction;
+    justify-content: space-between;
+  }
+
+  .block__visual {
+    @media only screen and (min-width: $min-breakpoint-s) {
+      width: calc(100% / #{$columns-tablet} * #{$visual-colspan} - #{$item-space});
+    }
+
+    @media only screen and (min-width: $min-breakpoint-m) {
+      width: calc(100% / #{$columns-desktop} * #{$visual-colspan} - #{$item-space});
+    }
+  }
+
+  .block__content {
+    @media only screen and (min-width: $min-breakpoint-s) {
+      width: calc(100% / #{$columns-tablet} * #{$content-colspan} - #{$item-space});
+    }
+
+    @media only screen and (min-width: $min-breakpoint-m) {
+      width: calc(100% / #{$columns-desktop} * #{$content-colspan} - #{$item-space}) ;
+    }
+  }
+}
+
+// b with v as background and c over it
+@mixin b--vbg ($min-breakpoint-s, $min-breakpoint-m, $min-height: 200px, $spacing: $grid, $spacing-tablet: $grid, $spacing-desktop: $grid, $gutter: $grid, $gutter-tablet: $grid, $gutter-desktop: $grid) { 
+  padding: $spacing $gutter;
+  position: relative;
+  min-height: $min-height;
+
+  @media only screen and (min-width: $min-breakpoint-s) {
+    padding: $spacing-tablet $gutter-tablet;
+  }
+
+  @media only screen and (min-width: $min-breakpoint-m) {
+    padding: $spacing-desktop $gutter-desktop;
+  }
+
+  // you need to add the class object fit on it
+  .block__visual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// block with visual + content + footer next to each  other || based on width of v/f and c
+@mixin b--vc($min-breakpoint, $max-breakpoint, $direction-s, $direction-m, $container-width, $visual-width, $content-width, $visual-margin, $footer-margin) { 
+  display: flex;
+  flex-direction: $direction-s;
+  flex-wrap: wrap;
+
+  @media only screen and (min-width: $min-breakpoint) {
+    flex-direction: $direction-m;
+    justify-content: space-between;
+  }
+
+  .item--1 {
+    width: 100%;
+    
+    @media only screen and (min-width: $min-breakpoint) {
+      width: calc(#{$content-width} * 100% / #{$container-width});
+      order: 1;
+    }
+  }
+
+  .item--2,
+  .item--3 {
+    @media only screen and (max-width: $max-breakpoint) {
+      margin: $visual-margin;
+    }
+
+    @media only screen and (min-width: $min-breakpoint) {
+      width: calc(#{$visual-width} * 100% / #{$container-width});
+      order: 2;
+    }
+  }
+
+  .item--3 {
+    margin: $footer-margin;
+
+    @media only screen and (min-width: $min-breakpoint) {
+      order: 3;
+      width: 100%;
+    }
+  }
+}
+
+// grid item with visual on top of content
+@mixin g--vc ($marigin-top: $grid) { 
+  display: flex;
+  flex-direction: column-reverse;
+
+  .block__content {
+    margin-top: $marigin-top;
+  }
+}

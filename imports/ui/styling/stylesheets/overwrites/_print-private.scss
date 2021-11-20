@@ -1,0 +1,19 @@
+// ==========================================================================
+// OVERWRITES | Print (Private)
+// When you don't want to print anything (because of privacy-/security reasons)
+// ==========================================================================
+
+@media print {
+
+  // ----- DEFAULT
+
+  * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  // ----- CUSTOM
+
+  // Insert custom print styling here
+}

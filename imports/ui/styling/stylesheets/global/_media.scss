@@ -1,0 +1,19 @@
+// ==========================================================================
+// GLOBAL | Figures
+// ==========================================================================
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+svg {
+  display: block;
+  transition: fill var(--transition--normal);
+}
+
+figure {
+  margin: 0;
+}

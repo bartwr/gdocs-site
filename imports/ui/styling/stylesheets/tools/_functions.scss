@@ -1,0 +1,47 @@
+// ==========================================================================
+// TOOLS | Functions
+// ==========================================================================
+
+@function strip-unit( $value ) {
+  @return $value / ( $value * 0 + 1 );
+}
+
+@function rem-to-px( $value ) {
+  @return strip-unit( $value ) * 16;
+}
+
+@function px-to-rem( $value ) {
+  @return strip-unit( $value ) / 16;
+}
+
+@function grid( $value ) {
+  @return $grid * $value;
+}
+
+@function grid--l( $value ) {
+  @return $grid--l * $value;
+}
+
+// -----
+
+@function calculate-perc( $value, $width, $negative: false ) {
+  $percentage: percentage( strip-unit( $value ) / strip-unit( $width ) );
+
+  @if $negative { $percentage: $percentage * -1; }
+
+  @return $percentage;
+}
+
+@function calculate-rem( $value, $negative: false ) {
+  $rem: px-to-rem( $value );
+  
+  @if $negative { $rem: $rem * -1; }
+
+  @return $rem + rem;
+}
+
+@function calculate-relative-lineheight( $fontsize, $lineheight ) {
+  $relative-lineheight: ( strip-unit( $lineheight ) / strip-unit( $fontsize ) );
+
+  @return $relative-lineheight;
+}

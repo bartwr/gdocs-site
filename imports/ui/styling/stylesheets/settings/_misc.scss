@@ -1,0 +1,47 @@
+// ==========================================================================
+// SETTINGS | Misc.
+// Variables concerning miscellaneous: transitions...
+// ==========================================================================
+
+// ----- Transitions
+
+$transition--normal: 0.3s;
+$transition--reduced-motion: 0.001ms;
+
+$animation--reduced-motion: 0.001ms;
+
+$map--transitions: (
+  'transition--normal': $transition--normal,
+  'transition--reduced-motion': $transition--reduced-motion,
+  'animation--reduced-motion': $animation--reduced-motion,
+);
+
+// ----- Border-radius
+
+$border-radius--normal: ($px * 4);
+
+$map--border-radius: (
+  'border-radius--normal': $border-radius--normal,
+);
+
+$map--misc-settings: map-collect($map--transitions, $map--border-radius);
+
+// ==========================================================================
+// Implementations
+// ==========================================================================
+
+@function msc($var) {
+  @return get-var($var, $map--misc-settings);
+}
+
+$map--misc-implementations: (
+  // 'font--text': msc('font--inter'),
+);
+
+// ==========================================================================
+// CONFIG
+// Merge settings into large generic settings map
+// ==========================================================================
+
+$map--misc: map-merge($map--misc-settings, $map--misc-implementations);
+$map--settings: map-merge($map--settings, $map--misc);

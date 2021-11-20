@@ -1,0 +1,50 @@
+// ==========================================================================
+// SETTINGS | Fonts
+// Variables concerning fonts: family, weights, styles, etc...
+// ==========================================================================
+
+// ----- Font families
+
+// $font--inter: 'Inter', sans-serif;
+
+$map--fonts: (
+  // 'font--inter': $font--inter,
+);
+
+// ----- Font weights
+
+$weight--regular: 400;
+
+$map--weights: (
+  'weight--regular': $weight--regular,
+);
+
+// ----- Font styles
+
+$style--italic: italic;
+
+$map--styles: (
+  'style--italic': $style--italic,
+);
+
+$map--typography-settings: map-collect($map--fonts, $map--weights, $map--styles);
+
+// ==========================================================================
+// Implementations
+// ==========================================================================
+
+@function tp($var) {
+  @return get-var($var, $map--typography-settings);
+}
+
+$map--typography-implementations: (
+  // 'font--text': tp('font--inter'),
+);
+
+// ==========================================================================
+// CONFIG
+// Merge settings into large generic settings map
+// ==========================================================================
+
+$map--typography: map-merge($map--typography-settings, $map--typography-implementations);
+$map--settings: map-merge($map--settings, $map--typography);

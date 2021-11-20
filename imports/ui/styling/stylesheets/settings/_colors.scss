@@ -1,0 +1,30 @@
+// ==========================================================================
+// SETTINGS | Colors
+// Variables concerning miscellaneous: colors...
+// ==========================================================================
+
+$color--blue-400: #08ABCE;
+
+$map--color-settings: (
+  'color--blue-400': $color--blue-400,
+);
+
+// ==========================================================================
+// Implementations
+// ==========================================================================
+
+@function clr($var) {
+  @return get-var($var, $map--color-settings);
+}
+
+$map--colors-implementations: (
+  'color--plyr': clr('color--blue-400'),
+);
+
+// ==========================================================================
+// CONFIG
+// Merge settings into large generic settings map
+// ==========================================================================
+
+$map--colors: map-merge($map--color-settings, $map--colors-implementations);
+$map--settings: map-merge($map--settings, $map--colors);

@@ -1,0 +1,58 @@
+// ==========================================================================
+// SETTINGS | Sizes
+// Variables concerning sizes: spacing, gutters, widhts, breakpoints...
+// ==========================================================================
+
+// ----- Font sizes
+
+$px: 0.0625rem;
+
+// ----- Fluid sizing thresholds
+
+$threshold--mobile: ($px * 320);
+$threshold--tablet: ($px * 768);
+$threshold--desktop: ($px * 1440);
+
+// ----- Widths
+
+$width--m: ($px * 1280);
+$width--m-gutter: ($px * 1440); // This variable contains the default desktop gutter: in this example 2x80px
+
+// ----- Gutters & Spacings
+
+$grid: ($px * 8);
+$grid--l: ($px * 10);
+
+// ----- Breakpoints (EXAMPLES!)
+
+$breakpoint--mobile--m: ($px * 480);
+$breakpoint--tablet--m: ($px * 768);
+$breakpoint--tablet--l: ($px * 1024);
+$breakpoint--desktop--m: ($px * 1280);
+
+$map--size-settings: (
+  'width--m': $width--m,
+  'width--m-gutter': $width--m-gutter,
+  'grid': $grid,
+  'grid--l': $grid--l,
+);
+
+// ==========================================================================
+// Implementations
+// ==========================================================================
+
+@function sz($var) {
+  @return get-var($var, $map--size-settings);
+}
+
+$map--size-implementations: (
+  'gutter--m': (sz('grid--l') * 2),
+);
+
+// ==========================================================================
+// CONFIG
+// Merge settings into large generic settings map
+// ==========================================================================
+
+$map--sizes: map-merge($map--size-settings, $map--size-implementations);
+$map--settings: map-merge($map--settings, $map--sizes);

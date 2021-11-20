@@ -1,0 +1,41 @@
+// ==========================================================================
+// GLOBAL | Core
+// ==========================================================================
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+}
+
+// https://css-tricks.com/revisiting-prefers-reduced-motion-the-reduced-motion-media-query/
+@media screen and (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: var(--transition--reduced-motion) !important;
+    animation-iteration-count: 1 !important;
+    animation-duration: var(--animation--reduced-motion) !important;
+  }
+}
+
+// -----
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  overflow-y: scroll; // Force vertical scrollbar to avoid jumping if navigating from short to long page and vice versa
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size-adjust: auto;
+  min-width: $threshold--mobile;
+  // color: var(--color--text);
+  // @include text--m;
+}
+
+// ::selection { background-color: var(--color--selection); }

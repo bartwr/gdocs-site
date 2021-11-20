@@ -1,0 +1,75 @@
+// ==========================================================================
+// The SCSS folder is structured using the ITCSS principle:
+// - SETTINGS: for variables
+// - TOOLS: for mixins/functions
+// - VENDOR: for third-party styling
+// - GLOBAL: for element styling - no classes or IDs
+// - OBJECTS: for shared styling - OOCSS!
+// - PAGES: for specific page styling - as less as possible
+// - OVERWRITES: for overwriting styles - this is the only place where the `!important` tag is acceptable.
+// ==========================================================================
+
+@charset 'UTF-8';
+
+// ==========================================================================
+// SETTINGS
+// ==========================================================================
+
+@import 'settings/helpers';
+@import 'settings/colors';
+@import 'settings/typography';
+@import 'settings/sizes';
+@import 'settings/misc';
+
+// Create root CSS variables
+:root { @include generate-root-vars($map--settings) }
+
+// ==========================================================================
+// TOOLS
+// ==========================================================================
+
+@import 'tools/functions';
+@import 'tools/mixins';
+
+// ==========================================================================
+// VENDOR
+// ==========================================================================
+
+@import 'vendor/normalize';
+
+// ==========================================================================
+// GLOBAL
+// ==========================================================================
+
+@import 'global/core';
+@import 'global/typography';
+@import 'global/links';
+@import 'global/buttons';
+@import 'global/lists';
+@import 'global/media';
+@import 'global/tables';
+@import 'global/forms';
+
+// ==========================================================================
+// OBJECTS
+// ==========================================================================
+
+@import 'objects/typography';
+@import 'objects/links';
+@import 'objects/lists';
+@import 'objects/media';
+@import 'objects/footer-sticky';
+
+@import 'objects/helpers';
+
+// ==========================================================================
+// PAGES
+// ==========================================================================
+
+
+// ==========================================================================
+// OVERWRITES
+// ==========================================================================
+
+@import 'overwrites/print-private';
+// @import 'overwrites/print';
