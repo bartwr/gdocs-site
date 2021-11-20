@@ -3,10 +3,32 @@
 // Variables concerning miscellaneous: colors...
 // ==========================================================================
 
-$color--blue-400: #08ABCE;
+$color--orange-400: #EA5C33;
+
+$color--blue-200: #325584;
+$color--blue-400: #0F6BFF;
+
+$color--green-400: #9CC192;
+
+$color--yellow-400: #F8D641;
+
+$color--melon-400: #FEB8A4;
+
+$color--grey-900: #EFEFEF;
+
+$color--black: #000;
+$color--white: #FFF;
 
 $map--color-settings: (
+  'color--orange-400': $color--orange-400,
+  'color--blue-200': $color--blue-200,
   'color--blue-400': $color--blue-400,
+  'color--green-400': $color--green-400,
+  'color--yellow-400': $color--yellow-400,
+  'color--melon-400': $color--melon-400,
+  'color--grey-900': $color--grey-900,
+  'color--black': $color--black,
+  'color--white': $color--white,
 );
 
 // ==========================================================================
@@ -18,7 +40,12 @@ $map--color-settings: (
 }
 
 $map--colors-implementations: (
-  'color--plyr': clr('color--blue-400'),
+  'color--primary': clr('color--orange-400'),
+  'color--secondary': clr('color--blue-200'),
+  'color--text': clr('color--black'),
+  'color--selection': clr('color--melon-400'),
+  'color--link': clr('color--blue-400'),
+  'color--link--hover': clr('color--blue-200'),
 );
 
 // ==========================================================================

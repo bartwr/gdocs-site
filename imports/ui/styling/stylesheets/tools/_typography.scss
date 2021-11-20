@@ -1,0 +1,14 @@
+// ==========================================================================
+// TOOLS | Typography
+// ==========================================================================
+
+@mixin text-base {
+  font-family: var(--font--text);
+  letter-spacing: var(--letterspacing--text);
+}
+
+@mixin text--m {
+  @include text-base;
+  font-size: ($px * 16);
+  line-height: calculate-relative-lineheight( ($px * 16), ($px * 32) );
+}

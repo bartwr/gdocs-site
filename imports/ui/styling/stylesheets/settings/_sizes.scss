@@ -15,16 +15,17 @@ $threshold--desktop: ($px * 1440);
 
 // ----- Widths
 
-$width--m: ($px * 1280);
-$width--m-gutter: ($px * 1440); // This variable contains the default desktop gutter: in this example 2x80px
+$width--m: ($px * 1200);
+$width--m-gutter: ($px * 1320); // This variable contains the default desktop gutter: in this example 2x60px
 
 // ----- Gutters & Spacings
 
 $grid: ($px * 8);
 $grid--l: ($px * 10);
 
-// ----- Breakpoints (EXAMPLES!)
+// ----- Breakpoints
 
+$breakpoint--mobile--s: ($px * 375);
 $breakpoint--mobile--m: ($px * 480);
 $breakpoint--tablet--m: ($px * 768);
 $breakpoint--tablet--l: ($px * 1024);

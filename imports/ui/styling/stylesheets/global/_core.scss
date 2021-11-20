@@ -34,8 +34,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size-adjust: auto;
   min-width: $threshold--mobile;
-  // color: var(--color--text);
-  // @include text--m;
+  color: var(--color--text);
+  @include text--m;
 }
 
-// ::selection { background-color: var(--color--selection); }
+::selection { background-color: var(--color--selection); }

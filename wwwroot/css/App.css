@@ -1,10 +1,46 @@
+@font-face {
+  font-family: 'Pluto';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("../../fonts/PlutoBold.otf") format("otf");
+}
+
+@font-face {
+  font-family: 'Pluto';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("../../fonts/PlutoHeavy.otf") format("otf");
+}
+
 :root {
-  --color--blue-400: #08ABCE;
-  --color--plyr: #08ABCE;
+  --color--orange-400: #EA5C33;
+  --color--blue-200: #325584;
+  --color--blue-400: #0F6BFF;
+  --color--green-400: #9CC192;
+  --color--yellow-400: #F8D641;
+  --color--melon-400: #FEB8A4;
+  --color--grey-900: #EFEFEF;
+  --color--black: #000;
+  --color--white: #FFF;
+  --color--primary: #EA5C33;
+  --color--secondary: #325584;
+  --color--text: #000;
+  --color--selection: #FEB8A4;
+  --color--link: #0F6BFF;
+  --color--link--hover: #325584;
+  --font--montserrat: Montserrat, sans-serif;
+  --font--pluto: Pluto, sans-serif;
   --weight--regular: 400;
+  --weight--semibold: 600;
+  --weight--bold: 700;
   --style--italic: italic;
-  --width--m: 80rem;
-  --width--m-gutter: 90rem;
+  --font--text: Montserrat, sans-serif;
+  --font--titles: Pluto, sans-serif;
+  --letterspacing--text: -0.2px;
+  --width--m: 75rem;
+  --width--m-gutter: 82.5rem;
   --grid: 0.5rem;
   --grid--l: 0.625rem;
   --gutter--m: 1.25rem;
@@ -413,6 +449,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size-adjust: auto;
   min-width: 20rem;
+  color: var(--color--text);
+  font-family: var(--font--text);
+  letter-spacing: var(--letterspacing--text);
+  font-size: 1rem;
+  line-height: 2;
+}
+
+::-moz-selection {
+  background-color: var(--color--selection);
+}
+
+::selection {
+  background-color: var(--color--selection);
 }
 
 h1,

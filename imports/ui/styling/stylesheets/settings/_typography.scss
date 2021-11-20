@@ -5,18 +5,40 @@
 
 // ----- Font families
 
-// $font--inter: 'Inter', sans-serif;
+@font-face {
+  font-family: 'Pluto';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../fonts/PlutoBold.otf') format('otf'),
+}
+
+@font-face {
+  font-family: 'Pluto';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../fonts/PlutoHeavy.otf') format('otf'),
+}
+
+$font--montserrat: 'Montserrat', sans-serif;
+$font--pluto: 'Pluto', sans-serif;
 
 $map--fonts: (
-  // 'font--inter': $font--inter,
+  'font--montserrat': $font--montserrat,
+  'font--pluto': $font--pluto,
 );
 
 // ----- Font weights
 
 $weight--regular: 400;
+$weight--semibold: 600;
+$weight--bold: 700;
 
 $map--weights: (
   'weight--regular': $weight--regular,
+  'weight--semibold': $weight--semibold,
+  'weight--bold': $weight--bold,
 );
 
 // ----- Font styles
@@ -38,7 +60,9 @@ $map--typography-settings: map-collect($map--fonts, $map--weights, $map--styles)
 }
 
 $map--typography-implementations: (
-  // 'font--text': tp('font--inter'),
+  'font--text': tp('font--montserrat'),
+  'font--titles': tp('font--pluto'),
+  'letterspacing--text': -.2px
 );
 
 // ==========================================================================
