@@ -19,18 +19,32 @@
     border-bottom: $px solid var(--color--border);
   }
 
-  h2 { }
+  h2 {
+    &:not(:last-child) { margin-bottom: grid--l(2); }
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    &:not(:last-child) { margin-bottom: grid--l(1); }
+  }
 
   h3 { }
 
-  h4 { }
-
-  h5 { }
-
+  h4,
+  h5,
   h6 { }
 
   p,
   blockquote {
-    &:not(:last-child) { }
+    &:not(:last-child) { margin-bottom: grid(3); }
+    
+    + h1,
+    + h2,
+    + h3, 
+    + h4,
+    + h5,
+    + h6 { padding-top: grid(2); }
   }
 }

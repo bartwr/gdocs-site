@@ -16,18 +16,50 @@
 .text--styled {
   ol,
   ul {
-    &:not(:last-child) { }
+    &:not(:last-child) { margin-bottom: grid(3); }
+    
+    li {
+      position: relative;
+      padding-left: var(--indentation--lists);
+      
+      + li,
+      ol,
+      ul { margin-top: grid--l(1); }
+    }
+
+    + h1,
+    + h2,
+    + h3, 
+    + h4,
+    + h5,
+    + h6 { padding-top: grid(2); }
   }
 
   ol {
     counter-reset: section;
-
+    
     > li {
       &:before {
+        display: block;
+        position: absolute;
+        left: 0;
+        font-weight: var(--weight--bold);
+        color: var(--color--lists);
+        content: counters(section, ".") "."; // Sublists with decimals: 1.1.1
         counter-increment: section;
-        // content: counter(section)'.'; // Sublists without decimals: 1
-        content: counters(section, ".")'.'; // Sublists with decimals: 1.1.1
-        display: inline-block;
+      }
+
+      // Overwrite indentation for sublists; add extra spacing for additional decimal
+      > ol > li {
+        padding-left: calc(#{grid--l(1)} + #{var(--indentation--lists)});
+
+        > ol > li {
+          padding-left: calc(#{grid--l(2)} + #{var(--indentation--lists)});
+
+          > ol > li {
+            padding-left: calc(#{grid--l(3)} + #{var(--indentation--lists)});
+          }
+        }
       }
     }
   }
@@ -35,7 +67,15 @@
   ul {
     > li {
       &:before {
-        content: '';
+        content: '\2731';
+        display: block;
+        position: absolute;
+        top: ($px * 16);
+        left: 0;
+        transform: translateY(-50%);
+        font-size: ($px * 14);
+        line-height: calculate-relative-lineheight(($px * 14), ($px * 32));
+        color: var(--color--lists);
       }
     }
   }

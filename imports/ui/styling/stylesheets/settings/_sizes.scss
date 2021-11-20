@@ -53,11 +53,13 @@ $map--size-implementations: ();
   --spacing--s: calc(#{$px} * 20);
   --spacing--m: calc(#{$px} * 40);
   --height--header: calc(#{$px} * 88);
+  --indentation--lists: calc(#{$px} * 24);
 
   @media only screen and (min-width: $breakpoint--tablet--m) {
     --gutter--m: calc(#{$px} * 40);
     --spacing--s: calc(#{$px} * 40);
     --spacing--m: calc(#{$px} * 60);
+    --indentation--lists: calc(#{$px} * 30);
   }
 
   @media only screen and (min-width: $breakpoint--tablet--l) {
