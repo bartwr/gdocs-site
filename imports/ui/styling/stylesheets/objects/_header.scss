@@ -135,7 +135,7 @@ $breakpoint--header: $breakpoint--tablet--l;
     height: grid(.25);
     width: grid--l(2);
     border-radius: calculate-rem(3);
-    background-color: var(--color--text);
+    background-color: var(--color--link-header);
     transition: all var(--transition--normal);
   }
 
@@ -151,8 +151,9 @@ $breakpoint--header: $breakpoint--tablet--l;
   bottom: 0;
   transform: translateX(-50%);
   font-size: ($px * 12);
-  @include title-base;
+  color: var(--color--link-header);
   transition: color var(--transition--normal);
+  @include title-base;
 }
 
 // ==========================================================================
@@ -178,6 +179,10 @@ $breakpoint--header: $breakpoint--tablet--l;
     @include title-base;
     @include fauxlink--hover-animation(var(--color--link), 'span');
 
+    @media only screen and (min-width: $breakpoint--header) {
+      padding: grid--l(2) grid--l(3);
+    }
+
     &:hover,
     &:focus {
       color: var(--color--link);
@@ -190,7 +195,11 @@ $breakpoint--header: $breakpoint--tablet--l;
     fill: var(--color--primary);
   }
 
+  .Nav__label { hyphens: auto; }
+
   .Nav__icon {
+    flex-shrink: 0;
+    margin-left: grid(1);
     transform: rotate(-90deg);
   }
 }

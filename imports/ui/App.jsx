@@ -22,7 +22,7 @@ export const App = (props) => {
           </a>
         </small>
       </footer>
-      
+
       <svg xmlns='https://www.w3.org/2000/svg' style={{ display: 'none' }} aria-hidden='true'>
         <symbol id='icon--chevron' viewBox='0 0 14 14'>
           <path d='M7,11a.99676.99676,0,0,1-.707-.293l-6-6A.99989.99989,0,0,1,1.707,3.293L7,8.58594l5.293-5.293A.99989.99989,0,0,1,13.707,4.707l-6,6A.99676.99676,0,0,1,7,11Z' />
@@ -31,3 +31,19 @@ export const App = (props) => {
     </>
   )
 }
+
+// Close navigation when pressing the escape key
+window.addEventListener('keyup', (e) => {
+  if (e.key === 'Escape') {
+    document.documentElement.classList.remove('Nav--toggled')
+  }
+})
+
+// Close navigation when clicking outside of header/navigation
+document.documentElement.addEventListener('click', (e) => {
+  const target = e.target || e.currentTarget;
+
+  if (target.closest('.Header') === null && document.documentElement.classList.contains('Nav--toggled')) {
+    document.documentElement.classList.remove('Nav--toggled')
+  }
+})
