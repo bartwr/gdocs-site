@@ -13,6 +13,7 @@
 1. Open your terminal
 2. `git clone git@github.com:bartwr/gdocs-site.git`
 3. `cd gdocs-site`
+4. `npm install` to install the dependencies.
 
 ## 3. Get Google API credentials:
 
@@ -73,11 +74,15 @@ To use this app, we have to configure some variables:
 
 ```brew install direnv```
 
-5. Navigate to your project folder:
+5. Add a [direnv hook](https://direnv.net/docs/hook.html) to the bottom of your `~/.bashrc`:
+
+```eval "$(direnv hook bash)"```
+
+6. Navigate to your project folder:
 
 ```cd /path/to/gdocs-site```
 
-6. In this 'gdocs-site' folder, activate the variables like this:
+7. In this 'gdocs-site' folder, activate the variables like this:
 
 ```direnv allow```
 
