@@ -10,19 +10,19 @@ const gulp = require('gulp'),
 const paths = {
   styles: {
     src: './imports/ui/styling/stylesheets/**/*.scss',
-    dest: './wwwroot/css'
+    dest: './public/css'
   },
   fonts: {
     src: './imports/ui/styling/fonts/**/*',
-    dest: './wwwroot/fonts'
+    dest: './public/fonts'
   },
   images: {
       src: './imports/ui/styling/images/**/*',
-      dest: './wwwroot/images'
+      dest: './public/images'
   },
   icons: {
       src: './imports/ui/styling/icons/**/*',
-      dest: './wwwroot/icons'
+      dest: './public/icons'
   }
 }
 

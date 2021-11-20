@@ -3,9 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { Header } from './components/Header/Header.jsx'
 import { Doc } from './components/Doc/Doc.jsx'
 
-// Load global App styles
-// import '../../wwwroot/css/App.css';
-
 export const App = (props) => {
   return (
     <>

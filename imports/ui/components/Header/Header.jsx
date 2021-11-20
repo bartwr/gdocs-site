@@ -48,7 +48,7 @@ export const Header = () => {
         </button>
 
         <a className='Header__logo' href='#'>
-          <img className='Header__image' src='/wwwroot/images/logo-nijverhoek.png' width='290' height='80' />
+          <img className='Header__image' src='/images/logo-nijverhoek.png' width='290' height='80' />
         </a>
 
         <nav className='Header__nav Nav--header' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
