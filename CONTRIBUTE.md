@@ -21,9 +21,9 @@ In `imports/ui` you'll find all client side UI.
 
 - [imports/ui](https://github.com/bartwr/gdocs-site/blob/main/imports/ui)
 
-In `imports/ui/App.css` you'll find the global app styles
+In `imports/ui/styling/stylesheets/App.css` you'll find the global app styles
 
-- [imports/ui/App.css](https://github.com/bartwr/gdocs-site/blob/main/imports/ui/App.css)
+- [imports/ui/styling/stylesheets/App.css](https://github.com/bartwr/gdocs-site/blob/main/imports/ui/styling/stylesheets/App.css)
 
 At this moment the app exists of two components: **Navigation** and **Doc**.
 
@@ -34,15 +34,9 @@ At this moment the app exists of two components: **Navigation** and **Doc**.
 
 ## Styling
 
-The global app styles can be configured in `/imports/ui/App.css`.
+The global app styles can be configured in `/imports/ui/styling/stylesheets`. 
 
-Styles for a specific components like the Navigation component can be edited in the same folder as the component, in example `/imports/ui/imports/Navigation/Navigation.css`.
-
-As you can see [in index.html](https://github.com/bartwr/gdocs-site/blob/main/client/main.html#L9) we link [Tailwind](https://tailwindcss.com/), which is a nice CSS library. You can for example add the class 'text-white' to give text a white color. 
-
-NOTE: When using HTML in React, you need to use `className=""`, not `class=""`. Example:
-- Correct: `<a className="inline-block underline bg-aqua px-2" />`
-- Incorrect: `<a class="inline-block underline bg-aqua px-2" />`
+The project uses `gulp` to compile SCSS-styling to CSS.
 
 ## Closing words
 
