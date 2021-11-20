@@ -2,7 +2,7 @@
 // OBJECTS | Header
 // ==========================================================================
 
-$breakpoint--header: $breakpoint--tablet--m;
+$breakpoint--header: $breakpoint--tablet--l;
 
 .Header {
   position: relative;
@@ -92,7 +92,7 @@ $breakpoint--header: $breakpoint--tablet--m;
     @media only screen and (max-width: ($breakpoint--header - $px)) {
       content: '';
       position: absolute;
-      top: 0;
+      top: grid--l(-2);
       left: 0;
       width: 100%;
       height: grid--l(2);
@@ -126,8 +126,8 @@ $breakpoint--header: $breakpoint--tablet--m;
     display: block;
     position: absolute;
     top: 32%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: ($px * 21);
+    transform: translateX(-50%);
     height: grid(.25);
     width: grid--l(2);
     border-radius: calculate-rem(3);
@@ -149,4 +149,34 @@ $breakpoint--header: $breakpoint--tablet--m;
   font-size: ($px * 12);
   @include title-base;
   transition: color var(--transition--normal);
+}
+
+// ==========================================================================
+// OBJECTS | Header / Nav
+// ==========================================================================
+
+.Nav--header {
+  .Nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: grid--l(2) var(--gutter--m);
+    font-size: ($px * 18);
+    line-height: calculate-relative-lineheight( ($px * 18), ($px * 24) );
+    color: var(--color--link-header);
+    fill: var(--color--link-header);
+    border-bottom: $px solid var(--color--border);
+    @include title-base;
+    @include fauxlink--hover-animation(var(--color--link), 'span');
+
+    &:hover,
+    &:focus {
+      color: var(--color--link);
+      fill: var(--color--link);
+    }
+  }
+
+  .Nav__icon {
+    transform: rotate(-90deg);
+  }
 }

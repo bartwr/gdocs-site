@@ -16,6 +16,12 @@
   letter-spacing: var(--letterspacing--text);
 }
 
+@mixin text--l {
+  @include text-base;
+  font-size: ($px * 18);
+  line-height: calculate-relative-lineheight( ($px * 18), ($px * 24) );
+}
+
 @mixin text--m {
   @include text-base;
   font-size: ($px * 16);

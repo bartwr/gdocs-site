@@ -4,10 +4,14 @@
 
 a {
   text-decoration-skip-ink: auto;
+  text-decoration: none;
   transition: color var(--transition--normal), background-color var(--transition--normal), border-color var(--transition--normal);
 
   &:hover,
-  &:focus { }
+  &:focus {
+    color: var(--color--link-hover);
+    fill: var(--color--link-hover);
+  }
 
   &:focus {
     outline: none;

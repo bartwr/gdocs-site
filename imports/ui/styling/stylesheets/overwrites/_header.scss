@@ -6,24 +6,28 @@
   @media only screen and (max-width: ($breakpoint--header - $px)) {
     overflow: hidden;
 
-    // Toggler
-    .toggler {
-      span:nth-child(2),
-      span:nth-child(5) { opacity: 0; }
+  // Toggler
+  .Toggler {
 
-      span:nth-child(3),
-      span:nth-child(4) { width: calculate-rem(20); }
+    span:not(.Toggler__label) { left: ($px * 11); }
 
-      span:nth-child(3) { transform: rotate(45deg); }
-      span:nth-child(4) { transform: rotate(-45deg); }
-    }
+    span:nth-child(2),
+    span:nth-child(5) { opacity: 0; }
 
-    // Nav
-    .Header__nav {
-      opacity: 1;
-      height: calc(100% - var(--height--header));
-      visibility: visible;
-      transition: opacity var(--transition--normal);
-    }
+    span:nth-child(3),
+    span:nth-child(4) { width: calculate-rem(20); }
+
+    span:nth-child(3) { transform: rotate(45deg); }
+    span:nth-child(4) { transform: rotate(-45deg); }
+  }
+
+  // Nav
+  .Header__nav {
+    opacity: 1;
+    height: calc(100% - var(--height--header));
+    visibility: visible;
+    transition: opacity var(--transition--normal);
+  }
+
   }
 }

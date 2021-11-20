@@ -47,26 +47,27 @@ export const Header = () => {
 
         <a className='Header__logo' href='#' />
 
-        <nav className='Header__nav' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
-          <ul className='nav__items'>
+        <nav className='Header__nav Nav--header' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
+          <ul className='Nav__items'>
             {folderDocs &&
               folderDocs.map((x) => {
                 const navTitleContainsForbiddenWord =
                   navItemsToExclude.filter((forbiddenWord) => x.name.indexOf(forbiddenWord) > -1).length >= 1
                 if (navTitleContainsForbiddenWord) return
                 return (
-                  <li key={x.id} className='nav__item'>
+                  <li key={x.id} className='Nav__item'>
                     <a
                       href='#'
                       target='_self'
+                      className='Nav__link'
                       onClick={(e) => {
                         e.preventDefault()
+                        closeNav()
                         FlowRouter.go('/d/' + x.id)
                       }}
-                      className='nav__link'
                     >
-                      <span className='nav__label'>{x.name}</span>
-                      <svg className='nav__icon' width='10px' height='10px' aria-hidden='true'>
+                      <span className='Nav__label'>{x.name}</span>
+                      <svg className='Nav__icon' width='10px' height='10px' aria-hidden='true'>
                         <use xlinkHref='#icon--chevron' />
                       </svg>
                     </a>

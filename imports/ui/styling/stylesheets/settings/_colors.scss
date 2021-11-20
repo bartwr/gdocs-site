@@ -48,7 +48,9 @@ $map--colors-implementations: (
   'color--bg-secondary': clr('color--grey-900'),
   'color--text': clr('color--black'),
   'color--link': clr('color--blue-400'),
-  'color--link--hover': clr('color--blue-200'),
+  'color--link-hover': clr('color--blue-200'),
+  'color--link-header': clr('color--blue-200'),
+  'color--border': clr('color--grey-900'),
   'color--selection': clr('color--melon-400'),
   'color--box-shadow': clr('color--grey-800')
 );
