@@ -4,7 +4,7 @@ import { Navigation } from './components/Navigation/Navigation.jsx';
 import { Doc } from './components/Doc/Doc.jsx';
 
 // Load global App styles
-import './App.css';
+// import '../../wwwroot/css/App.css';
 
 export const App = (props) => {
   return <div className="App">
