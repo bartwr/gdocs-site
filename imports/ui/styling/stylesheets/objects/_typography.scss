@@ -38,7 +38,7 @@
 
   p,
   blockquote {
-    &:not(:last-child) { margin-bottom: grid(3); }
+    &:not(:last-child) { margin-bottom: var(--spacing--wysiwyg); }
     
     + h1,
     + h2,

@@ -13,3 +13,19 @@ img {
     transition: opacity $transition--normal;
   }
 }
+
+// ==========================================================================
+// OBJECTS | Figures / Inline (WYSIWYG)
+// ==========================================================================
+
+.text--styled {
+  img {
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: var(--border-radius--content);
+    @include container;
+
+    &:not(:last-child) { margin-bottom: var(--spacing--wysiwyg); }
+  }
+}
