@@ -4,19 +4,19 @@ import {mount} from 'react-mounter';
 /**
  *  App
  */
-import { App } from '/imports/ui/App.jsx';
+import { AppProvider } from '/imports/ui/AppProvider.jsx';
 import { Doc } from '/imports/ui/components/Doc/Doc.jsx';
 
 FlowRouter.route('/', {
   action() {
-    mount(App, {
+    mount(AppProvider, {
       children: <Doc documentId={'1zpGZF55X8SHJi_kkor6gu5CnolxngXUV92PZbkSrKtw'} />
     });
   }
 });
 FlowRouter.route('/d/:id', {
   action(params) {
-    mount(App, {
+    mount(AppProvider, {
       children: <Doc documentId={params.id} />
     });
   }

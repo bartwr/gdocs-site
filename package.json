@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
+    "@reduxjs/toolkit": "^1.6.2",
     "docs-markdown": "git+https://github.com/bartwr/docs-markdown.git",
     "fibers": "^5.0.0",
     "googleapis": "^89.0.0",
@@ -18,7 +19,8 @@
     "meteor-node-stubs": "^1.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-mounter": "^1.2.0"
+    "react-mounter": "^1.2.0",
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
     "gulp": "^4.0.2",

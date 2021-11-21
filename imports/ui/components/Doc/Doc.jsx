@@ -1,20 +1,42 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { saveDocTitle, saveDocContent } from '/imports/reducers/doc'
+import { findDocument } from '/imports/reducers/doc'
 import { marked } from 'marked'
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
 export const Doc = (props) => {
+  const dispatch = useDispatch()
+  const documentsArray = useSelector((state) => state.doc)
+
   // State variables
   const [title, setTitle] = useState('')
   const [doc, setDoc] = useState('')
-  const [counter, setCounter] = useState(0)
-  // Other variables
-  let TO_counter
 
   // Function fetchDoc :: fetched document from Google Docs
   const fetchDoc = () => {
+    // Get document from store
+    const documentFromStore = findDocument(documentsArray, props.documentId)
+    if(documentFromStore) {
+      setTitle(documentFromStore.title);
+      setDoc(documentFromStore.content);
+    } else {
+      // Get random 'loading' title
+      const randomLoadingTitle = homeUnicodeSymbols[Math.floor(Math.random() * homeUnicodeSymbols.length)]
+      // Set 'loading' title & doc
+      setTitle(randomLoadingTitle)
+      setDoc('...')
+    }
+    // Now get latest version from Google Drive
     Meteor.call('docs.getFormattedDoc', props.documentId, (err, docInMarkdown) => {
       setDoc(docInMarkdown)
+      // Save doc content in Redux store
+      dispatch(saveDocContent({
+        documentId: props.documentId,
+        content: docInMarkdown
+      }));
+      // Save doc content in database
       Meteor.call('docs.updateDocContent', {
         documentId: props.documentId,
         content: docInMarkdown
@@ -22,25 +44,16 @@ export const Doc = (props) => {
     })
   }
 
-  // Every 5 seconds: increment counter
-  // This is used for re-fetching the doc every 5 seconds
-  useEffect(() => {
-    TO_counter = setInterval((x) => {
-      setCounter(counter + 1)
-    }, 60 * 1000 * 30)
-
-    return () => {
-      clearInterval(TO_counter)
-    }
-  }, [counter])
-
   // Fetch document on load and if new documentId is given
   useEffect(() => {
-    // Get random 'loading' title
-    const randomLoadingTitle = homeUnicodeSymbols[Math.floor(Math.random() * homeUnicodeSymbols.length)]
-    setTitle(randomLoadingTitle)
     Meteor.call('docs.getTitle', props.documentId, (err, title) => {
       setTitle(title)
+      // Save doc content in Redux store
+      dispatch(saveDocTitle({
+        documentId: props.documentId,
+        title: title
+      }));
+      // Save doc title in database
       Meteor.call('docs.updateDocTitle', {
         documentId: props.documentId,
         title: title
@@ -50,14 +63,8 @@ export const Doc = (props) => {
 
   // Fetch doc if documentId updates
   useEffect(() => {
-    setDoc('...')
     fetchDoc()
   }, [props.documentId])
-
-  // Fetch doc every x seconds
-  useEffect(() => {
-    fetchDoc()
-  }, [counter])
 
   // Strip comments from doc
   const strippedDoc = doc && doc.indexOf('---') > -1 ? doc.split('---')[2] : doc ? doc : ''
@@ -71,30 +78,10 @@ export const Doc = (props) => {
           target='_blank'
           rel='external'
           title='Bewerk in Google Docs'
-          style={{marginLeft: '10px', fontSize: '30px'}}>
-          📝
+          style={{marginLeft: '1rem', fontSize: '1rem', fontWeight: 'normal'}}>
+          bewerk
         </a>
       </h1>
-
-      {/* <a href="/" className="
-        text-xs
-        font-semibold
-        inline-block
-        py-1
-        px-2
-        uppercase
-        rounded
-        uppercase last:mr-0 mr-1
-        no-underline
-        hover:text-black
-
-        transition-transform duration-200 transform hover:scale-105
-      " style={{
-        color: '#f59e0b',
-        backgroundColor: '#fde68a'
-      }} title="Terug naar home">
-        Nijverhoek kennisbank
-      </a> */}
 
       <div
         dangerouslySetInnerHTML={{
