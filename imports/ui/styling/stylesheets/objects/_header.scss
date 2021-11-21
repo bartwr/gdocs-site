@@ -160,16 +160,10 @@ $breakpoint--header: $breakpoint--tablet--l;
     fill: var(--color--link-header);
     border-bottom: $px solid var(--color--border);
     @include title-base;
-    @include fauxlink--hover-animation(var(--color--link), 'span');
+    @include fauxlink--inverted-hover-animation(currentColor, 'span');
 
     @media only screen and (min-width: $breakpoint--header) {
       padding: grid--l(2) grid--l(3);
-    }
-
-    &:hover,
-    &:focus {
-      color: var(--color--link);
-      fill: var(--color--link);
     }
   }
 

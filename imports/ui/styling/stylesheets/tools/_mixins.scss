@@ -167,23 +167,48 @@
 // ----- Links
 
 @mixin link--hover-animation-base($color) {
-  background: linear-gradient(#{$color} 0 0) bottom / 0 $px no-repeat;
-  transition: $transition--normal;
+  background: linear-gradient(#{$color} 0 0) bottom / 100% $px no-repeat;
+  transition: var(--transition--normal);
 }
 
 @mixin link--hover-animation($color) {
   @include link--hover-animation-base($color);
 
   &:hover,
+  &:focus { background-size: 0 $px; }
+}
+
+// Use: @include fauxlink--hover-animation(var(--color--link-hover), 'span');
+@mixin fauxlink--hover-animation($color, $element) {
+  #{$element} { @include link--hover-animation-base($color); }
+
+  &:hover,
+  &:focus {
+    #{$element} { background-size: 0 $px; }
+  }
+}
+
+// ----- Links - Inverted
+
+@mixin link--inverted-hover-animation-base($color) {
+  background: linear-gradient(#{$color} 0 0) bottom / 0 $px no-repeat;
+  transition: var(--transition--normal);
+}
+
+@mixin link--inverted-hover-animation($color) {
+  @include link--inverted-hover-animation-base($color);
+
+  &:hover,
   &:focus { background-size: 100% $px; }
 }
 
-// Use: @include fauxlink--hover-animation(var(--color--clickable-primary-hover), '.teaser__fauxlink');
-@mixin fauxlink--hover-animation($color, $element) {
-  #{$element} { @include link--hover-animation-base($color); }
+// Use: @include fauxlink--inverted-hover-animation(var(--color--link-hover), 'span');
+@mixin fauxlink--inverted-hover-animation($color, $element) {
+  #{$element} { @include link--inverted-hover-animation-base($color); }
 
   &:hover,
   &:focus {
     #{$element} { background-size: 100% $px; }
   }
 }
+

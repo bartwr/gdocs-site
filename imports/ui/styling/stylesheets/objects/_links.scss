@@ -9,7 +9,7 @@
 .text--styled {
   a {
     color: var(--color--link);
-    @include link--hover-animation(var(--color--link-hover));
+    @include link--hover-animation(var(--color--link));
     
     &:hover,
     &:focus { color: var(--color--link-hover); }
