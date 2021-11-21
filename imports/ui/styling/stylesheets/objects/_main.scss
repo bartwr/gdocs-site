@@ -1,0 +1,19 @@
+// ==========================================================================
+// OBJECTS | Main
+// ==========================================================================
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  margin-top: var(--height--header);
+}
+
+.main__inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  @include spacing--m--top;
+}

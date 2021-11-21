@@ -25,6 +25,7 @@ body {
 }
 
 html {
+  overflow-y: scroll; // Force vertical scrollbar to avoid jumping if navigating from short to long page and vice versa
   box-sizing: border-box;
 }
 

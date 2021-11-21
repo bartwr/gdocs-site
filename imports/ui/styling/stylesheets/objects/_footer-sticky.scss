@@ -18,16 +18,12 @@
   }
 }
 
-
 .main,
 .loader {
   flex: 1 0 auto; /* 2 */
 }
 
-.header, .footer {
+.header,
+.footer {
   flex: none; /* 2 */
 }
-
-.main { margin-top: var(--height--header); }
-
-.main__inner { @include spacing--m--top; }
