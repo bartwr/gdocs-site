@@ -47,7 +47,7 @@ export const Header = () => {
           <span aria-hidden='true' />
         </button>
 
-        <a className='Header__logo' href='#'>
+        <a className='Header__logo' href='/' onClick={() => FlowRouter.go('/')}>
           <img className='Header__image' src='/images/logo-nijverhoek.png' width='290' height='80' />
         </a>
 
