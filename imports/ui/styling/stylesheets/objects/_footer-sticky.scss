@@ -10,7 +10,7 @@
  * 3. Use `%` instead of `vh` since `vh` is buggy in older mobile Safari.
 */
 
-#root {
+#react-root {
   &:not(:empty) {
     display: flex;
     flex-direction: column;
