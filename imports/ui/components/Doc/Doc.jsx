@@ -71,14 +71,9 @@ export const Doc = (props) => {
           target='_blank'
           rel='external'
           title='Bewerk in Google Docs'
-          className='
-          inline-block px-2 no-underline
-          transition-transform
-          duration-200
-          transform
-          hover:scale-110
-        '
-        ></a>
+          style={{marginLeft: '10px', fontSize: '30px'}}>
+          📝
+        </a>
       </h1>
 
       {/* <a href="/" className="
