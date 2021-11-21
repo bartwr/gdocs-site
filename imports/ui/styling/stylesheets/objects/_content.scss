@@ -9,6 +9,7 @@
   margin: calc(var(--offset) / 2) calc(-1 * var(--gutter--m));
   padding: var(--spacing--m) var(--spacing--s);
   background-color: var(--color--bg-primary);
+  box-shadow: 0 ($px * 2) grid--l(2) 0 var(--color--box-shadow);
 
   @media only screen and (min-width: $breakpoint--tablet--m) {
     margin: calc(var(--offset) / 2) 0;
@@ -20,11 +21,16 @@
     content: '';
     position: absolute;
     top: calc(var(--offset) / -2);
-    left: calc(var(--offset) / 2);
-    width: calc(100% - var(--offset));
-    height: calc(100% + var(--offset));
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: var(--color--white--rgba-50);
-    border-radius: var(--border-radius--content);
     z-index: -1;
+
+    @media only screen and (min-width: $breakpoint--tablet--m) {
+      top: calc(var(--offset) / -2);
+      left: calc(var(--offset) / 2);
+      border-radius: var(--border-radius--content);
+    }
   }
 }

@@ -18,7 +18,7 @@ $breakpoint--header: $breakpoint--tablet--l;
   display: flex;
   align-items: center;
   height: var(--height--header);
-  box-shadow: 0 ($px * 2) ($px * 20) 0 var(--color--box-shadow);
+  box-shadow: 0 ($px * 2) grid--l(2) 0 var(--color--box-shadow);
   @include gutter--m;
 }
 
@@ -41,7 +41,7 @@ $breakpoint--header: $breakpoint--tablet--l;
   height: 100%;
   max-height: grid--l(5);
   transform: scale(1);
-  transition: transform $transition--normal;
+  transition: transform var(--transition--normal);
 
   @media only screen and (min-width: $breakpoint--header) {
     max-height: grid--l(8);
