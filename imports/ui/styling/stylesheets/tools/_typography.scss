@@ -8,12 +8,30 @@
   font-family: var(--font--titles);
 }
 
-@mixin title--xl {
+@mixin title--l {
   @include title-base;
   @include fluid-sizing($threshold--mobile, $threshold--desktop, ($px * 32), ($px * 56));
   line-height: calculate-relative-lineheight(($px * 56), ($px * 62));
   letter-spacing: var(--letterspacing--titles);
   color: var(--color--blue-200);
+}
+
+@mixin title--m {
+  @include fluid-sizing($threshold--mobile, $threshold--desktop, ($px * 24), ($px * 32));
+  line-height: calculate-relative-lineheight(($px * 32), ($px * 38));
+  font-weight: var(--weight--bold);
+}
+
+@mixin title--s {
+  @include fluid-sizing($threshold--mobile, $threshold--desktop, ($px * 20), ($px * 24));
+  line-height: calculate-relative-lineheight(($px * 24), ($px * 30));
+  font-weight: var(--weight--bold);
+}
+
+@mixin title--xs {
+  font-size: ($px * 18);
+  line-height: calculate-relative-lineheight(($px * 18), ($px * 24));
+  font-weight: var(--weight--bold);
 }
 
 // ----- Texts

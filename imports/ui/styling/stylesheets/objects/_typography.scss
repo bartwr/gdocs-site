@@ -13,13 +13,14 @@
 
 .text--styled {
   h1 {
-    @include title--xl;
+    @include title--l;
     padding-bottom: grid(2);
     margin-bottom: grid(3);
     border-bottom: $px solid var(--color--border);
   }
 
   h2 {
+    @include title--m;
     &:not(:last-child) { margin-bottom: grid--l(2); }
   }
 
@@ -30,11 +31,11 @@
     &:not(:last-child) { margin-bottom: grid--l(1); }
   }
 
-  h3 { }
+  h3 { @include title--s; }
 
   h4,
   h5,
-  h6 { }
+  h6 { @include title--xs; }
 
   p,
   blockquote {
