@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { isDesktop } from '/imports/ui/AppUtils'
+
 import { Header } from './components/Header/Header.jsx'
 import { Doc } from './components/Doc/Doc.jsx'
 
@@ -38,7 +40,6 @@ window.addEventListener('keyup', (e) => {
 // Close navigation when clicking outside of header/navigation
 document.documentElement.addEventListener('click', (e) => {
   const target = e.target || e.currentTarget;
-
   if (target.closest('.Header') === null && document.documentElement.classList.contains('Nav--toggled')) {
     document.documentElement.classList.remove('Nav--toggled')
   }

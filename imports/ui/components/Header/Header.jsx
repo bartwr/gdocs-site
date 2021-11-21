@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { convertRemToPx } from './HeaderUtils'
+import { isDesktop } from '/imports/ui/AppUtils'
 
 export const Header = () => {
   // Exclude nav items if they contain a forbidden word
@@ -16,7 +16,6 @@ export const Header = () => {
   }
 
   const isLinkActive = (id) => window.location.pathname.includes(id)
-  const isDesktop = window.innerWidth >= convertRemToPx(64) // 1024px
 
   useEffect(() => {
     Meteor.call('drive.getFolderFiles', '148bWv4FCGEeTBeEgwZCFjT7gn748s3vj', (err, res) => {
