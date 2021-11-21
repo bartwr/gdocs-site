@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { convertRemToPx } from './HeaderUtils'
+
 export const Header = () => {
   // Exclude nav items if they contain a forbidden word
   const navItemsToExclude = ['TEMPLATE', 'Welkom!', 'DRAFT']
@@ -14,6 +16,7 @@ export const Header = () => {
   }
 
   const isLinkActive = (id) => window.location.pathname.includes(id)
+  const isDesktop = window.innerWidth >= convertRemToPx(64) // 1024px
 
   useEffect(() => {
     Meteor.call('drive.getFolderFiles', '148bWv4FCGEeTBeEgwZCFjT7gn748s3vj', (err, res) => {
@@ -47,7 +50,14 @@ export const Header = () => {
           <span aria-hidden='true' />
         </button>
 
-        <a className='Header__logo' href='/' onClick={() => FlowRouter.go('/')}>
+        <a
+          className='Header__logo'
+          href='/'
+          onClick={() => {
+            FlowRouter.go('/')
+            !isDesktop && closeNav()
+          }}
+        >
           <img className='Header__image' src='/images/logo-nijverhoek.png' width='290' height='80' />
         </a>
 
