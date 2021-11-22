@@ -15,26 +15,58 @@ export const Header = () => {
     })
   }
 
+  // Auto hide header on scroll
+  const autoHideHeader = () => {
+    const header = document.getElementById("Header");
+
+    let lastKnownScrollPosition = 0, direction = 0, ticking = false;
+
+    window.addEventListener("scroll", (e) => { 
+      direction = lastKnownScrollPosition - window.scrollY;
+      lastKnownScrollPosition = window.scrollY;
+
+      if (! ticking) {
+        window.requestAnimationFrame(function() {
+          if (direction < 0) {
+            header.classList.add('did-scroll');
+            closeNav();
+          }
+          else {
+            header.classList.remove('did-scroll');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+
   const isLinkActive = (id) => window.location.pathname.includes(id)
 
+  const toggleNav = () => {
+    setNavMode((isNavOpen) => !isNavOpen)
+    document.documentElement.classList.toggle('Nav--toggled')
+  }
+
+  const closeNav = () => {
+    setNavMode(false)
+    document.documentElement.classList.remove('Nav--toggled')
+  }
+
+  // On page load: get navigation items from Google Drive
   useEffect(() => {
     Meteor.call('drive.getFolderFiles', '148bWv4FCGEeTBeEgwZCFjT7gn748s3vj', (err, res) => {
       setFolderDocs(sortAlphabetically(res, 'name'))
     })
   }, [])
 
-  toggleNav = () => {
-    setNavMode((isNavOpen) => !isNavOpen)
-    document.documentElement.classList.toggle('Nav--toggled')
-  }
-
-  closeNav = () => {
-    setNavMode(false)
-    document.documentElement.classList.remove('Nav--toggled')
-  }
+  // On page load: init autoHideHeader
+  useEffect(() => {
+    autoHideHeader();
+  }, [])
 
   return (
-    <header className='Header'>
+    <header className='Header' id='Header'>
       <div className='Header__inner'>
         <button
           className='Toggler'
@@ -53,7 +85,11 @@ export const Header = () => {
           className='Header__logo'
           href='/'
           onClick={() => {
+            // Navigate to home
             FlowRouter.go('/')
+            // Scroll to top
+            window.scrollTo(0, 0)
+            // Close nav if on mobile
             !isDesktop && closeNav()
           }}
         >
