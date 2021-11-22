@@ -55,6 +55,7 @@ $map--size-implementations: ();
   --spacing--wysiwyg: calc(#{$px} * 30);
   --height--header: calc(#{$px} * 88);
   --indentation--lists: calc(#{$px} * 24);
+  --offset--content: calc(#{$px} * 30);
 
   @media only screen and (min-width: $breakpoint--tablet--m) {
     --gutter--m: calc(#{$px} * 40);
