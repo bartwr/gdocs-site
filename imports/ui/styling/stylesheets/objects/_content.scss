@@ -32,4 +32,14 @@
       border-radius: var(--border-radius--content);
     }
   }
+
+  h2 {
+    position: relative;
+
+    // Avoid header falling over anchor
+    span {
+      position: absolute;  
+      top: calc(var(--height--header) * -1);
+    }
+  }
 }

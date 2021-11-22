@@ -1,0 +1,82 @@
+// ==========================================================================
+// OBJECTS | Table of Contents
+// ==========================================================================
+
+$breakpoint--toc: $breakpoint--tablet--l;
+
+.ToC {
+  margin-bottom: grid(3);
+
+  @media only screen and (min-width: $breakpoint--toc) {
+    flex-shrink: 0;
+    width: grid--l(24);
+    margin-right: var(--gutter--m);
+    margin: var(--offset--content) var(--gutter--m) var(--offset--content) 0;
+    padding-top: var(--spacing--m);
+  }
+
+  h2 {
+    position: relative;
+    margin-bottom: grid(3);
+    color: var(--color--secondary);
+    @include title--m;
+  }
+
+  ol {
+    > li {  
+      // Overwrite indentation for sublists; add extra spacing for additional decimal
+      > ol > li {
+        padding-left: calc(.5 * #{var(--indentation--lists)});
+
+        > ol > li {
+          padding-left: calc(1 * #{var(--indentation--lists)});
+
+          > ol > li {
+            padding-left: calc(1.5 * #{var(--indentation--lists)});
+          }
+        }
+      }
+    }
+
+    ol,
+    li + li { margin-top: grid--l(2); }
+  }
+
+  a {
+    font-weight: var(--weight--semibold);
+    color: var(--color--text);
+    transition: color var(--transition--normal);
+    @include link--inverted-hover-animation(var(--color--link-hover));
+
+    &:hover,
+    &:focus { color: var(--color--link-hover); }
+
+    &:before {
+      content: '#. ';
+      color: var(--color--link);
+    }
+  }
+
+  @media only screen and (max-width: ($breakpoint--toc - $px)) {
+    display: none;
+  }
+}
+
+.ToC__inner {
+  @media only screen and (min-width: $breakpoint--toc) {
+    position: sticky;
+    top: calc(var(--height--header) + #{grid(2)});
+  }
+}
+
+// .ToC__title {
+//   @media only screen and (max-width: ($breakpoint--toc - $px)) {
+//     display: none;
+//   }
+// }
+
+// .ToC__toggle {
+//   @media only screen and (min-width: $breakpoint--toc) {
+//     display: none;
+//   }
+// }

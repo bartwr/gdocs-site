@@ -2,6 +2,11 @@
 // Objects | Typography
 // ==========================================================================
 
+.title--l { @include title--l; }
+.title--m { @include title--m; }
+.title--s { @include title--s; }
+.title--xs { @include title--xs; }
+
 .text--m { @include text--m; }
 .text--s { @include text--s; }
 

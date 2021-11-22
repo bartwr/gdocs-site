@@ -16,4 +16,8 @@
   width: 100%;
   flex-grow: 1;
   @include spacing--m--top;
+
+  @media only screen and (min-width: $breakpoint--tablet--l) {
+    flex-direction: row;
+  }
 }
