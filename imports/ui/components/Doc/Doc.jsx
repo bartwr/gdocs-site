@@ -16,7 +16,7 @@ export const Doc = (props) => {
   const [doc, setDoc] = useState('')
   const [isToCOpen, setToCMode] = useState(false)
 
-  // Function fetchDoc :: fetched document from Google Docs
+  // Function fetchDoc :: fetches document from Google Docs
   const fetchDoc = () => {
     // Get document from store
     const documentFromStore = findDocument(documentsArray, props.documentId)
@@ -94,7 +94,7 @@ export const Doc = (props) => {
       return k
     }
     var node = coll[k]
-    ctx.push(`<li><a href='#${node.anchor}'>${node.text}</a>`)
+    ctx.push(`<li><a href='#${node.anchor}' class='animate-scroll'>${node.text}</a>`)
     k++
     var childCtx = []
     k = build(coll, k, node.level, childCtx)
@@ -114,6 +114,21 @@ export const Doc = (props) => {
   ctx.push('<ol>')
   build(toc, 0, 0, ctx)
   ctx.push('</ol>')
+
+  // Scroll to element smoothly if outline link is clicked
+  const triggers = [].slice.call(document.querySelectorAll('.animate-scroll'));
+  triggers.forEach(function (el) {
+    const clickHandler = (e) => {
+      // Prevent the default action
+      e.preventDefault();
+      // Get the `href` attribute
+      const href = e.target.getAttribute('href');
+      const id = href.substr(1);
+      const target = document.getElementById(id);
+      target.scrollIntoView({ behavior: 'smooth' });
+    };
+    el.addEventListener('click', clickHandler);
+  });
 
   toggleToc = () => {
     setToCMode((isToCOpen) => !isToCOpen)
