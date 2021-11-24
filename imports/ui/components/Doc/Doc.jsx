@@ -4,11 +4,7 @@ import { saveDocTitle, saveDocContent } from '/imports/reducers/doc'
 import { findDocument } from '/imports/reducers/doc'
 import { marked } from 'marked'
 import { isDesktop } from '/imports/ui/AppUtils'
-import {
-  findGoogleLinks,
-  updateGoogleLinksToLocalLinks,
-  openExternalLinksInNewTab
-} from './DocUtils.js';
+import { findGoogleLinks, updateGoogleLinksToLocalLinks, openExternalLinksInNewTab } from './DocUtils.js'
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
@@ -42,7 +38,7 @@ export const Doc = (props) => {
     }
     // Now get latest version from Google Drive
     Meteor.call('docs.getFormattedDoc', props.documentId, (err, docInMarkdown) => {
-      const docWithReplacedDriveLinks = updateGoogleLinksToLocalLinks(docInMarkdown, folderFromStore);
+      const docWithReplacedDriveLinks = updateGoogleLinksToLocalLinks(docInMarkdown, folderFromStore)
       setDoc(docWithReplacedDriveLinks)
       // Save doc content in Redux store
       dispatch(
@@ -56,7 +52,7 @@ export const Doc = (props) => {
         documentId: props.documentId,
         content: docWithReplacedDriveLinks
       })
-      openExternalLinksInNewTab();
+      openExternalLinksInNewTab()
     })
   }
 
@@ -90,12 +86,12 @@ export const Doc = (props) => {
   // Generate Table of Contents with different levels
   // https://github.com/markedjs/marked/issues/545#issuecomment-495093214
   const toc = []
-  var renderer = (function () {
+  const renderer = (function () {
     var renderer = new marked.Renderer()
     renderer.heading = function (text, level, raw) {
-      var anchor = this.options.headerPrefix + raw.toLowerCase().replace(/[^\w\\u4e00-\\u9fa5]]+/g, '-')
+      const anchor = this.options.headerPrefix + raw.toLowerCase().replace(/[^\w\\u4e00-\\u9fa5]]+/g, '-')
       toc.push({ anchor: anchor, level: level, text: text })
-      return `<h2>${text} <span id="${anchor}" /></h2>`
+      return `<h${level}>${text} <span id="${anchor}" /></h${level}>`
     }
     return renderer
   })()
@@ -105,10 +101,10 @@ export const Doc = (props) => {
     if (k >= coll.length || coll[k].level <= level) {
       return k
     }
-    var node = coll[k]
+    const node = coll[k]
     ctx.push(`<li><a href='#${node.anchor}' class='animate-scroll'>${node.text}</a>`)
     k++
-    var childCtx = []
+    const childCtx = []
     k = build(coll, k, node.level, childCtx)
     if (childCtx.length > 0) {
       ctx.push('<ol>')
@@ -121,26 +117,25 @@ export const Doc = (props) => {
     k = build(coll, k, level, ctx)
     return k
   }
-  var html = marked(strippedDoc)
-  var ctx = []
+  const ctx = []
   ctx.push('<ol>')
   build(toc, 0, 0, ctx)
   ctx.push('</ol>')
 
   // Scroll to element smoothly if outline link is clicked
-  const triggers = [].slice.call(document.querySelectorAll('.animate-scroll'));
+  const triggers = [].slice.call(document.querySelectorAll('.animate-scroll'))
   triggers.forEach(function (el) {
     const clickHandler = (e) => {
       // Prevent the default action
-      e.preventDefault();
+      e.preventDefault()
       // Get the `href` attribute
-      const href = e.target.getAttribute('href');
-      const id = href.substr(1);
-      const target = document.getElementById(id);
-      target.scrollIntoView({ behavior: 'smooth' });
-    };
-    el.addEventListener('click', clickHandler);
-  });
+      const href = e.target.getAttribute('href')
+      const id = href.substr(1)
+      const target = document.getElementById(id)
+      target.scrollIntoView({ behavior: 'smooth' })
+    }
+    el.addEventListener('click', clickHandler)
+  })
 
   toggleToc = () => {
     setToCMode((isToCOpen) => !isToCOpen)
