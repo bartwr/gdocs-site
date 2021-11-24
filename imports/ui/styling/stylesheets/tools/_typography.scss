@@ -34,6 +34,12 @@
   font-weight: var(--weight--bold);
 }
 
+@mixin title--xxs {
+  font-size: ($px * 16);
+  line-height: calculate-relative-lineheight(($px * 16), ($px * 20));
+  font-weight: var(--weight--bold);
+}
+
 // ----- Texts
 
 @mixin text-base {

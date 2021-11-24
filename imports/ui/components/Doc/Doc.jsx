@@ -148,6 +148,7 @@ export const Doc = (props) => {
   }
   return (
     <>
+      {/* Table of Contents */}
       <section className='ToC'>
         <div className='ToC__inner'>
           {/* Title shows on desktop, button should show on mobile */}
@@ -158,7 +159,8 @@ export const Doc = (props) => {
           <div aria-hidden={!isToCOpen} dangerouslySetInnerHTML={{ __html: ctx.join('') }} />
         </div>
       </section>
-
+      
+      {/* Content */}
       <section className='Content text--styled'>
         <h1>
           <span className='Content__title'>{title}</span>
@@ -167,7 +169,7 @@ export const Doc = (props) => {
             target='_blank'
             rel='external'
             title='Bewerk in Google Docs'
-            style={{ marginLeft: '1rem', fontSize: '1rem', fontWeight: 'normal' }}
+            className="Content__edit"
           >
             bewerk
           </a>

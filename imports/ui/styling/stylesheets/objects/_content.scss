@@ -43,3 +43,12 @@
     }
   }
 }
+
+.Content__title {
+  margin-right: grid(2);
+}
+
+.Content__edit {
+  display: inline-block;
+  @include title--xxs;
+}
