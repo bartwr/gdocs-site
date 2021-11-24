@@ -9,6 +9,7 @@
 .text--styled {
   a {
     color: var(--color--link);
+    word-break: break-word; // When URLs are too long for mobile
     @include link--hover-animation(var(--color--link));
     
     &:hover,

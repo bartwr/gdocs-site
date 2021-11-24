@@ -56,10 +56,6 @@ $breakpoint--toc: $breakpoint--tablet--l;
       color: var(--color--link);
     }
   }
-
-  @media only screen and (max-width: ($breakpoint--toc - $px)) {
-    display: none;
-  }
 }
 
 .ToC__inner {
@@ -72,14 +68,77 @@ $breakpoint--toc: $breakpoint--tablet--l;
   }
 }
 
-// .ToC__title {
-//   @media only screen and (max-width: ($breakpoint--toc - $px)) {
-//     display: none;
-//   }
-// }
+.ToC__title {
+  @media only screen and (max-width: ($breakpoint--toc - $px)) {
+    display: none;
+  }
+}
 
-// .ToC__toggle {
-//   @media only screen and (min-width: $breakpoint--toc) {
-//     display: none;
-//   }
-// }
+.ToC__toggle {
+  @media only screen and (max-width: ($breakpoint--toc - $px)) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: grid(3);
+    width: 100%;
+    text-align: left;
+    font-weight: var(--weight--bold);
+    background-color: var(--color--bg-primary);
+    transition: border-radius var(--transition--normal);
+
+    &[aria-expanded="false"] {
+      border-radius: var(--border-radius--content);
+    }
+    
+    &[aria-expanded="true"] {
+      border-bottom: $px solid var(--color--border);
+      border-radius: var(--border-radius--content) var(--border-radius--content) 0 0;
+
+      .ToC__toggle-icon { transform: rotate(180deg); }
+    }
+
+    &:hover,
+    &:focus {
+      .ToC__toggle-label { color: var(--color--link); }
+      .ToC__toggle-icon { fill: var(--color--link); }
+    }
+  }
+
+  @media only screen and (min-width: $breakpoint--toc) {
+    display: none;
+  }
+}
+
+.ToC__toggle-label {
+  @media only screen and (max-width: ($breakpoint--toc - $px)) {
+    color: var(--color--secondary);
+    transition: color var(--transition--normal);
+  }
+}
+
+.ToC__toggle-icon {
+  @media only screen and (max-width: ($breakpoint--toc - $px)) {
+    width: grid(1.5);
+    height: grid(1.5);
+    transition: transform var(--transition--normal), fill var(--transition--normal);
+  }
+}
+
+.ToC__content {
+  @media only screen and (max-width: ($breakpoint--toc - $px)) {
+    &[aria-hidden="true"] {
+      visibility: hidden;
+      height: 0;
+      opacity: 0;
+    }
+    
+    &[aria-hidden="false"] {
+      visibility: visible;
+      height: auto;
+      opacity: 1;
+      padding: grid(2) grid(3) grid(5);
+      background-color: var(--color--bg-primary);
+      border-radius: 0 0 var(--border-radius--content) var(--border-radius--content);
+    }
+  }
+}

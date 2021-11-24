@@ -134,29 +134,37 @@ export const Doc = (props) => {
       const target = document.getElementById(id)
       target.scrollIntoView({ behavior: 'smooth' })
     }
-    el.addEventListener('click', clickHandler)
+    el.addEventListener('click', clickHandler);
+    el.addEventListener('click', () => closeToC());
   })
 
-  toggleToc = () => {
+  const toggleToC = () => {
     setToCMode((isToCOpen) => !isToCOpen)
     document.documentElement.classList.toggle('ToC--toggled')
   }
 
-  closeToc = () => {
+  const closeToC = () => {
     setToCMode(false)
     document.documentElement.classList.remove('ToC--toggled')
   }
+
   return (
     <>
       {/* Table of Contents */}
       <section className='ToC'>
         <div className='ToC__inner'>
-          {/* Title shows on desktop, button should show on mobile */}
+          {/* Desktop title */}
           <h2 className='ToC__title'>Inhoud</h2>
-          {/* <button className='ToC__toggle' aria-expanded={isToCOpen} onClick={() => toggleToC()}>
-            Inhoud
-          </button> */}
-          <div aria-hidden={!isToCOpen} dangerouslySetInnerHTML={{ __html: ctx.join('') }} />
+
+          {/* Mobile button */}
+          <button className='ToC__toggle' aria-expanded={isToCOpen} onClick={() => toggleToC()}>
+            <span className="ToC__toggle-label">Inhoud</span>
+            <svg className="ToC__toggle-icon">
+              <use xlinkHref="#icon--chevron" />
+            </svg>
+          </button>
+
+          <div className="ToC__content" aria-hidden={!isToCOpen} dangerouslySetInnerHTML={{ __html: ctx.join('') }} />
         </div>
       </section>
       
