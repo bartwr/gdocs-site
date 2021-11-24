@@ -7,6 +7,23 @@ import { isDesktop } from '/imports/ui/AppUtils'
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
+const findGoogleLinks = (input) => {
+  const pattern = new RegExp("https://docs\.google\.com/document/u/0/d/(.*)/edit", "g");
+  const matches = input.matchAll(pattern);
+  for (const match of matches) {
+    console.log(`Found ${match[0]} start=${match.index} end=${match.index + match[0].length}.`);
+  }
+  return input;
+} 
+
+const updateLinks = (content) => {
+  // Find all Google Docs links
+  // Links look like this: https://docs.google.com/document/u/0/d/1W5Ye92m0v_f6C_1Xc_mnheSIoIXxt4b5BVgh8nYhyWY/edit
+  const links = findGoogleLinks(content)
+  // console.log('links', links)
+  return content;
+}
+
 export const Doc = (props) => {
   const dispatch = useDispatch()
   const documentsArray = useSelector((state) => state.doc)
@@ -32,18 +49,19 @@ export const Doc = (props) => {
     }
     // Now get latest version from Google Drive
     Meteor.call('docs.getFormattedDoc', props.documentId, (err, docInMarkdown) => {
-      setDoc(docInMarkdown)
+      const docWithReplacedDriveLinks = updateLinks(docInMarkdown);
+      setDoc(docWithReplacedDriveLinks)
       // Save doc content in Redux store
       dispatch(
         saveDocContent({
           documentId: props.documentId,
-          content: docInMarkdown
+          content: docWithReplacedDriveLinks
         })
       )
       // Save doc content in database
       Meteor.call('docs.updateDocContent', {
         documentId: props.documentId,
-        content: docInMarkdown
+        content: docWithReplacedDriveLinks
       })
     })
   }

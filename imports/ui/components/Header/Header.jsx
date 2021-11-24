@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { saveFolderFiles } from '/imports/reducers/folder'
 
 import { isDesktop } from '/imports/ui/AppUtils'
 
 export const Header = () => {
+  const dispatch = useDispatch()
+
+  // Get folder from store
+  const folderFromStore = useSelector((state) => state.folder)
+
   // Exclude nav items if they contain a forbidden word
   const navItemsToExclude = ['TEMPLATE', 'Welkom!', 'DRAFT']
   const [folderDocs, setFolderDocs] = useState([])
@@ -55,8 +62,16 @@ export const Header = () => {
 
   // On page load: get navigation items from Google Drive
   useEffect(() => {
+    // Get folder from store
+    if(folderFromStore) {
+      setFolderDocs(folderFromStore)
+    }
+    // Now get most recent folder contents from Drive
     Meteor.call('drive.getFolderFiles', '148bWv4FCGEeTBeEgwZCFjT7gn748s3vj', (err, res) => {
-      setFolderDocs(sortAlphabetically(res, 'name'))
+      const sortedFiles = sortAlphabetically(res, 'name');
+      setFolderDocs(sortedFiles)
+      // Save folder docs in Redux store
+      dispatch( saveFolderFiles(sortedFiles) )
     })
   }, [])
 

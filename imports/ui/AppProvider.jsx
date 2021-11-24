@@ -26,7 +26,8 @@ const store = createStore(
 store.subscribe(() => {
   const storeState = store.getState();
   const storeStateToSaveInLocalStorage = {
-    doc: storeState.doc
+    doc: storeState.doc,
+    folder: storeState.folder
   }
   localStorage.setItem('NIJVER_reduxState', JSON.stringify(storeStateToSaveInLocalStorage))
 })
