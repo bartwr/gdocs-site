@@ -4,7 +4,11 @@ import { saveDocTitle, saveDocContent } from '/imports/reducers/doc'
 import { findDocument } from '/imports/reducers/doc'
 import { marked } from 'marked'
 import { isDesktop } from '/imports/ui/AppUtils'
-import {findGoogleLinks, updateGoogleLinksToLocalLinks} from './DocUtils.js';
+import {
+  findGoogleLinks,
+  updateGoogleLinksToLocalLinks,
+  openExternalLinksInNewTab
+} from './DocUtils.js';
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
@@ -52,6 +56,7 @@ export const Doc = (props) => {
         documentId: props.documentId,
         content: docWithReplacedDriveLinks
       })
+      openExternalLinksInNewTab();
     })
   }
 
