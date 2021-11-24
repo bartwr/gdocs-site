@@ -25,16 +25,8 @@ $breakpoint--toc: $breakpoint--tablet--l;
   ol {
     > li {  
       // Overwrite indentation for sublists; add extra spacing for additional decimal
-      > ol > li {
+      ol > li {
         padding-left: calc(.5 * #{var(--indentation--lists)});
-
-        > ol > li {
-          padding-left: calc(1 * #{var(--indentation--lists)});
-
-          > ol > li {
-            padding-left: calc(1.5 * #{var(--indentation--lists)});
-          }
-        }
       }
     }
 
