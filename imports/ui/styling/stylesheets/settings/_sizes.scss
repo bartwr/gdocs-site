@@ -65,7 +65,7 @@ $map--size-implementations: ();
   }
 
   @media only screen and (min-width: $breakpoint--tablet--l) {
-    --height--header: calc(#{$px} * 160);
+    --height--header: calc(#{$px} * 128);
   }
 
   @media only screen and (min-width: $breakpoint--desktop--m) {
