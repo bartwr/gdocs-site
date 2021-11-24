@@ -112,6 +112,7 @@ $breakpoint--toc: $breakpoint--tablet--l;
   @media only screen and (max-width: ($breakpoint--toc - $px)) {
     width: grid(1.5);
     height: grid(1.5);
+    fill: var(--color--secondary);
     transition: transform var(--transition--normal), fill var(--transition--normal);
   }
 }
