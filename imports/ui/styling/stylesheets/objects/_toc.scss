@@ -17,7 +17,7 @@ $breakpoint--toc: $breakpoint--tablet--l;
 
   h2 {
     position: relative;
-    margin-bottom: grid(3);
+    margin-bottom: grid(2);
     color: var(--color--secondary);
     @include title--m;
   }
@@ -39,7 +39,7 @@ $breakpoint--toc: $breakpoint--tablet--l;
     }
 
     ol,
-    li + li { margin-top: grid--l(2); }
+    li + li { margin-top: grid(1); }
   }
 
   a {
@@ -66,6 +66,9 @@ $breakpoint--toc: $breakpoint--tablet--l;
   @media only screen and (min-width: $breakpoint--toc) {
     position: sticky;
     top: calc(var(--height--header) + #{grid(2)});
+    transition: top .6s ease-in;
+
+    .Header--invisible & { top: grid(2); }
   }
 }
 

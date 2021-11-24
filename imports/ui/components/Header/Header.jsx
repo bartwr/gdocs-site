@@ -36,10 +36,14 @@ export const Header = () => {
         window.requestAnimationFrame(function() {
           if (direction < 0) {
             header.classList.add('did-scroll');
+            document.documentElement.classList.add('Header--invisible');
+            document.documentElement.classList.remove('Header--visible');
             closeNav();
           }
           else {
             header.classList.remove('did-scroll');
+            document.documentElement.classList.remove('Header--invisible');
+            document.documentElement.classList.add('Header--visible');
           }
           ticking = false;
         });
