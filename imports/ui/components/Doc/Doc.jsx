@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { saveDocTitle, saveDocContent } from '/imports/reducers/doc'
 import { findDocument } from '/imports/reducers/doc'
 import { marked } from 'marked'
-import { isDesktop } from '/imports/ui/AppUtils'
-import { findGoogleLinks, updateGoogleLinksToLocalLinks, openExternalLinksInNewTab } from './DocUtils.js'
+import { updateGoogleLinksToLocalLinks, openExternalLinksInNewTab } from './DocUtils.js'
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
@@ -86,10 +85,10 @@ export const Doc = (props) => {
   // Generate Table of Contents with different levels
   // https://github.com/markedjs/marked/issues/545#issuecomment-495093214
   const toc = []
-  const renderer = (function () {
+  var renderer = (function () {
     var renderer = new marked.Renderer()
     renderer.heading = function (text, level, raw) {
-      const anchor = this.options.headerPrefix + raw.toLowerCase().replace(/[^\w\\u4e00-\\u9fa5]]+/g, '-')
+      var anchor = this.options.headerPrefix + raw.toLowerCase().replace(/[^\w\\u4e00-\\u9fa5]]+/g, '-')
       toc.push({ anchor: anchor, level: level, text: text })
       return `<h${level}>${text} <span id="${anchor}" /></h${level}>`
     }
@@ -101,10 +100,10 @@ export const Doc = (props) => {
     if (k >= coll.length || coll[k].level <= level) {
       return k
     }
-    const node = coll[k]
+    var node = coll[k]
     ctx.push(`<li><a href='#${node.anchor}' class='animate-scroll'>${node.text}</a>`)
     k++
-    const childCtx = []
+    var childCtx = []
     k = build(coll, k, node.level, childCtx)
     if (childCtx.length > 0) {
       ctx.push('<ol>')
@@ -117,7 +116,8 @@ export const Doc = (props) => {
     k = build(coll, k, level, ctx)
     return k
   }
-  const ctx = []
+  var html = marked(strippedDoc)
+  var ctx = []
   ctx.push('<ol>')
   build(toc, 0, 0, ctx)
   ctx.push('</ol>')
