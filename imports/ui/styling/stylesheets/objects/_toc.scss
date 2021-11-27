@@ -23,18 +23,23 @@ $breakpoint--toc: $breakpoint--tablet--l;
   }
 
   ol {
+    li { line-height: 1.4; }
+
     > li {  
       // Overwrite indentation for sublists; add extra spacing for additional decimal
       ol > li {
         padding-left: calc(.5 * #{var(--indentation--lists)});
+
+        // a:before { content: '##. '; }
       }
     }
 
     ol,
-    li + li { margin-top: grid(1); }
+    li + li { margin-top: grid--l(1); }
   }
 
   a {
+    hyphens: auto;
     font-weight: var(--weight--semibold);
     color: var(--color--text);
     transition: color var(--transition--normal);

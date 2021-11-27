@@ -23,7 +23,7 @@
 }
 
 @mixin title--s {
-  @include fluid-sizing($threshold--mobile, $threshold--desktop, ($px * 20), ($px * 24));
+  @include fluid-sizing($threshold--mobile, $threshold--desktop, ($px * 20), ($px * 22));
   line-height: calculate-relative-lineheight(($px * 24), ($px * 30));
   font-weight: var(--weight--bold);
 }
