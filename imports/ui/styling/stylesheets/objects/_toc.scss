@@ -30,7 +30,15 @@ $breakpoint--toc: $breakpoint--tablet--l;
       ol > li {
         padding-left: calc(.5 * #{var(--indentation--lists)});
 
-        // a:before { content: '##. '; }
+        a {
+          font-weight: var(--weight--regular);
+          font-size: ($px * 14);
+
+          &:before { content: ''; }
+        }
+
+        // 3rd level is italic
+        ol>li { font-style: italic; }
       }
     }
 
