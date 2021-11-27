@@ -159,10 +159,9 @@ $breakpoint--header: $breakpoint--tablet--l;
   }
 
   .Nav__link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: grid--l(2) var(--gutter--m);
+    position: relative;
+    display: block;
+    padding: grid--l(2) grid--l(6) grid--l(2) var(--gutter--m);
     font-size: ($px * 18);
     line-height: calculate-relative-lineheight( ($px * 18), ($px * 24) );
     color: var(--color--link-header);
@@ -172,7 +171,7 @@ $breakpoint--header: $breakpoint--tablet--l;
     @include fauxlink--inverted-hover-animation(currentColor, 'span');
 
     @media only screen and (min-width: $breakpoint--header) {
-      padding: grid--l(2) grid--l(3);
+      padding: grid--l(2) grid--l(5) grid--l(2) grid--l(3);
     }
   }
 
@@ -185,7 +184,14 @@ $breakpoint--header: $breakpoint--tablet--l;
 
   .Nav__icon {
     flex-shrink: 0;
+    position: absolute;
+    top: 50%;
+    right: grid--l(4);
+    transform: translateY(-50%) rotate(-90deg);
     margin-left: grid(1);
-    transform: rotate(-90deg);
+
+    @media only screen and (min-width: $breakpoint--header) {
+      right: grid--l(3);
+    }
   }
 }
