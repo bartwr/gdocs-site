@@ -46,6 +46,8 @@
 
 .Content__title {
   margin-right: grid(2);
+  hyphens: auto;
+  word-break: break-word;
 }
 
 .Content__edit {
