@@ -24,32 +24,33 @@ export const Header = () => {
 
   // Auto hide header on scroll
   const autoHideHeader = () => {
-    const header = document.getElementById("Header");
+    const header = document.getElementById('Header')
 
-    let lastKnownScrollPosition = 0, direction = 0, ticking = false;
+    let lastKnownScrollPosition = 0,
+      direction = 0,
+      ticking = false
 
-    window.addEventListener("scroll", (e) => { 
-      direction = lastKnownScrollPosition - window.scrollY;
-      lastKnownScrollPosition = window.scrollY;
+    window.addEventListener('scroll', (e) => {
+      direction = lastKnownScrollPosition - window.scrollY
+      lastKnownScrollPosition = window.scrollY
 
-      if (! ticking) {
-        window.requestAnimationFrame(function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
           if (direction < 0) {
-            header.classList.add('did-scroll');
-            document.documentElement.classList.add('Header--invisible');
-            document.documentElement.classList.remove('Header--visible');
-            closeNav();
+            header.classList.add('did-scroll')
+            document.documentElement.classList.add('Header--invisible')
+            document.documentElement.classList.remove('Header--visible')
+            closeNav()
+          } else {
+            header.classList.remove('did-scroll')
+            document.documentElement.classList.remove('Header--invisible')
+            document.documentElement.classList.add('Header--visible')
           }
-          else {
-            header.classList.remove('did-scroll');
-            document.documentElement.classList.remove('Header--invisible');
-            document.documentElement.classList.add('Header--visible');
-          }
-          ticking = false;
-        });
-        ticking = true;
+          ticking = false
+        })
+        ticking = true
       }
-    });
+    })
   }
 
   const isLinkActive = (id) => window.location.pathname.includes(id)
@@ -67,21 +68,21 @@ export const Header = () => {
   // On page load: get navigation items from Google Drive
   useEffect(() => {
     // Get folder from store
-    if(folderFromStore) {
+    if (folderFromStore) {
       setFolderDocs(folderFromStore)
     }
     // Now get most recent folder contents from Drive
     Meteor.call('drive.getFolderFiles', '148bWv4FCGEeTBeEgwZCFjT7gn748s3vj', (err, res) => {
-      const sortedFiles = sortAlphabetically(res, 'name');
+      const sortedFiles = sortAlphabetically(res, 'name')
       setFolderDocs(sortedFiles)
       // Save folder docs in Redux store
-      dispatch( saveFolderFiles(sortedFiles) )
+      dispatch(saveFolderFiles(sortedFiles))
     })
   }, [])
 
   // On page load: init autoHideHeader
   useEffect(() => {
-    autoHideHeader();
+    autoHideHeader()
   }, [])
 
   return (
@@ -118,10 +119,25 @@ export const Header = () => {
         <nav className='Header__nav Nav--header' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
           <ul className='Nav__items'>
             {folderDocs &&
-              folderDocs.map((x) => {
+              [
+                ...folderDocs,
+                { id: 'a', name: 'Zonnepanelen: bbbbb', webViewLink: '/' },
+                { id: 'b', name: 'Zonnepanelen: hhhhh', webViewLink: '/' },
+                { id: 'd', name: 'Zonnepanelen: xxxxx', webViewLink: '/' },
+                { id: 'd', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
+              ].map((x, i, array) => {
+                // Don't render nav items with forbidden words
                 const navTitleContainsForbiddenWord =
                   navItemsToExclude.filter((forbiddenWord) => x.name.indexOf(forbiddenWord) > -1).length >= 1
                 if (navTitleContainsForbiddenWord) return
+
+                // Submenu
+                // Check if a nav item has children (a.k.a. when next nav item starts with the same name followed by a colon)
+                const navItemHasChildren = array[i + 1] && array[i + 1].name.startsWith(`${x.name}:`)
+                // Create an array with the current nav item's children. When an item has children, the array's length is >= 1. Otherwise it's 0.
+                const navItemChildren = array.filter((navItem) => navItem['name'].startsWith(`${array[i].name}:`))
+                // Remove that same amount of children from the original array, so that the children aren't rendered as main menu items.
+                navItemChildren.length >= 1 ? array.splice(i + 1, navItemChildren.length) : undefined
                 return (
                   <li key={x.id} className='Nav__item'>
                     <a
@@ -139,6 +155,24 @@ export const Header = () => {
                         <use xlinkHref='#icon--chevron' />
                       </svg>
                     </a>
+
+                    {navItemHasChildren && (
+                      <>
+                        <button>
+                          <span>Submenu toggle</span>
+                          <svg className='Nav__icon' width='10px' height='10px' aria-hidden='true'>
+                            <use xlinkHref='#icon--chevron' />
+                          </svg>
+                        </button>
+                        <ul>
+                          {navItemChildren
+                            .filter((item) => item.name.startsWith(`${x.name}:`))
+                            .map((n) => (
+                              <li>{n.name.replace(`${x.name}:`, '')}</li>
+                            ))}
+                        </ul>
+                      </>
+                    )}
                   </li>
                 )
               })}
