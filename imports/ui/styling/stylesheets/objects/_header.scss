@@ -181,6 +181,10 @@ $breakpoint--header: $breakpoint--tablet--l;
     @media only screen and (min-width: $breakpoint--header) {
       padding: grid--l(2) var(--navlink--pr) grid--l(2) grid--l(3);
     }
+
+    &.Nav__sublink {
+      font-size: ($px * 12);
+    }
   }
 
   .Nav__link--active {

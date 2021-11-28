@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { saveFolderFiles } from '/imports/reducers/folder'
 
 import { isDesktop } from '/imports/ui/AppUtils'
+import { isLinkActive, isChildActive } from './HeaderUtils.js'
+
+// Import components
+import {SubNav} from './SubNav.jsx';
 
 export const Header = () => {
   const dispatch = useDispatch()
@@ -14,12 +18,6 @@ export const Header = () => {
   const navItemsToExclude = ['TEMPLATE', 'Welkom!', 'DRAFT']
   const [folderDocs, setFolderDocs] = useState([])
   const [isNavOpen, setNavMode] = useState(false)
-  const [isSubNavOpen, setSubNavMode] = useState(false)
-
-  const isLinkActive = (id) => window.location.pathname.includes(id)
-  const isChildActive = (children) => children.filter((child) => child.id).find((child) => window.location.pathname.includes(child.id))
-  ? true
-  : false
 
   const toggleNav = () => {
     setNavMode((isNavOpen) => !isNavOpen)
@@ -28,13 +26,8 @@ export const Header = () => {
 
   const closeNav = () => {
     setNavMode(false)
-    setSubNavMode(false)
     document.documentElement.classList.remove('Nav--toggled')
   }
-  const toggleSubNav = () => {
-    setSubNavMode((isSubNavOpen) => !isSubNavOpen)
-  }
-
 
   // Sort array on sub key
   const sortAlphabetically = (elements, key) => {
@@ -130,10 +123,10 @@ export const Header = () => {
             {folderDocs &&
               [
                 ...folderDocs,
-                { id: 'a11111', name: 'Zonnepanelen: bbbbb', webViewLink: '/' },
-                { id: 'b111111', name: 'Zonnepanelen: hhhhh', webViewLink: '/' },
-                { id: 'd111111', name: 'Zonnepanelen: xxxxx', webViewLink: '/' },
-                { id: 'e111111', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
+                //{ id: 'a11111', name: 'Zonnepanelen: bbbbb', webViewLink: '/' },
+                //{ id: 'b111111', name: 'Zonnepanelen: hhhhh', webViewLink: '/' },
+                //{ id: 'd111111', name: 'Zonnepanelen: xxxxx', webViewLink: '/' },
+                //{ id: 'e111111', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
               ].map((x, i, array) => {
                 // Don't render nav items with forbidden words
                 const navTitleContainsForbiddenWord =
@@ -147,6 +140,7 @@ export const Header = () => {
                 const navItemChildren = array.filter((navItem) => navItem['name'].startsWith(`${array[i].name}:`))
                 // Remove that same amount of children from the original array, so that the children aren't rendered as main menu items.
                 navItemChildren.length >= 1 ? array.splice(i + 1, navItemChildren.length) : undefined
+                
                 return (
                   <li key={x.id} className='Nav__item'>
                     <a
@@ -162,42 +156,12 @@ export const Header = () => {
                       <span className='Nav__label'>{x.name}</span>
                     </a>
 
-                    {navItemHasChildren && (
-                      <>
-                        <button
-                          className={`Nav__toggler ${isChildActive(navItemChildren) ? 'Nav__toggler--active' : ''}`}
-                          aria-controls={`a11y-sub-menu-${x.id}`}
-                          aria-expanded={isSubNavOpen}
-                          onClick={() => toggleSubNav()}
-                        >
-                          <span className="sr-text">Submenu</span>
-                          <svg className='Nav__icon' width='10px' height='10px' aria-hidden='true'>
-                            <use xlinkHref='#icon--chevron' />
-                          </svg>
-                        </button>
-                        <ul className='Nav__subitems' id={`a11y-sub-menu-${x.id}`} aria-hidden={!isSubNavOpen}>
-                          {navItemChildren
-                            .filter((xs) => xs.name.startsWith(`${x.name}:`))
-                            .map((xs) => (
-                              <li key={xs.id} className='Nav__item Nav__subitem'>
-                                <a
-                                  href='#'
-                                  target='_self'
-                                  className={`Nav__sublink Nav__link${isLinkActive(xs.id) ? ' Nav__link--active' : ''} `}
-                                  onClick={(e) => {
-                                    e.preventDefault()
-                                    closeNav()
-                                    FlowRouter.go('/d/' + xs.id)
-                                  }}
-                                >
-                                  {/* {xs.name} */}
-                                  <span className="Nav__label">{xs.name.replace(`${x.name}: `, '')}</span>
-                                </a>
-                              </li>
-                            ))}
-                        </ul>
-                      </>
-                    )}
+                    {navItemHasChildren && <SubNav
+                      rootNavItem={x}
+                      subNavItems={navItemChildren}
+                      closeNav={closeNav}
+                      />
+                    }
                   </li>
                 )
               })}
