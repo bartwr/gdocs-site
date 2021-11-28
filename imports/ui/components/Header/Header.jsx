@@ -124,7 +124,7 @@ export const Header = () => {
                 { id: 'a', name: 'Zonnepanelen: bbbbb', webViewLink: '/' },
                 { id: 'b', name: 'Zonnepanelen: hhhhh', webViewLink: '/' },
                 { id: 'd', name: 'Zonnepanelen: xxxxx', webViewLink: '/' },
-                { id: 'd', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
+                { id: 'e', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
               ].map((x, i, array) => {
                 // Don't render nav items with forbidden words
                 const navTitleContainsForbiddenWord =
@@ -166,9 +166,9 @@ export const Header = () => {
                         </button>
                         <ul>
                           {navItemChildren
-                            .filter((item) => item.name.startsWith(`${x.name}:`))
-                            .map((n) => (
-                              <li>{n.name.replace(`${x.name}:`, '')}</li>
+                            .filter((xs) => xs.name.startsWith(`${x.name}:`))
+                            .map((xs) => (
+                              <li key={xs.name}>{xs.name.replace(`${x.name}:`, '')}</li>
                             ))}
                         </ul>
                       </>
