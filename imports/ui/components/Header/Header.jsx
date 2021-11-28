@@ -17,6 +17,9 @@ export const Header = () => {
   const [isSubNavOpen, setSubNavMode] = useState(false)
 
   const isLinkActive = (id) => window.location.pathname.includes(id)
+  const isChildActive = (children) => children.filter((child) => child.id).find((child) => window.location.pathname.includes(child.id))
+  ? true
+  : false
 
   const toggleNav = () => {
     setNavMode((isNavOpen) => !isNavOpen)
@@ -149,7 +152,7 @@ export const Header = () => {
                     <a
                       href='#'
                       target='_self'
-                      className={`Nav__link${isLinkActive(x.id) ? ' Nav__link--active' : ''} `}
+                      className={`Nav__link${isLinkActive(x.id) || isChildActive(navItemChildren) ? ' Nav__link--active' : ''} `}
                       onClick={(e) => {
                         e.preventDefault()
                         closeNav()
@@ -162,7 +165,7 @@ export const Header = () => {
                     {navItemHasChildren && (
                       <>
                         <button
-                          className='Nav__toggler'
+                          className={`Nav__toggler ${isChildActive(navItemChildren) ? 'Nav__toggler--active' : ''}`}
                           aria-controls={`a11y-sub-menu-${x.id}`}
                           aria-expanded={isSubNavOpen}
                           onClick={() => toggleSubNav()}

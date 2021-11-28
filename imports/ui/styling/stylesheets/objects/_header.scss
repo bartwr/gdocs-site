@@ -218,6 +218,10 @@ $breakpoint--header: $breakpoint--tablet--l;
     }
   }
 
+  .Nav__toggler--active {
+    fill: var(--color--primary);
+  }
+
   .Nav__subitems {
     &[aria-hidden="true"] {
       visibility: hidden;
