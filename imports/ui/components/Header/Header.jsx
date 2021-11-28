@@ -14,6 +14,24 @@ export const Header = () => {
   const navItemsToExclude = ['TEMPLATE', 'Welkom!', 'DRAFT']
   const [folderDocs, setFolderDocs] = useState([])
   const [isNavOpen, setNavMode] = useState(false)
+  const [isSubNavOpen, setSubNavMode] = useState(false)
+
+  const isLinkActive = (id) => window.location.pathname.includes(id)
+
+  const toggleNav = () => {
+    setNavMode((isNavOpen) => !isNavOpen)
+    document.documentElement.classList.toggle('Nav--toggled')
+  }
+
+  const closeNav = () => {
+    setNavMode(false)
+    setSubNavMode(false)
+    document.documentElement.classList.remove('Nav--toggled')
+  }
+  const toggleSubNav = () => {
+    setSubNavMode((isSubNavOpen) => !isSubNavOpen)
+  }
+
 
   // Sort array on sub key
   const sortAlphabetically = (elements, key) => {
@@ -51,18 +69,6 @@ export const Header = () => {
         ticking = true
       }
     })
-  }
-
-  const isLinkActive = (id) => window.location.pathname.includes(id)
-
-  const toggleNav = () => {
-    setNavMode((isNavOpen) => !isNavOpen)
-    document.documentElement.classList.toggle('Nav--toggled')
-  }
-
-  const closeNav = () => {
-    setNavMode(false)
-    document.documentElement.classList.remove('Nav--toggled')
   }
 
   // On page load: get navigation items from Google Drive
@@ -121,10 +127,10 @@ export const Header = () => {
             {folderDocs &&
               [
                 ...folderDocs,
-                { id: 'a', name: 'Zonnepanelen: bbbbb', webViewLink: '/' },
-                { id: 'b', name: 'Zonnepanelen: hhhhh', webViewLink: '/' },
-                { id: 'd', name: 'Zonnepanelen: xxxxx', webViewLink: '/' },
-                { id: 'e', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
+                { id: 'a11111', name: 'Zonnepanelen: bbbbb', webViewLink: '/' },
+                { id: 'b111111', name: 'Zonnepanelen: hhhhh', webViewLink: '/' },
+                { id: 'd111111', name: 'Zonnepanelen: xxxxx', webViewLink: '/' },
+                { id: 'e111111', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
               ].map((x, i, array) => {
                 // Don't render nav items with forbidden words
                 const navTitleContainsForbiddenWord =
@@ -151,24 +157,40 @@ export const Header = () => {
                       }}
                     >
                       <span className='Nav__label'>{x.name}</span>
-                      <svg className='Nav__icon' width='10px' height='10px' aria-hidden='true'>
-                        <use xlinkHref='#icon--chevron' />
-                      </svg>
                     </a>
 
                     {navItemHasChildren && (
                       <>
-                        <button>
-                          <span>Submenu toggle</span>
+                        <button
+                          className='Nav__toggler'
+                          aria-controls={`a11y-sub-menu-${x.id}`}
+                          aria-expanded={isSubNavOpen}
+                          onClick={() => toggleSubNav()}
+                        >
+                          <span className="sr-text">Submenu</span>
                           <svg className='Nav__icon' width='10px' height='10px' aria-hidden='true'>
                             <use xlinkHref='#icon--chevron' />
                           </svg>
                         </button>
-                        <ul>
+                        <ul className='Nav__subitems' id={`a11y-sub-menu-${x.id}`} aria-hidden={!isSubNavOpen}>
                           {navItemChildren
                             .filter((xs) => xs.name.startsWith(`${x.name}:`))
                             .map((xs) => (
-                              <li key={xs.name}>{xs.name.replace(`${x.name}:`, '')}</li>
+                              <li key={xs.id} className='Nav__item Nav__subitem'>
+                                <a
+                                  href='#'
+                                  target='_self'
+                                  className={`Nav__sublink Nav__link${isLinkActive(xs.id) ? ' Nav__link--active' : ''} `}
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    closeNav()
+                                    FlowRouter.go('/d/' + xs.id)
+                                  }}
+                                >
+                                  {/* {xs.name} */}
+                                  <span className="Nav__label">{xs.name.replace(`${x.name}: `, '')}</span>
+                                </a>
+                              </li>
                             ))}
                         </ul>
                       </>

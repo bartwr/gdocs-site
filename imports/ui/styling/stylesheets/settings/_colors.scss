@@ -16,6 +16,7 @@ $color--melon-400: #FEB8A4;
 
 $color--grey-800: #E2E2E2;
 $color--grey-900: #EFEFEF;
+$color--grey-800--rgba-35:  rgba($color--grey-800, .35);
 
 $color--black: #000;
 $color--white: #FFF;
@@ -33,6 +34,7 @@ $map--color-settings: (
   'color--black': $color--black,
   'color--white': $color--white,
   'color--white--rgba-50': $color--white--rgba-50,
+  'color--grey-800--rgba-35': $color--grey-800--rgba-35,
 );
 
 // ==========================================================================

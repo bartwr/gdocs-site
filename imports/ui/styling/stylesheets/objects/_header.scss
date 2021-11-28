@@ -153,15 +153,23 @@ $breakpoint--header: $breakpoint--tablet--l;
 // ==========================================================================
 
 .Nav--header {
+  --navlink--pr: calc(#{$px} * 60);
+
+  @media only screen and (min-width: $breakpoint--header) {
+    --navlink--pr: calc(#{$px} * 50);
+  }
+
   .Nav__items {
     height: 100%;
     overflow-y: auto;
   }
 
+  .Nav__item { position: relative; }
+
   .Nav__link {
     position: relative;
     display: block;
-    padding: grid--l(2) grid--l(6) grid--l(2) var(--gutter--m);
+    padding: grid--l(2) var(--navlink--pr) grid--l(2) var(--gutter--m);
     font-size: ($px * 18);
     line-height: calculate-relative-lineheight( ($px * 18), ($px * 24) );
     color: var(--color--link-header);
@@ -171,7 +179,7 @@ $breakpoint--header: $breakpoint--tablet--l;
     @include fauxlink--inverted-hover-animation(currentColor, 'span');
 
     @media only screen and (min-width: $breakpoint--header) {
-      padding: grid--l(2) grid--l(5) grid--l(2) grid--l(3);
+      padding: grid--l(2) var(--navlink--pr) grid--l(2) grid--l(3);
     }
   }
 
@@ -183,15 +191,45 @@ $breakpoint--header: $breakpoint--tablet--l;
   .Nav__label { hyphens: auto; }
 
   .Nav__icon {
-    flex-shrink: 0;
-    position: absolute;
-    top: 50%;
-    right: grid--l(4);
-    transform: translateY(-50%) rotate(-90deg);
-    margin-left: grid(1);
+    @include container;
+  }
 
-    @media only screen and (min-width: $breakpoint--header) {
-      right: grid--l(3);
+  // ----- Sub-menu
+
+  .Nav__toggler {
+    position: absolute;
+    right: calc((var(--navlink--pr) / 2) - #{grid--l(1)});
+    top: grid(1.5);
+    padding: 0;
+    width: grid--l(4);
+    height: grid--l(4);
+    background-color: transparent;
+    fill: var(--color--link-header);
+    border-radius: 50%;
+    transition: transform var(--transition--normal), background-color var(--transition--normal);
+
+    &:hover,
+    &:focus {
+      background-color: var(--color--grey-800--rgba-35);
+    }
+
+    &[aria-expanded="true"] {
+      transform: rotate(180deg);
+    }
+  }
+
+  .Nav__subitems {
+    &[aria-hidden="true"] {
+      visibility: hidden;
+      opacity: 0;
+      height: 0;
+    }
+
+    &[aria-hidden="false"] {
+      opacity: 1;
+      visibility: visible;
+      height: auto;
+      background-color: var(--color--grey-800--rgba-35);
     }
   }
 }
