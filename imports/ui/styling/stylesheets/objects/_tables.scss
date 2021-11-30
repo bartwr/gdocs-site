@@ -1,0 +1,35 @@
+// ==========================================================================
+// OBJECTS | Tables
+// ==========================================================================
+
+// ==========================================================================
+// OBJECTS | Tables / Inline (WYSIWYG)
+// ==========================================================================
+
+.text--styled {
+  div { 
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: grid(2);
+    margin-bottom: var(--spacing--wysiwyg);
+  }
+
+  table {
+    tbody { display: table; }
+
+    th { 
+      text-align: left;
+      font-weight: var(--weight--semibold);
+
+      &:empty { display: none; }
+    }
+
+    th, td { padding: grid(1) grid(2); }
+
+    tbody {
+      tr {
+        &:nth-child(odd) { background-color: var(--color--grey-800--rgba-35); }
+      }
+    }
+  }
+}

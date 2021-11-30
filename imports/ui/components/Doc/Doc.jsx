@@ -148,6 +148,10 @@ export const Doc = (props) => {
     document.documentElement.classList.remove('ToC--toggled')
   }
 
+  const parseTable = (s) => {
+    return s.indexOf('<table>') >= 0 ? s.replace(/<table>/g, "<div><table>").replace(/<\/table>/g, "</table></div>") : s
+  }
+
   return (
     <>
       {/* Table of Contents */}
@@ -185,7 +189,7 @@ export const Doc = (props) => {
 
         <div
           dangerouslySetInnerHTML={{
-            __html: marked(strippedDoc, { breaks: true })
+            __html: parseTable(marked(strippedDoc, { breaks: true}))
           }}
         />
       </section>
