@@ -66,11 +66,11 @@ $breakpoint--toc: $breakpoint--tablet--l;
 
 .ToC__inner {
   @media only screen and (min-width: $breakpoint--toc) {
-    position: sticky;
-    top: calc(var(--height--header) + #{grid(2)});
-    transition: top .6s ease-in;
+    // position: sticky;
+    // top: calc(var(--height--header) + #{grid(2)});
+    // transition: top .6s ease-in;
 
-    .Header--invisible & { top: grid(2); }
+    // .Header--invisible & { top: grid(2); }
   }
 }
 
