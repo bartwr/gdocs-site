@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { saveFolderFiles } from '/imports/reducers/folder'
-
-import { isDesktop } from '/imports/ui/AppUtils'
-import { isLinkActive, isChildActive } from './HeaderUtils.js'
-
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { isChildActive, isLinkActive } from './HeaderUtils.js'
 // Import components
-import {SubNav} from './SubNav.jsx';
+import { SubNav } from './SubNav.jsx'
+import { saveFolderFiles } from '/imports/reducers/folder'
+import { isDesktop } from '/imports/ui/AppUtils'
+
+
 
 export const Header = () => {
   const dispatch = useDispatch()
@@ -28,6 +28,16 @@ export const Header = () => {
     setNavMode(false)
     document.documentElement.classList.remove('Nav--toggled')
   }
+
+  // Keep navigation open when screen is wider than 1920px
+  // window.addEventListener('resize', function(event) {
+  //   if(window.innerWidth >= 1920) { // 1920px
+  //   setNavMode(true)
+  //   document.documentElement.classList.add('Nav--toggled')
+  //   } else {
+  //     isNavOpen && closeNav()
+  //   }
+  // }, true);
 
   // Sort array on sub key
   const sortAlphabetically = (elements, key) => {
@@ -121,13 +131,7 @@ export const Header = () => {
         <nav className='Header__nav Nav--header' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
           <ul className='Nav__items'>
             {folderDocs &&
-              [
-                ...folderDocs,
-                //{ id: 'a11111', name: 'Zonnepanelen: bbbbb', webViewLink: '/' },
-                //{ id: 'b111111', name: 'Zonnepanelen: hhhhh', webViewLink: '/' },
-                //{ id: 'd111111', name: 'Zonnepanelen: xxxxx', webViewLink: '/' },
-                //{ id: 'e111111', name: 'Zonnepanelen: zzzzz', webViewLink: '/' }
-              ].map((x, i, array) => {
+              [folderDocs].map((x, i, array) => {
                 // Don't render nav items with forbidden words
                 const navTitleContainsForbiddenWord =
                   navItemsToExclude.filter((forbiddenWord) => x.name.indexOf(forbiddenWord) > -1).length >= 1
@@ -140,13 +144,15 @@ export const Header = () => {
                 const navItemChildren = array.filter((navItem) => navItem['name'].startsWith(`${array[i].name}:`))
                 // Remove that same amount of children from the original array, so that the children aren't rendered as main menu items.
                 navItemChildren.length >= 1 ? array.splice(i + 1, navItemChildren.length) : undefined
-                
+
                 return (
                   <li key={x.id} className='Nav__item'>
                     <a
                       href='#'
                       target='_self'
-                      className={`Nav__link${isLinkActive(x.id) || isChildActive(navItemChildren) ? ' Nav__link--active' : ''} `}
+                      className={`Nav__link${
+                        isLinkActive(x.id) || isChildActive(navItemChildren) ? ' Nav__link--active' : ''
+                      } `}
                       onClick={(e) => {
                         e.preventDefault()
                         closeNav()
@@ -156,12 +162,7 @@ export const Header = () => {
                       <span className='Nav__label'>{x.name}</span>
                     </a>
 
-                    {navItemHasChildren && <SubNav
-                      rootNavItem={x}
-                      subNavItems={navItemChildren}
-                      closeNav={closeNav}
-                      />
-                    }
+                    {navItemHasChildren && <SubNav rootNavItem={x} subNavItems={navItemChildren} closeNav={closeNav} />}
                   </li>
                 )
               })}

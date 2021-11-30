@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { isChildActive, isLinkActive } from './HeaderUtils.js'
 
-import { isLinkActive, isChildActive } from './HeaderUtils.js'
 
 export const SubNav = (props) => {
-
-  const {rootNavItem, subNavItems, closeNav} = props;
+  const { rootNavItem, subNavItems, closeNav } = props
   const [isSubNavOpen, setSubNavMode] = useState(isChildActive(subNavItems))
 
   const toggleSubNav = () => {
     setSubNavMode((isSubNavOpen) => !isSubNavOpen)
   }
 
-  return <>
-    <button
-      className={`Nav__toggler ${isChildActive(subNavItems) ? 'Nav__toggler--active' : ''}`}
-      aria-controls={`a11y-sub-menu-${rootNavItem.id}`}
-      aria-expanded={isSubNavOpen}
-      onClick={() => toggleSubNav()}
-    >
-      <span className="sr-text">Submenu</span>
-      <svg className='Nav__icon' width='10px' height='10px' aria-hidden='true'>
-        <use xlinkHref='#icon--chevron' />
-      </svg>
-    </button>
-    <ul className='Nav__subitems' id={`a11y-sub-menu-${rootNavItem.id}`} aria-hidden={!isSubNavOpen}>
-      {subNavItems
-        .map((xs) => (
+  return (
+    <>
+      <button
+        className={`Nav__toggler ${isChildActive(subNavItems) ? 'Nav__toggler--active' : ''}`}
+        aria-controls={`a11y-sub-menu-${rootNavItem.id}`}
+        aria-expanded={isSubNavOpen}
+        onClick={() => toggleSubNav()}
+      >
+        <span className='sr-text'>Submenu</span>
+        <svg className='Nav__icon' width='12px' height='12px' aria-hidden='true'>
+          <use xlinkHref='#icon--chevron' />
+        </svg>
+      </button>
+      <ul className='Nav__subitems' id={`a11y-sub-menu-${rootNavItem.id}`} aria-hidden={!isSubNavOpen}>
+        {subNavItems.map((xs) => (
           <li key={xs.id} className='Nav__item Nav__subitem'>
             <a
               href='#'
@@ -38,10 +36,11 @@ export const SubNav = (props) => {
                 FlowRouter.go('/d/' + xs.id)
               }}
             >
-              <span className="Nav__label">{xs.name.replace(`${rootNavItem.name}: `, '')}</span>
+              <span className='Nav__label'>{xs.name.replace(`${rootNavItem.name}: `, '')}</span>
             </a>
           </li>
         ))}
-    </ul>
-  </>
+      </ul>
+    </>
+  )
 }
