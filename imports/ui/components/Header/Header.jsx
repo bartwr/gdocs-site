@@ -131,7 +131,7 @@ export const Header = () => {
         <nav className='Header__nav Nav--header' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
           <ul className='Nav__items'>
             {folderDocs &&
-              [folderDocs].map((x, i, array) => {
+              folderDocs.map((x, i, array) => {
                 // Don't render nav items with forbidden words
                 const navTitleContainsForbiddenWord =
                   navItemsToExclude.filter((forbiddenWord) => x.name.indexOf(forbiddenWord) > -1).length >= 1
