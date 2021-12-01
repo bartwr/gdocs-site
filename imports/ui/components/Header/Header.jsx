@@ -6,7 +6,17 @@ import { SubNav } from './SubNav.jsx'
 import { saveFolderFiles } from '/imports/reducers/folder'
 import { isDesktop } from '/imports/ui/AppUtils'
 
+// Exclude nav items if they contain a forbidden word
+const filterFolderDocs = (folderDocs) => {
+  if(! folderDocs) return folderDocs;
+  const navItemsToExclude = ['TEMPLATE', 'Welkom!', 'DRAFT']
 
+  return folderDocs.filter((x) => {
+    const navTitleContainsForbiddenWord =
+      navItemsToExclude.filter((forbiddenWord) => x.name.indexOf(forbiddenWord) > -1).length >= 1
+    return ! navTitleContainsForbiddenWord;
+  })
+}
 
 export const Header = () => {
   const dispatch = useDispatch()
@@ -14,8 +24,6 @@ export const Header = () => {
   // Get folder from store
   const folderFromStore = useSelector((state) => state.folder)
 
-  // Exclude nav items if they contain a forbidden word
-  const navItemsToExclude = ['TEMPLATE', 'Welkom!', 'DRAFT']
   const [folderDocs, setFolderDocs] = useState([])
   const [isNavOpen, setNavMode] = useState(false)
 
@@ -97,6 +105,9 @@ export const Header = () => {
     autoHideHeader()
   }, [])
 
+  // Filter folderDocs
+  filteredFolderDocs = filterFolderDocs(folderDocs);
+
   return (
     <header className='Header' id='Header'>
       <div className='Header__inner'>
@@ -130,20 +141,15 @@ export const Header = () => {
 
         <nav className='Header__nav Nav--header' id='a11y-main-menu-collapse' aria-hidden={!isNavOpen}>
           <ul className='Nav__items'>
-            {folderDocs &&
-              folderDocs.map((x, i, array) => {
-                // Don't render nav items with forbidden words
-                const navTitleContainsForbiddenWord =
-                  navItemsToExclude.filter((forbiddenWord) => x.name.indexOf(forbiddenWord) > -1).length >= 1
-                if (navTitleContainsForbiddenWord) return
-
+            {filteredFolderDocs &&
+              filteredFolderDocs.map((x, i, array) => {
                 // Submenu
                 // Check if a nav item has children (a.k.a. when next nav item starts with the same name followed by a colon)
                 const navItemHasChildren = array[i + 1] && array[i + 1].name.startsWith(`${x.name}:`)
                 // Create an array with the current nav item's children. When an item has children, the array's length is >= 1. Otherwise it's 0.
                 const navItemChildren = array.filter((navItem) => navItem['name'].startsWith(`${array[i].name}:`))
                 // Remove that same amount of children from the original array, so that the children aren't rendered as main menu items.
-                navItemChildren.length >= 1 ? array.splice(i + 1, navItemChildren.length) : undefined
+                navItemChildren && navItemChildren.length >= 1 ? array.splice(i + 1, navItemChildren.length) : undefined
 
                 return (
                   <li key={x.id} className='Nav__item'>

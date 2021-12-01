@@ -124,21 +124,21 @@ async function getTitle(auth, documentId) {
   return fut.wait();
 }
 
-// async function getDoc(auth, documentId) {
-//   let fut = new Future();
-//   const docs = google.docs({version: 'v1', auth});
+async function getDoc(auth, documentId) {
+  let fut = new Future();
+  const docs = google.docs({version: 'v1', auth});
 
-//   (async () => {
-//     docs.documents.get({
-//       documentId: documentId,
-//     }, (err, res) => {
-//       if (err) fut.throw(err);
-//       fut.return(res.data ? res.data : 'nope')
-//     });
-//   })();
+  (async () => {
+    docs.documents.get({
+      documentId: documentId,
+    }, (err, res) => {
+      if (err) fut.throw(err);
+      fut.return(res.data ? res.data : 'nope')
+    });
+  })();
 
-//   return fut.wait();
-// }
+  return fut.wait();
+}
 
 async function getFormattedDoc(auth, documentId) {
   let fut = new Future();
@@ -162,9 +162,9 @@ Meteor.methods({
   'docs.getTitle': async function (documentId) {
     return await authorizedCall(getTitle, documentId);
   },
-  // 'docs.getDoc': async function(documentId) {
-  //   return await authorizedCall(getDoc, documentId);
-  // },
+  'docs.getDoc': async function(documentId) {
+    return await authorizedCall(getDoc, documentId);
+  },
   'docs.getFormattedDoc': async function(documentId) {
     return await authorizedCall(getFormattedDoc, documentId);
   },

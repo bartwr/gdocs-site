@@ -74,6 +74,12 @@ export const Doc = (props) => {
     })
   }, [props.documentId])
 
+  // useEffect(() => {
+  //   Meteor.call('docs.getDoc', props.documentId, (err, theDoc) => {
+  //     console.log(theDoc)
+  //   })
+  // }, [props.documentId])
+
   // Fetch doc if documentId updates
   useEffect(() => {
     fetchDoc()

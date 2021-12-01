@@ -9,7 +9,7 @@ async function getFiles(auth, folderId) {
   (async () => {
     drive.files.list({
       q: 'parents in "'+folderId+'"',
-      pageSize: 10,
+      pageSize: 50,
       fields: 'nextPageToken, files(id, name, webViewLink)',
     }, (err, res) => {
       if (err) return fut.throw(err);
