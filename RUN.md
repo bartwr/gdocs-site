@@ -10,4 +10,8 @@ To run the app, follow these two steps:
 
 ```npm run start```
 
-2. Open a browser and navigate to [localhost:3000](http://localhost:3000/). The page should show the gdocs-site now.
+2. Open a second terminal, navigate to your project directory and run:
+
+```npm run css-watch```
+
+3. Open a browser and navigate to [localhost:3000](http://localhost:3000/). The page should show the gdocs-site now.

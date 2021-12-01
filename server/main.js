@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import '/imports/server/methods/index.js';
 
+// Redirect non-kennisbank.nijverhoekrotterdam.nl URL to correct domain
 WebApp.rawConnectHandlers.use(
   (req, res, next) => {
 
