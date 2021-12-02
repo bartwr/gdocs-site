@@ -183,7 +183,7 @@ $breakpoint--header: $breakpoint--tablet--l;
     }
 
     &.Nav__sublink {
-      font-size: ($px * 12);
+      font-size: ($px * 16);
     }
   }
 
@@ -239,5 +239,9 @@ $breakpoint--header: $breakpoint--tablet--l;
       height: auto;
       background-color: var(--color--grey-800--rgba-35);
     }
+  }
+
+  .Nav__sublink {
+    span { margin-left: 20px; }
   }
 }

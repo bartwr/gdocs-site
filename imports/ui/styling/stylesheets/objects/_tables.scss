@@ -15,6 +15,15 @@
   }
 
   table {
+    @media only screen and (max-width: ($breakpoint--mobile--m - $px)) {
+      white-space: nowrap;
+    }
+
+    @media only screen and (max-width: ($px * 549)) {
+      min-width: grid--l(60);
+      white-space: unset;
+    }
+
     tbody {
       display: table;
       width: 100%;
