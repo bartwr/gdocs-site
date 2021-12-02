@@ -24,28 +24,10 @@ export const Header = () => {
   // Get folder from store
   const folderFromStore = useSelector((state) => state.folder)
 
+  // State variables
   const [folderDocs, setFolderDocs] = useState([])
   const [isNavOpen, setNavMode] = useState(false)
-
-  const toggleNav = () => {
-    setNavMode((isNavOpen) => !isNavOpen)
-    document.documentElement.classList.toggle('Nav--toggled')
-  }
-
-  const closeNav = () => {
-    setNavMode(false)
-    document.documentElement.classList.remove('Nav--toggled')
-  }
-
-  // Keep navigation open when screen is wider than 1920px
-  // window.addEventListener('resize', function(event) {
-  //   if(window.innerWidth >= 1920) { // 1920px
-  //   setNavMode(true)
-  //   document.documentElement.classList.add('Nav--toggled')
-  //   } else {
-  //     isNavOpen && closeNav()
-  //   }
-  // }, true);
+  const [doAutoHideNav, setDoAutoHideNav] = useState(true)
 
   // Sort array on sub key
   const sortAlphabetically = (elements, key) => {
@@ -54,35 +36,68 @@ export const Header = () => {
     })
   }
 
-  // Auto hide header on scroll
-  const autoHideHeader = () => {
+  const toggleNav = () => {
+    setNavMode((isNavOpen) => !isNavOpen)
+    document.documentElement.classList.toggle('Nav--toggled')
+  }
+
+  const openNav = () => {
+    setNavMode(true)
+    document.documentElement.classList.add('Nav--toggled')
+  }
+
+  const closeNav = (force = false) => {
+    // Only close nav if needed
+    if(! doAutoHideNav && ! force) return;
+
+    setNavMode(false)
+    document.documentElement.classList.remove('Nav--toggled')
+  }
+
+  const handleResize = () => {
+    // On large screens:
+    if(window.innerWidth >= 1920) {
+      // Don't autohide nav
+      setDoAutoHideNav(false);
+      // Show nav sidebar by default
+      openNav();
+    }
+    // On smaller screens:
+    else {
+      // Do auto hide nav
+      setDoAutoHideNav(true);
+      // Hide nav by default;
+      setNavMode(false);
+    }
+  }
+
+  // Hide/show topbar & nav on scroll 
+  const scrollHandler = (e) => {
     const header = document.getElementById('Header')
 
     let lastKnownScrollPosition = 0,
       direction = 0,
       ticking = false
 
-    window.addEventListener('scroll', (e) => {
-      direction = lastKnownScrollPosition - window.scrollY
-      lastKnownScrollPosition = window.scrollY
+    direction = lastKnownScrollPosition - window.scrollY
+    lastKnownScrollPosition = window.scrollY
 
-      if (!ticking) {
-        window.requestAnimationFrame(function () {
-          if (direction < 0) {
-            header.classList.add('did-scroll')
-            document.documentElement.classList.add('Header--invisible')
-            document.documentElement.classList.remove('Header--visible')
-            closeNav()
-          } else {
-            header.classList.remove('did-scroll')
-            document.documentElement.classList.remove('Header--invisible')
-            document.documentElement.classList.add('Header--visible')
-          }
-          ticking = false
-        })
-        ticking = true
-      }
-    })
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        if (direction < 0) {
+          if(doAutoHideNav) header.classList.add('did-scroll')
+          document.documentElement.classList.add('Header--invisible')
+          document.documentElement.classList.remove('Header--visible')
+          closeNav()
+        } else {
+          if(doAutoHideNav) header.classList.remove('did-scroll')
+          document.documentElement.classList.remove('Header--invisible')
+          document.documentElement.classList.add('Header--visible')
+        }
+        ticking = false
+      })
+      ticking = true
+    }
   }
 
   // On page load: get navigation items from Google Drive
@@ -102,8 +117,40 @@ export const Header = () => {
 
   // On page load: init autoHideHeader
   useEffect(() => {
-    autoHideHeader()
-  }, [])
+    // Auto hide header on scroll
+    window.addEventListener('scroll', scrollHandler)
+
+    // Clean up event handlers on state update
+    return () => {
+      window.removeEventListener('scroll', scrollHandler);
+    }
+  }, [doAutoHideNav])
+
+  // Window resize actions
+  React.useEffect(() => {
+    window.addEventListener("resize", handleResize, false);// On resize: handleResize
+    handleResize();// On load: handleResize
+  }, []);
+
+  // Press escape key actions
+  React.useEffect(() => {
+    // Close navigation when pressing the escape key
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'Escape') {
+        closeNav()
+      }
+    })
+  }, []);
+
+  // Close navigation when clicking outside of header/navigation
+  React.useEffect(() => {
+    document.documentElement.addEventListener('click', (e) => {
+      const target = e.target || e.currentTarget;
+      if (target.closest('.Header') === null && document.documentElement.classList.contains('Nav--toggled')) {
+        closeNav()
+      }
+    })
+  }, []);
 
   // Filter folderDocs
   filteredFolderDocs = filterFolderDocs(folderDocs);

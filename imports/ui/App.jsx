@@ -29,18 +29,3 @@ export const App = (props) => {
     </>
   )
 }
-
-// Close navigation when pressing the escape key
-window.addEventListener('keyup', (e) => {
-  if (e.key === 'Escape') {
-    document.documentElement.classList.remove('Nav--toggled')
-  }
-})
-
-// Close navigation when clicking outside of header/navigation
-document.documentElement.addEventListener('click', (e) => {
-  const target = e.target || e.currentTarget;
-  if (target.closest('.Header') === null && document.documentElement.classList.contains('Nav--toggled')) {
-    document.documentElement.classList.remove('Nav--toggled')
-  }
-})
