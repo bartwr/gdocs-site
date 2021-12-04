@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { useDispatch, useSelector } from 'react-redux'
 import { isChildActive, isLinkActive } from './HeaderUtils.js'
 // Import components

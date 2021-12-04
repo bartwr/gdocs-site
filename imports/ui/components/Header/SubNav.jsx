@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { isChildActive, isLinkActive } from './HeaderUtils.js'
-
 
 export const SubNav = (props) => {
   const { rootNavItem, subNavItems, closeNav } = props

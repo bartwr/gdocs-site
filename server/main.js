@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { WebApp } from 'meteor/webapp';
+import Spiderable from 'meteor/ostrio:spiderable-middleware';
 
 import '/imports/server/methods/index.js';
 
@@ -28,3 +30,10 @@ WebApp.rawConnectHandlers.use(
     return next();
   }
 );
+
+// Register middleware
+WebApp.connectHandlers.use(new Spiderable({
+  rootURL: 'https://kennisbank.nijverhoekrotterdam.nl',
+  serviceURL: 'https://render.ostr.io',
+  auth: `${process.env.OSTRIO_API_USER}:${process.env.OSTRIO_API_PASS}`
+}));

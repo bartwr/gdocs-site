@@ -6,6 +6,8 @@ import { Header } from './components/Header/Header.jsx'
 import { Doc } from './components/Doc/Doc.jsx'
 
 export const App = (props) => {
+  window.IS_RENDERED = true;
+
   return (
     <>
       <Header />
