@@ -9,6 +9,13 @@ import { FlowRouterMeta, FlowRouterTitle } from 'meteor/ostrio:flow-router-meta'
 import { AppProvider } from '/imports/ui/AppProvider.jsx';
 import { Doc } from '/imports/ui/components/Doc/Doc.jsx';
 
+const hardCodedPageData = {
+  '1aGs-d2jYI-ks3MnpSd0gZi7Nv07cziaMnVSVb5C9Zyw': {
+    title: 'Ventilatie | Nijverhoek kennisbank',
+    image: 'https://kennisbank.nijverhoekrotterdam.nl/images/social-previews/preview-image-ventilatie.png'
+  }
+}
+
 FlowRouter.route('/', {
   name: 'home',
   action() {
@@ -120,10 +127,47 @@ FlowRouter.route('/', {
   }
 });
 FlowRouter.route('/d/:id', {
+  name: 'doc',
   action(params) {
     mount(AppProvider, {
       children: <Doc documentId={params.id} />
     });
+  },
+  title(params) {
+    if(! hardCodedPageData || ! hardCodedPageData[params.id]) {
+      return 'Nijverhoek kennisbank';
+    }
+    const pageMeta = hardCodedPageData[params.id];
+    return pageMeta.title;
+  },
+  meta(params) {
+    if(! hardCodedPageData || ! hardCodedPageData[params.id]) {
+      return {};
+    }
+    const pageMeta = hardCodedPageData[params.id];
+    return {
+      image: {
+        name: 'twitter:image',
+        itemprop: 'image',
+        property: 'og:image',
+        content: pageMeta.image
+      },
+    }
+  },
+  link(params) {
+    if(! hardCodedPageData || ! hardCodedPageData[params.id]) {
+      return {};
+    }
+    const pageMeta = hardCodedPageData[params.id];
+    return {
+      link: {
+        image: {
+          rel: 'image',
+          sizes: '500x500',
+          href: pageMeta.image
+        }
+      }
+    }
   }
 })
 

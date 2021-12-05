@@ -4,6 +4,13 @@ import Spiderable from 'meteor/ostrio:spiderable-middleware';
 
 import '/imports/server/methods/index.js';
 
+// Register middleware
+WebApp.connectHandlers.use(new Spiderable({
+  rootURL: 'https://kennisbank.nijverhoekrotterdam.nl',
+  serviceURL: 'https://render.ostr.io',
+  auth: `${process.env.OSTRIO_API_USER}:${process.env.OSTRIO_API_PASS}`
+}));
+
 // Redirect non-kennisbank.nijverhoekrotterdam.nl URL to correct domain
 WebApp.rawConnectHandlers.use(
   (req, res, next) => {
@@ -30,10 +37,3 @@ WebApp.rawConnectHandlers.use(
     return next();
   }
 );
-
-// Register middleware
-WebApp.connectHandlers.use(new Spiderable({
-  rootURL: 'https://kennisbank.nijverhoekrotterdam.nl',
-  serviceURL: 'https://render.ostr.io',
-  auth: `${process.env.OSTRIO_API_USER}:${process.env.OSTRIO_API_PASS}`
-}));
