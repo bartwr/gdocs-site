@@ -17,9 +17,12 @@ export const App = (props) => {
       </main>
 
       <footer className='footer container--m gutter--m spacing--s text--s text--styled text--center'>
-        {new Date().getFullYear()} De Nijverhoek&nbsp;&nbsp;|&nbsp;&nbsp; 
-        <a href='https://github.com/bartwr/gdocs-site' target='_blank' rel='external'>
-          open source
+        {new Date().getFullYear()} De Nijverhoek&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href='https://github.com/bartwr/gdocs-site' target='_blank' rel='external' title="Werk mee aan de website; deze site is open source">
+          source
+        </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href='https://simpleanalytics.com/kennisbank.nijverhoekrotterdam.nl' target='_blank' rel='external' title="Bekijk website-statistieken">
+          stats
         </a>
       </footer>
 
