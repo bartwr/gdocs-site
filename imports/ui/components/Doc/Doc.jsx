@@ -197,6 +197,7 @@ export const Doc = (props) => {
           dangerouslySetInnerHTML={{
             __html: parseTable(marked(strippedDoc, { breaks: true}))
           }}
+          style={{overflow: 'hidden'}}
         />
       </section>
     </>
