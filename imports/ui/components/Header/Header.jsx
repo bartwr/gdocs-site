@@ -60,7 +60,7 @@ export const Header = () => {
 
   const handleResize = () => {
     // On large screens:
-    if(window.innerWidth >= 1920) {
+    if(window.innerWidth >= 1880) {
       // Don't autohide nav
       setDoAutoHideNav(false);
       // Show nav sidebar by default
