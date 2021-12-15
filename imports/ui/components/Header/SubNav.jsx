@@ -36,7 +36,7 @@ export const SubNav = (props) => {
                 FlowRouter.go('/d/' + xs.id)
               }}
             >
-              <span className='Nav__label'>{xs.name.replace(`${rootNavItem.name}: `, '')}</span>
+              <span className='Nav__label'>{xs.name.replace(`${rootNavItem.name}: `, '').trim()}</span>
             </a>
           </li>
         ))}

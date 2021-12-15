@@ -50,7 +50,9 @@ export const Header = () => {
 
   const closeNav = (force = false) => {
     // Only close nav if needed
-    if(! doAutoHideNav && ! force) return;
+    if(doAutoHideNav === false && force !== true) {
+      return;
+    }
 
     setNavMode(false)
     document.documentElement.classList.remove('Nav--toggled')
@@ -82,7 +84,6 @@ export const Header = () => {
 
     direction = lastKnownScrollPosition - window.scrollY
     lastKnownScrollPosition = window.scrollY
-
 
     if (! ticking) {
       window.requestAnimationFrame(function () {
@@ -137,22 +138,33 @@ export const Header = () => {
   // Press escape key actions
   React.useEffect(() => {
     // Close navigation when pressing the escape key
-    window.addEventListener('keyup', (e) => {
+    const handler = (e) => {
       if (e.key === 'Escape') {
-        closeNav()
+        const force = true;
+        closeNav(force)
       }
-    })
-  }, []);
+    }
+    window.addEventListener('keyup', handler)
+
+    return () => {
+      window.removeEventListener('keyup', handler)
+    }
+  }, [doAutoHideNav]);
 
   // Close navigation when clicking outside of header/navigation
   React.useEffect(() => {
-    document.documentElement.addEventListener('click', (e) => {
+    const handler = (e) => {
       const target = e.target || e.currentTarget;
       if (target.closest('.Header') === null && document.documentElement.classList.contains('Nav--toggled')) {
         closeNav()
       }
-    })
-  }, []);
+    }
+    document.documentElement.addEventListener('click', handler)
+
+    return () => {
+      document.documentElement.removeEventListener('click', handler);
+    }
+  }, [doAutoHideNav]);
 
   // Filter folderDocs
   filteredFolderDocs = filterFolderDocs(folderDocs);
