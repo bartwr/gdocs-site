@@ -21,6 +21,7 @@ const filterFolderDocs = (folderDocs) => {
 
 export const Header = () => {
   const dispatch = useDispatch()
+  let lastKnownScrollPosition = 0;
 
   // Get folder from store
   const folderFromStore = useSelector((state) => state.folder)
@@ -76,14 +77,14 @@ export const Header = () => {
   const scrollHandler = (e) => {
     const header = document.getElementById('Header')
 
-    let lastKnownScrollPosition = 0,
-      direction = 0,
+    let direction = 0,
       ticking = false
 
     direction = lastKnownScrollPosition - window.scrollY
     lastKnownScrollPosition = window.scrollY
 
-    if (!ticking) {
+
+    if (! ticking) {
       window.requestAnimationFrame(function () {
         if (direction < 0) {
           if(doAutoHideNav) header.classList.add('did-scroll')
