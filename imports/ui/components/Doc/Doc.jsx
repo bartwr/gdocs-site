@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { saveDocTitle, saveDocContent } from '/imports/reducers/doc'
 import { findDocument } from '/imports/reducers/doc'
 import { marked } from 'marked'
+import slugify from 'slugify';
+
 import { updateGoogleLinksToLocalLinks, openExternalLinksInNewTab } from './DocUtils.js'
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
@@ -131,15 +133,24 @@ export const Doc = (props) => {
   // Scroll to element smoothly if outline link is clicked
   const triggers = [].slice.call(document.querySelectorAll('.animate-scroll'))
   triggers.forEach(function (el) {
+    const updateUrlHash = (hash) => {
+      const location = window.location.toString().split('#')[0];
+      history.replaceState(null, null, location + '#' + hash);
+    }
     const clickHandler = (e) => {
       // Prevent the default action
       e.preventDefault()
       // Get the `href` attribute
       const href = e.target.getAttribute('href')
+      const name = e.target.getAttribute('data-name')
       const id = href.substr(1)
       const target = document.getElementById(id)
       target.scrollIntoView({ behavior: 'smooth' })
+      updateUrlHash(name);
     }
+    const slug = slugify(el.getAttribute('href'))
+    el.setAttribute('data-name', slug.replace('#', ''));
+    el.addEventListener('click', clickHandler);
     el.addEventListener('click', clickHandler);
     el.addEventListener('click', () => closeToC());
   })

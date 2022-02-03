@@ -14,7 +14,7 @@ const findGoogleLinks = (input) => {
     })
   }
   return allUrls;
-} 
+}
 
 const updateGoogleLinksToLocalLinks = (content, allFolderDocuments) => {
   let updatedContent = content;
