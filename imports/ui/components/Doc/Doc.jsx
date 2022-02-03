@@ -9,6 +9,21 @@ import { updateGoogleLinksToLocalLinks, openExternalLinksInNewTab } from './DocU
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
+function scrollToTargetAdjusted(elementId){
+  const element = document.getElementById(elementId);
+  
+  const isHeaderVisible = document.documentElement.classList.contains('Header--visible');
+  const headerOffset = isHeaderVisible ? document.getElementById('Header').offsetHeight : 0;
+  
+  const elementPosition = element.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: "smooth"
+  });
+}
+
 export const Doc = (props) => {
   const dispatch = useDispatch()
 
@@ -22,6 +37,7 @@ export const Doc = (props) => {
   const [title, setTitle] = useState('')
   const [doc, setDoc] = useState('')
   const [isToCOpen, setToCMode] = useState(false)
+  const [tocContent, setTocContent] = useState([])
 
   // Function fetchDoc :: fetches document from Google Docs
   const fetchDoc = () => {
@@ -76,6 +92,11 @@ export const Doc = (props) => {
     })
   }, [props.documentId])
 
+  // Update ToC if doc updates
+  useEffect(x => {
+    generateToc()
+  }, [doc])
+
   // useEffect(() => {
   //   Meteor.call('docs.getDoc', props.documentId, (err, theDoc) => {
   //     console.log(theDoc)
@@ -92,68 +113,77 @@ export const Doc = (props) => {
 
   // Generate Table of Contents with different levels
   // https://github.com/markedjs/marked/issues/545#issuecomment-495093214
-  const toc = []
-  var renderer = (function () {
-    var renderer = new marked.Renderer()
-    renderer.heading = function (text, level, raw) {
-      var anchor = this.options.headerPrefix + raw.toLowerCase().replace(/[^\w\\u4e00-\\u9fa5]]+/g, '-')
-      toc.push({ anchor: anchor, level: level, text: text })
-      return `<h${level}>${text} <span id="${anchor}" /></h${level}>`
-    }
-    return renderer
-  })()
+  const generateToc = () => {
+    const toc = []
+    var renderer = (function () {
+      var renderer = new marked.Renderer()
+      renderer.heading = function (text, level, raw) {
+        var anchor = this.options.headerPrefix + raw.toLowerCase().replace(/[^\w\\u4e00-\\u9fa5]]+/g, '-')
+        toc.push({ anchor: anchor, level: level, text: text })
+        return `<h${level}>${text} <span id="${anchor}" /></h${level}>`
+      }
+      return renderer
+    })()
 
-  marked.setOptions({ renderer: renderer })
-  function build(coll, k, level, ctx) {
-    if (k >= coll.length || coll[k].level <= level) {
+    marked.setOptions({ renderer: renderer })
+    function build(coll, k, level, ctx) {
+      if (k >= coll.length || coll[k].level <= level) {
+        return k
+      }
+      var node = coll[k]
+      ctx.push(`<li><a href='#${node.anchor}' class='animate-scroll'>${node.text}</a>`)
+      k++
+      var childCtx = []
+      k = build(coll, k, node.level, childCtx)
+      if (childCtx.length > 0) {
+        ctx.push('<ol>')
+        childCtx.forEach(function (idm) {
+          ctx.push(idm)
+        })
+        ctx.push('</ol>')
+      }
+      ctx.push('</li>')
+      k = build(coll, k, level, ctx)
       return k
     }
-    var node = coll[k]
-    ctx.push(`<li><a href='#${node.anchor}' class='animate-scroll'>${node.text}</a>`)
-    k++
-    var childCtx = []
-    k = build(coll, k, node.level, childCtx)
-    if (childCtx.length > 0) {
-      ctx.push('<ol>')
-      childCtx.forEach(function (idm) {
-        ctx.push(idm)
-      })
-      ctx.push('</ol>')
-    }
-    ctx.push('</li>')
-    k = build(coll, k, level, ctx)
-    return k
-  }
-  var html = marked(strippedDoc)
-  var ctx = []
-  ctx.push('<ol>')
-  build(toc, 0, 0, ctx)
-  ctx.push('</ol>')
+    var html = marked(strippedDoc)
 
-  // Scroll to element smoothly if outline link is clicked
-  const triggers = [].slice.call(document.querySelectorAll('.animate-scroll'))
-  triggers.forEach(function (el) {
-    const updateUrlHash = (hash) => {
-      const location = window.location.toString().split('#')[0];
-      history.replaceState(null, null, location + '#' + hash);
-    }
-    const clickHandler = (e) => {
-      // Prevent the default action
-      e.preventDefault()
-      // Get the `href` attribute
-      const href = e.target.getAttribute('href')
-      const name = e.target.getAttribute('data-name')
-      const id = href.substr(1)
-      const target = document.getElementById(id)
-      target.scrollIntoView({ behavior: 'smooth' })
-      updateUrlHash(name);
-    }
-    const slug = slugify(el.getAttribute('href'))
-    el.setAttribute('data-name', slug.replace('#', ''));
-    el.addEventListener('click', clickHandler);
-    el.addEventListener('click', clickHandler);
-    el.addEventListener('click', () => closeToC());
-  })
+    let fullCtx = []
+    fullCtx.push('<ol>')
+    build(toc, 0, 0, fullCtx)
+    fullCtx.push('</ol>')
+    setTocContent(fullCtx)
+
+    // Scroll to element smoothly if outline link is clicked
+    setTimeout(x => {
+      const clickHandler = (e) => {
+        // Prevent the default action
+        e.preventDefault()
+        // Get the `href` attribute
+        const href = e.target.getAttribute('href')
+        const name = e.target.getAttribute('data-name')
+        const id = href.substr(1)
+        const target = document.getElementById(id)
+        // target.scrollIntoView({ behavior: 'smooth' })
+        scrollToTargetAdjusted(id)
+        updateUrlHash(name);
+      }
+      const updateUrlHash = (hash) => {
+        const location = window.location.toString().split('#')[0];
+        history.replaceState(null, null, location + '#' + hash);
+      }
+      const triggers = [].slice.call(document.querySelectorAll('.animate-scroll'))
+      triggers.forEach(function (el) {
+        el.removeEventListener('click', clickHandler);
+      })
+      triggers.forEach(function (el) {
+        const slug = slugify(el.getAttribute('href'))
+        el.setAttribute('data-name', slug.replace('#', ''));
+        el.addEventListener('click', clickHandler);
+        el.addEventListener('click', () => closeToC());
+      })
+    }, 5)
+  }
 
   const toggleToC = () => {
     setToCMode((isToCOpen) => !isToCOpen)
@@ -185,7 +215,7 @@ export const Doc = (props) => {
             </svg>
           </button>
 
-          <div className="ToC__content" aria-hidden={!isToCOpen} dangerouslySetInnerHTML={{ __html: ctx.join('') }} />
+          <div className="ToC__content" aria-hidden={!isToCOpen} dangerouslySetInnerHTML={{ __html: tocContent.join('') }} />
         </div>
       </section>
       
