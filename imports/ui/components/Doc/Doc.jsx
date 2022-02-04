@@ -5,7 +5,7 @@ import { findDocument } from '/imports/reducers/doc'
 import { marked } from 'marked'
 import slugify from 'slugify';
 
-import { updateGoogleLinksToLocalLinks, openExternalLinksInNewTab } from './DocUtils.js'
+import { updateGoogleLinksToLocalLinks, openExternalLinksInNewTab, loadImages } from './DocUtils.js'
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
@@ -99,9 +99,23 @@ export const Doc = (props) => {
   }, [doc])
 
   // On page load: navigate to URL hash
-  useEffect(x => {
-    const urlHash = window.location.toString().split('#')[1];
-    scrollToTargetAdjusted(urlHash)
+  useEffect(() => {
+    scrollIfImagesAreLoaded = async () => {
+      const urlHash = window.location.toString().split('#')[1];
+      const imageSrcArray = [].slice.call(document.images).map(img => {
+        return img.src
+      });
+      // Scroll after 1.5 second or if all images are loaded
+      const TO_forceScrollAfterTimeout = setTimeout(x => {
+        scrollToTargetAdjusted(urlHash)
+      }, 1500);
+      // Wait on images loading
+      await loadImages(imageSrcArray);
+      // Scroll after all images are loaded
+      clearTimeout(TO_forceScrollAfterTimeout);
+      scrollToTargetAdjusted(urlHash)
+    }
+    scrollIfImagesAreLoaded();
   }, [doc])
 
   // useEffect(() => {
