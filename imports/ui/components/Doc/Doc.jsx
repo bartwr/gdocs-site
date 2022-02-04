@@ -11,7 +11,8 @@ const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️'
 
 function scrollToTargetAdjusted(elementId){
   const element = document.getElementById(elementId);
-  
+  if(! element) return;
+
   const isHeaderVisible = document.documentElement.classList.contains('Header--visible');
   const headerOffset = isHeaderVisible ? document.getElementById('Header').offsetHeight : 0;
   
@@ -97,6 +98,12 @@ export const Doc = (props) => {
     generateToc()
   }, [doc])
 
+  // On page load: navigate to URL hash
+  useEffect(x => {
+    const urlHash = window.location.toString().split('#')[1];
+    scrollToTargetAdjusted(urlHash)
+  }, [doc])
+
   // useEffect(() => {
   //   Meteor.call('docs.getDoc', props.documentId, (err, theDoc) => {
   //     console.log(theDoc)
@@ -118,7 +125,7 @@ export const Doc = (props) => {
     var renderer = (function () {
       var renderer = new marked.Renderer()
       renderer.heading = function (text, level, raw) {
-        var anchor = this.options.headerPrefix + raw.toLowerCase().replace(/[^\w\\u4e00-\\u9fa5]]+/g, '-')
+        var anchor = slugify(raw.toLowerCase());
         toc.push({ anchor: anchor, level: level, text: text })
         return `<h${level}>${text} <span id="${anchor}" /></h${level}>`
       }
@@ -161,12 +168,12 @@ export const Doc = (props) => {
         e.preventDefault()
         // Get the `href` attribute
         const href = e.target.getAttribute('href')
-        const name = e.target.getAttribute('data-name')
         const id = href.substr(1)
         const target = document.getElementById(id)
-        // target.scrollIntoView({ behavior: 'smooth' })
+        // Scroll to element
         scrollToTargetAdjusted(id)
-        updateUrlHash(name);
+        // Update URL hash
+        updateUrlHash(id);
       }
       const updateUrlHash = (hash) => {
         const location = window.location.toString().split('#')[0];
@@ -177,8 +184,6 @@ export const Doc = (props) => {
         el.removeEventListener('click', clickHandler);
       })
       triggers.forEach(function (el) {
-        const slug = slugify(el.getAttribute('href'))
-        el.setAttribute('data-name', slug.replace('#', ''));
         el.addEventListener('click', clickHandler);
         el.addEventListener('click', () => closeToC());
       })

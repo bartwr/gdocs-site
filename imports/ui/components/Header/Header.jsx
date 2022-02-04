@@ -89,8 +89,10 @@ export const Header = () => {
       window.requestAnimationFrame(function () {
         if (direction < 0) {
           if(doAutoHideNav) header.classList.add('did-scroll')
-          document.documentElement.classList.add('Header--invisible')
-          document.documentElement.classList.remove('Header--visible')
+          if(window.innerWidth < 1880) {
+            document.documentElement.classList.add('Header--invisible')
+            document.documentElement.classList.remove('Header--visible')
+          }
           closeNav()
         } else {
           if(doAutoHideNav) header.classList.remove('did-scroll')
