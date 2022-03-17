@@ -108,7 +108,7 @@ export const Doc = (props) => {
       // Scroll after 1.5 second or if all images are loaded
       const TO_forceScrollAfterTimeout = setTimeout(x => {
         scrollToTargetAdjusted(urlHash)
-      }, 1500);
+      }, 2000);
       // Wait on images loading
       await loadImages(imageSrcArray);
       // Scroll after all images are loaded

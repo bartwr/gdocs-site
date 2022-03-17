@@ -112,7 +112,7 @@ export const Header = () => {
       setFolderDocs(folderFromStore)
     }
     // Now get most recent folder contents from Drive
-    Meteor.call('drive.getFolderFiles', '148bWv4FCGEeTBeEgwZCFjT7gn748s3vj', (err, res) => {
+    Meteor.call('drive.getFolderFiles', (err, res) => {
       const sortedFiles = sortAlphabetically(res, 'name')
       setFolderDocs(sortedFiles)
       // Save folder docs in Redux store
