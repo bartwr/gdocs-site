@@ -44,13 +44,32 @@
   }
 }
 
+.Content__category {
+  display: inline-block;
+  padding: grid--l(.5) grid(1.5);
+  margin-bottom: grid(2);
+  color: var(--color--blue-200);
+  background-color: var(--color--grey-800--rgba-35);
+  border-radius: var(--border-radius--content);
+  @include label--m;
+}
+
 .Content__title {
-  margin-right: grid(2);
+  display: block;
   hyphens: auto;
   word-break: break-word;
 }
 
 .Content__edit {
-  display: inline-block;
+  display: table;
+  margin-top: grid(1);
   @include title--xxs;
+
+  @media only screen and (min-width: $breakpoint--tablet--m) {
+    position: absolute;
+    top: var(--spacing--m);
+    right: var(--spacing--m);
+    transform: translateY(grid(.25));
+    margin: 0;
+  }
 }
