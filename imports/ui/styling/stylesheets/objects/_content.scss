@@ -59,6 +59,11 @@
   hyphens: auto;
   word-break: break-word;
 }
+.Content__title--padding {
+  @media only screen and (min-width: $breakpoint--tablet--m) {
+    padding-right: grid--l(10);
+  }
+}
 
 .Content__edit {
   display: table;

@@ -222,7 +222,6 @@ export const Doc = (props) => {
   }
 
   const titleContainsParent = (title) => title.split(':').length > 1
-  // const parseParent = (title) => title.split(':')[0].trim()
   const parseTitle = (title) => ({
     parent: titleContainsParent(title) ? title.split(':')[0].trim() : undefined,
     title: titleContainsParent(title) ? title.split(':')[1].trim() : title
@@ -254,10 +253,10 @@ export const Doc = (props) => {
 
       {/* Content */}
       <section className='Content text--styled'>
-        {parseTitle(title).parent && <p className='Content__category'>{parseTitle(title).parent}</p>}
+        {parseTitle(title).parent && <span className='Content__category'>{parseTitle(title).parent}</span>}
 
         <h1>
-          <span className='Content__title' style={!parseTitle(title).parent ? { paddingRight: '100px' } : undefined}>
+          <span className={`Content__title${!parseTitle(title).parent ? ' Content__title--padding' : ''}`}>
             {parseTitle(title).title}
           </span>
           <a
