@@ -221,9 +221,12 @@ export const Doc = (props) => {
     return s.indexOf('<table>') >= 0 ? s.replace(/<table>/g, '<div><table>').replace(/<\/table>/g, '</table></div>') : s
   }
 
-  const titleContainsParent = (title) => title.startsWith(`${title}: `)
-  const parseParent = (title) => title.split(':')[0].trim()
-  const parseTitle = (title) => titleContainsParent(title) ? title.replace(`${title}: `, '').trim() : title
+  const titleContainsParent = (title) => title.split(':').length > 1
+  // const parseParent = (title) => title.split(':')[0].trim()
+  const parseTitle = (title) => ({
+    parent: titleContainsParent(title) ? title.split(':')[0].trim() : undefined,
+    title: titleContainsParent(title) ? title.replace(`${title}: `, '').trim() : title
+  })
 
   return (
     <>
@@ -251,10 +254,10 @@ export const Doc = (props) => {
 
       {/* Content */}
       <section className='Content text--styled'>
-        {titleContainsParent(title) && <p className='Content__category'>{parseParent(title)}</p>}
+        {parseTitle(title).parent && <p className='Content__category'>{parseTitle(title).parent}</p>}
 
         <h1>
-          <span className='Content__title'>{parseTitle(title)}</span>
+          <span className='Content__title'>{parseTitle(title).title}</span>
           <a
             href={`https://docs.google.com/document/d/${props.documentId}/edit`}
             target='_blank'
