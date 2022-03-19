@@ -225,7 +225,7 @@ export const Doc = (props) => {
   // const parseParent = (title) => title.split(':')[0].trim()
   const parseTitle = (title) => ({
     parent: titleContainsParent(title) ? title.split(':')[0].trim() : undefined,
-    title: titleContainsParent(title) ? title.replace(`${title}: `, '').trim() : title
+    title: titleContainsParent(title) ? title.split(':')[1].trim() : title
   })
 
   return (
@@ -257,7 +257,9 @@ export const Doc = (props) => {
         {parseTitle(title).parent && <p className='Content__category'>{parseTitle(title).parent}</p>}
 
         <h1>
-          <span className='Content__title'>{parseTitle(title).title}</span>
+          <span className='Content__title' style={!parseTitle(title).parent ? { paddingRight: '100px' } : undefined}>
+            {parseTitle(title).title}
+          </span>
           <a
             href={`https://docs.google.com/document/d/${props.documentId}/edit`}
             target='_blank'
