@@ -3,26 +3,26 @@ import { useSelector, useDispatch } from 'react-redux'
 import { saveDocTitle, saveDocContent } from '/imports/reducers/doc'
 import { findDocument } from '/imports/reducers/doc'
 import { marked } from 'marked'
-import slugify from 'slugify';
+import slugify from 'slugify'
 
 import { updateGoogleLinksToLocalLinks, openExternalLinksInNewTab, loadImages } from './DocUtils.js'
 
 const homeUnicodeSymbols = ['🏠', '🏡', '🏞️', '🌉', '🌃', '🏙️', '🌆', '🌌', '🎪', '🏕️']
 
-function scrollToTargetAdjusted(elementId){
-  const element = document.getElementById(elementId);
-  if(! element) return;
+function scrollToTargetAdjusted(elementId) {
+  const element = document.getElementById(elementId)
+  if (!element) return
 
-  const isHeaderVisible = document.documentElement.classList.contains('Header--visible');
-  const headerOffset = isHeaderVisible ? document.getElementById('Header').offsetHeight : 0;
-  
-  const elementPosition = element.getBoundingClientRect().top;
-  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  const isHeaderVisible = document.documentElement.classList.contains('Header--visible')
+  const headerOffset = isHeaderVisible ? document.getElementById('Header').offsetHeight : 0
+
+  const elementPosition = element.getBoundingClientRect().top
+  const offsetPosition = elementPosition + window.pageYOffset - headerOffset
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: "smooth"
-  });
+    behavior: 'smooth'
+  })
 }
 
 export const Doc = (props) => {
@@ -94,28 +94,31 @@ export const Doc = (props) => {
   }, [props.documentId])
 
   // Update ToC if doc updates
-  useEffect(x => {
-    generateToc()
-  }, [doc])
+  useEffect(
+    (x) => {
+      generateToc()
+    },
+    [doc]
+  )
 
   // On page load: navigate to URL hash
   useEffect(() => {
     scrollIfImagesAreLoaded = async () => {
-      const urlHash = window.location.toString().split('#')[1];
-      const imageSrcArray = [].slice.call(document.images).map(img => {
+      const urlHash = window.location.toString().split('#')[1]
+      const imageSrcArray = [].slice.call(document.images).map((img) => {
         return img.src
-      });
+      })
       // Scroll after 1.5 second or if all images are loaded
-      const TO_forceScrollAfterTimeout = setTimeout(x => {
+      const TO_forceScrollAfterTimeout = setTimeout((x) => {
         scrollToTargetAdjusted(urlHash)
-      }, 2000);
+      }, 2000)
       // Wait on images loading
-      await loadImages(imageSrcArray);
+      await loadImages(imageSrcArray)
       // Scroll after all images are loaded
-      clearTimeout(TO_forceScrollAfterTimeout);
+      clearTimeout(TO_forceScrollAfterTimeout)
       scrollToTargetAdjusted(urlHash)
     }
-    scrollIfImagesAreLoaded();
+    scrollIfImagesAreLoaded()
   }, [doc])
 
   // useEffect(() => {
@@ -139,7 +142,7 @@ export const Doc = (props) => {
     var renderer = (function () {
       var renderer = new marked.Renderer()
       renderer.heading = function (text, level, raw) {
-        var anchor = slugify(raw.toLowerCase());
+        var anchor = slugify(raw.toLowerCase())
         toc.push({ anchor: anchor, level: level, text: text })
         return `<h${level}>${text} <span id="${anchor}" /></h${level}>`
       }
@@ -176,7 +179,7 @@ export const Doc = (props) => {
     setTocContent(fullCtx)
 
     // Scroll to element smoothly if outline link is clicked
-    setTimeout(x => {
+    setTimeout((x) => {
       const clickHandler = (e) => {
         // Prevent the default action
         e.preventDefault()
@@ -187,19 +190,19 @@ export const Doc = (props) => {
         // Scroll to element
         scrollToTargetAdjusted(id)
         // Update URL hash
-        updateUrlHash(id);
+        updateUrlHash(id)
       }
       const updateUrlHash = (hash) => {
-        const location = window.location.toString().split('#')[0];
-        history.replaceState(null, null, location + '#' + hash);
+        const location = window.location.toString().split('#')[0]
+        history.replaceState(null, null, location + '#' + hash)
       }
       const triggers = [].slice.call(document.querySelectorAll('.animate-scroll'))
       triggers.forEach(function (el) {
-        el.removeEventListener('click', clickHandler);
+        el.removeEventListener('click', clickHandler)
       })
       triggers.forEach(function (el) {
-        el.addEventListener('click', clickHandler);
-        el.addEventListener('click', () => closeToC());
+        el.addEventListener('click', clickHandler)
+        el.addEventListener('click', () => closeToC())
       })
     }, 5)
   }
@@ -215,8 +218,14 @@ export const Doc = (props) => {
   }
 
   const parseTable = (s) => {
-    return s.indexOf('<table>') >= 0 ? s.replace(/<table>/g, "<div><table>").replace(/<\/table>/g, "</table></div>") : s
+    return s.indexOf('<table>') >= 0 ? s.replace(/<table>/g, '<div><table>').replace(/<\/table>/g, '</table></div>') : s
   }
+
+  const titleContainsParent = (title) => title.split(':').length > 1
+  const parseTitle = (title) => ({
+    parent: titleContainsParent(title) ? title.split(':')[0].trim() : undefined,
+    title: titleContainsParent(title) ? title.split(':')[1].trim() : title
+  })
 
   return (
     <>
@@ -228,26 +237,34 @@ export const Doc = (props) => {
 
           {/* Mobile button */}
           <button className='ToC__toggle' aria-expanded={isToCOpen} onClick={() => toggleToC()}>
-            <span className="ToC__toggle-label">Inhoud</span>
-            <svg className="ToC__toggle-icon">
-              <use xlinkHref="#icon--chevron" />
+            <span className='ToC__toggle-label'>Inhoud</span>
+            <svg className='ToC__toggle-icon'>
+              <use xlinkHref='#icon--chevron' />
             </svg>
           </button>
 
-          <div className="ToC__content" aria-hidden={!isToCOpen} dangerouslySetInnerHTML={{ __html: tocContent.join('') }} />
+          <div
+            className='ToC__content'
+            aria-hidden={!isToCOpen}
+            dangerouslySetInnerHTML={{ __html: tocContent.join('') }}
+          />
         </div>
       </section>
-      
+
       {/* Content */}
       <section className='Content text--styled'>
+        {parseTitle(title).parent && <span className='Content__category'>{parseTitle(title).parent}</span>}
+
         <h1>
-          <span className='Content__title'>{title}</span>
+          <span className={`Content__title${!parseTitle(title).parent ? ' Content__title--padding' : ''}`}>
+            {parseTitle(title).title}
+          </span>
           <a
             href={`https://docs.google.com/document/d/${props.documentId}/edit`}
             target='_blank'
             rel='external'
             title='Bewerk in Google Docs'
-            className="Content__edit"
+            className='Content__edit'
           >
             bewerk
           </a>
@@ -255,9 +272,9 @@ export const Doc = (props) => {
 
         <div
           dangerouslySetInnerHTML={{
-            __html: parseTable(marked(strippedDoc, { breaks: true}))
+            __html: parseTable(marked(strippedDoc, { breaks: true }))
           }}
-          style={{overflow: 'hidden'}}
+          style={{ overflow: 'hidden' }}
         />
       </section>
     </>

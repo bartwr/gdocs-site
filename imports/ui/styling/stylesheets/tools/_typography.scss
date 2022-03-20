@@ -64,3 +64,12 @@
   font-size: ($px * 14);
   line-height: calculate-relative-lineheight(($px * 14), ($px * 18));
 }
+
+// ----- Labels
+
+@mixin label--m {
+  @include title-base;
+  font-size: ($px * 14);
+  line-height: calculate-relative-lineheight(($px * 14), ($px * 18));
+  text-transform: uppercase;
+}
