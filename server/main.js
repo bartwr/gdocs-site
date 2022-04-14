@@ -3,6 +3,7 @@ import { WebApp } from 'meteor/webapp';
 import Spiderable from 'meteor/ostrio:spiderable-middleware';
 
 import '/imports/server/methods/index.js';
+import '/imports/server/publish.js';
 
 // Register middleware
 WebApp.connectHandlers.use(new Spiderable({

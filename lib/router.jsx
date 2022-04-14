@@ -3,6 +3,9 @@ import {mount} from 'react-mounter';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { FlowRouterMeta, FlowRouterTitle } from 'meteor/ostrio:flow-router-meta';
 
+// Import models
+import {Docs} from '/imports/models/Docs.js';
+
 /**
  *  App
  */
@@ -13,6 +16,12 @@ const hardCodedPageData = {
   '1aGs-d2jYI-ks3MnpSd0gZi7Nv07cziaMnVSVb5C9Zyw': {
     title: 'Ventilatie | Nijverhoek kennisbank',
     image: 'https://kennisbank.nijverhoekrotterdam.nl/images/social-previews/preview-image-ventilatie.png'
+  },
+  '1ozBo1iweIePX5kQcQRhyVhtZc1rq1PlpWgHd2pb9Woo': {
+    title: 'Biodiversiteit | Nijverhoek kennisbank'
+  },
+  '1-OYpv1BaDjDPJLRIelPByX0rH114Ikqz7_AISjcA1VI': {
+    title: 'Triple glas | Nijverhoek kennisbank'
   }
 }
 
@@ -128,17 +137,21 @@ FlowRouter.route('/', {
 });
 FlowRouter.route('/d/:id', {
   name: 'doc',
+  waitOn(params) {
+    return [Meteor.subscribe('doc.one', params.id)];
+  },
+  data(params) {
+    return Docs.findOne({documentId: params.id});
+  },
   action(params) {
     mount(AppProvider, {
       children: <Doc documentId={params.id} />
     });
   },
-  title(params) {
-    if(! hardCodedPageData || ! hardCodedPageData[params.id]) {
-      return 'Nijverhoek kennisbank';
+  title(params, query, data) {
+    if (data) {
+      return data.title;
     }
-    const pageMeta = hardCodedPageData[params.id];
-    return pageMeta.title;
   },
   meta(params) {
     if(! hardCodedPageData || ! hardCodedPageData[params.id]) {
